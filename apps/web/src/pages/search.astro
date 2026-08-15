@@ -1,0 +1,44 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { createSearchIndex } from "../lib/search";
+const index = createSearchIndex(await getCollection("wiki"));
+---
+
+<BaseLayout title="Search"
+  ><p class="eyebrow">Static index</p><h1>Search</h1><input
+    id="query"
+    type="search"
+    placeholder="Protocols, frameworks, authorization…"
+    autofocus
+  /><div id="results" class="grid"></div>
+  <script is:inline define:vars={{ index, base: import.meta.env.BASE_URL }}>
+    const input = document.querySelector("#query");
+    const results = document.querySelector("#results");
+    const render = () => {
+      const q = input.value.toLowerCase().trim();
+      const found = q
+        ? index
+            .map((d) => ({
+              d,
+              score:
+                [d.title, d.description, d.type, ...d.tags, d.body]
+                  .join(" ")
+                  .toLowerCase()
+                  .split(q).length - 1,
+            }))
+            .filter((x) => x.score > 0)
+            .sort((a, b) => b.score - a.score)
+            .slice(0, 30)
+        : index.slice(0, 12).map((d) => ({ d }));
+      results.innerHTML = found
+        .map(
+          ({ d }) =>
+            `<a class="card" href="${base}${d.path.replace(/^\//, "")}"><small>${d.type}</small><h3>${d.title}</h3><p>${d.description}</p></a>`,
+        )
+        .join("");
+    };
+    input.addEventListener("input", render);
+    render();
+  </script></BaseLayout
+>

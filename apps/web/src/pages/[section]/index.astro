@@ -1,0 +1,61 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import {
+  entryPath,
+  isReservedEntry,
+  sectionFor,
+  titleFor,
+} from "../../lib/wiki";
+
+interface Props {
+  section: string;
+  items: CollectionEntry<"wiki">[];
+}
+export async function getStaticPaths() {
+  const entries = (await getCollection("wiki")).filter(
+    (entry) => !isReservedEntry(entry),
+  );
+  return [
+    "protocols",
+    "frameworks",
+    "concepts",
+    "references",
+    "sources",
+    "updates",
+  ].map((section) => ({
+    params: { section },
+    props: {
+      section,
+      items:
+        section === "updates"
+          ? [...entries].sort(
+              (a, b) =>
+                Number(b.data.timestamp ?? b.data.updated_at ?? 0) -
+                Number(a.data.timestamp ?? a.data.updated_at ?? 0),
+            )
+          : entries.filter((entry) => sectionFor(entry) === section),
+    },
+  }));
+}
+const { section, items } = Astro.props;
+const heading = section.charAt(0).toUpperCase() + section.slice(1);
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title={heading}>
+  <p class="eyebrow">Collection</p><h1>{heading}</h1>
+  <div class="grid">
+    {
+      items.map((item) => (
+        <a class="card" href={`${base}${entryPath(item.id).slice(1)}`}>
+          <>
+            <small>{item.data.type}</small>
+            <h3>{titleFor(item)}</h3>
+            <p>{item.data.description}</p>
+          </>
+        </a>
+      ))
+    }
+  </div>
+</BaseLayout>

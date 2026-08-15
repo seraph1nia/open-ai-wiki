@@ -1,0 +1,102 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { entryPath, isReservedEntry, sectionFor, titleFor } from "../lib/wiki";
+const entries = (await getCollection("wiki")).filter(
+  (e) => !isReservedEntry(e),
+);
+const sections = [
+  "protocols",
+  "frameworks",
+  "concepts",
+  "references",
+  "sources",
+];
+const recent = [...entries]
+  .sort(
+    (a, b) =>
+      Number(b.data.timestamp ?? b.data.updated_at ?? 0) -
+      Number(a.data.timestamp ?? a.data.updated_at ?? 0),
+  )
+  .slice(0, 6);
+const featured = entries
+  .filter((e) => ["protocols", "frameworks"].includes(sectionFor(e)))
+  .slice(0, 6);
+const recentSources = recent.filter((entry) => sectionFor(entry) === "sources");
+const base = import.meta.env.BASE_URL;
+---
+
+<BaseLayout title="Home">
+  <p class="eyebrow">Living technical field guide</p><h1>
+    Intelligence,<br />made durable.
+  </h1>
+  <p class="lede">
+    This knowledge base is automatically maintained from technical sources and
+    reviewed/synthesized into durable concepts.
+  </p>
+  <div class="grid">
+    {
+      sections.map((section) => (
+        <a class="card" href={`${base}${section}/`}>
+          <span class="count">
+            {entries.filter((entry) => sectionFor(entry) === section).length}
+          </span>
+          <br />
+          {section[0]?.toUpperCase() + section.slice(1)}
+        </a>
+      ))
+    }
+  </div>
+  <h2>Important protocols & tracked frameworks</h2><div class="grid">
+    {
+      featured.map((entry) => (
+        <a class="card" href={`${base}${entryPath(entry.id).slice(1)}`}>
+          <>
+            <small>{entry.data.type}</small>
+            <h3>{titleFor(entry)}</h3>
+            <p>{entry.data.description}</p>
+          </>
+        </a>
+      ))
+    }
+  </div>
+  <h2>Recently updated</h2><div class="grid">
+    {
+      recent.map((entry) => (
+        <a class="card" href={`${base}${entryPath(entry.id).slice(1)}`}>
+          <>
+            <small>{sectionFor(entry)}</small>
+            <h3>{titleFor(entry)}</h3>
+            <p>{entry.data.description}</p>
+          </>
+        </a>
+      ))
+    }
+  </div>
+  <h2>Recent sources</h2><div class="grid">
+    {
+      recentSources.length > 0 ? (
+        recentSources.map((entry) => (
+          <a class="card" href={`${base}${entryPath(entry.id).slice(1)}`}>
+            <>
+              <small>{entry.data.source_type}</small>
+              <h3>{titleFor(entry)}</h3>
+              <p>{entry.data.description}</p>
+            </>
+          </a>
+        ))
+      ) : (
+        <div class="card">
+          <>
+            <small>Source inbox ready</small>
+            <h3>No source records yet</h3>
+            <p>
+              The first accepted ingestion will appear here with full
+              provenance.
+            </p>
+          </>
+        </div>
+      )
+    }
+  </div>
+</BaseLayout>

@@ -1,0 +1,158 @@
+---
+import { getCollection, render, type CollectionEntry } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import {
+  buildGraph,
+  entryPath,
+  isReservedEntry,
+  normalizeWikiId,
+  sectionFor,
+  titleFor,
+  withBase,
+  type WikiGraph,
+} from "../lib/wiki";
+
+interface Props {
+  entry: CollectionEntry<"wiki">;
+  entries: CollectionEntry<"wiki">[];
+  graph: WikiGraph;
+}
+
+export async function getStaticPaths() {
+  const entries = await getCollection("wiki");
+  const graph = buildGraph(entries);
+  return entries
+    .filter((entry) => !isReservedEntry(entry))
+    .map((entry) => ({
+      params: { slug: normalizeWikiId(entry.id) },
+      props: { entry, entries, graph },
+    }));
+}
+
+const { entry, entries, graph } = Astro.props;
+const rendered = await render(entry);
+const base = import.meta.env.BASE_URL;
+const findEntry = (id: string) =>
+  entries.find(
+    (candidate) => normalizeWikiId(candidate.id) === normalizeWikiId(id),
+  );
+const backlinks = (graph.backlinks.get(normalizeWikiId(entry.id)) ?? [])
+  .map(findEntry)
+  .filter((item): item is CollectionEntry<"wiki"> => item !== undefined);
+const relatedIds = [
+  ...new Set([
+    ...(graph.outbound.get(normalizeWikiId(entry.id)) ?? []),
+    ...entry.data.related,
+    ...entry.data.supporting_sources,
+  ]),
+];
+const related = relatedIds
+  .map(findEntry)
+  .filter((item): item is CollectionEntry<"wiki"> => item !== undefined);
+const layoutProps = {
+  title: titleFor(entry),
+  ...(entry.data.description ? { description: entry.data.description } : {}),
+};
+---
+
+<BaseLayout {...layoutProps}>
+  <div class="page-grid">
+    <article>
+      <p class="eyebrow">{entry.data.type ?? sectionFor(entry)}</p>
+      <h1>{titleFor(entry)}</h1>
+      <p class="lede">{entry.data.description}</p>
+      <div class="chips">
+        {entry.data.tags.map((tag) => <span class="chip">{tag}</span>)}
+      </div>
+      {
+        entry.data.url && (
+          <p>
+            <a href={entry.data.url} target="_blank" rel="noopener">
+              Open original source ↗
+            </a>
+          </p>
+        )
+      }
+      <div class="prose"><rendered.Content /></div>
+    </article>
+    <aside class="side">
+      <h3>Details</h3>
+      <p class="meta">
+        Type: {entry.data.type ?? "Page"}<br />Updated: {
+          (entry.data.timestamp ?? entry.data.updated_at)?.toLocaleDateString(
+            "en-CA",
+          ) ?? "Unknown"
+        }{
+          entry.data.published_at && (
+            <>
+              <br />
+              Published: {entry.data.published_at.toLocaleDateString("en-CA")}
+            </>
+          )
+        }{
+          entry.data.retrieved_at && (
+            <>
+              <br />
+              Retrieved: {entry.data.retrieved_at.toLocaleDateString("en-CA")}
+            </>
+          )
+        }
+      </p>
+      {
+        (entry.data.author || entry.data.channel || entry.data.repository) && (
+          <p class="meta">
+            {entry.data.author && (
+              <>
+                Author: {entry.data.author}
+                <br />
+              </>
+            )}
+            {entry.data.channel && (
+              <>
+                Channel: {entry.data.channel}
+                <br />
+              </>
+            )}
+            {entry.data.repository && <>Repository: {entry.data.repository}</>}
+          </p>
+        )
+      }
+      {
+        related.length > 0 && (
+          <>
+            <>
+              <h3>Related & supporting</h3>
+              <ul>
+                {related.map((item) => (
+                  <li>
+                    <a href={withBase(entryPath(item.id), base)}>
+                      {titleFor(item)}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </>
+          </>
+        )
+      }
+      {
+        backlinks.length > 0 && (
+          <>
+            <>
+              <h3>Referenced by</h3>
+              <ul>
+                {backlinks.map((item) => (
+                  <li>
+                    <a href={withBase(entryPath(item.id), base)}>
+                      {titleFor(item)}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </>
+          </>
+        )
+      }
+    </aside>
+  </div>
+</BaseLayout>

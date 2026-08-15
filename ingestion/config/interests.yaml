@@ -1,0 +1,58 @@
+topics:
+  protocols:
+    - Model Context Protocol
+    - Agent2Agent
+    - AG-UI
+    - Agent Communication Protocol
+    - agent interoperability
+  frameworks:
+    - OpenAI Agents SDK
+    - LangGraph
+    - Pydantic AI
+    - Google ADK
+    - CrewAI
+    - AutoGen
+  concepts:
+    - context engineering
+    - agent memory
+    - tool discovery
+    - agent evaluation
+    - multi-agent systems
+    - structured tool calling
+    - agent identity
+    - authentication
+    - authorization
+    - observability
+
+preferred_sources:
+  - official specifications
+  - official documentation
+  - GitHub repositories
+  - GitHub releases
+  - engineering blogs
+  - technical research
+
+exclude:
+  - generic AI funding news
+  - celebrity AI news
+  - SEO summaries
+  - content farms
+  - generic model benchmark coverage
+  - opinion pieces without technical substance
+
+scoring:
+  relevance: 0.35
+  novelty: 0.30
+  authority: 0.20
+  technicalDepth: 0.15
+  threshold: 0.75
+
+# Deterministic release discovery complements OpenAI web search. Add repositories here.
+github_repositories:
+  - modelcontextprotocol/specification
+  - ag-ui-protocol/ag-ui
+  - a2aproject/A2A
+  - openai/openai-agents-js
+  - langchain-ai/langgraphjs
+  - pydantic/pydantic-ai
+  - google/adk-python

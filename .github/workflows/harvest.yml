@@ -1,0 +1,50 @@
+name: Harvest AI knowledge
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: knowledge-harvest
+  cancel-in-progress: false
+
+jobs:
+  harvest:
+    runs-on: ubuntu-latest
+    env:
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: jdx/mise-action@v3
+        with:
+          cache: true
+      - name: Install repository toolchain
+        run: mise install
+      - name: Restore pnpm store
+        uses: actions/cache@v5
+        with:
+          path: ~/.local/share/pnpm/store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: ${{ runner.os }}-pnpm-
+      - run: pnpm install --frozen-lockfile
+      - name: Discover, evaluate, extract, and synthesize
+        run: pnpm harvest
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
+      - name: Open review pull request
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: automated/knowledge-harvest
+          delete-branch: true
+          commit-message: "knowledge: apply scheduled harvest"
+          title: "knowledge: scheduled AI ecosystem harvest"
+          body-path: ingestion/state/last-harvest-summary.md
+          labels: automated,knowledge

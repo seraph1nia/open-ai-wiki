@@ -1,0 +1,6 @@
+packages:
+  - "apps/*"
+  - "ingestion"
+
+allowBuilds:
+  esbuild: true

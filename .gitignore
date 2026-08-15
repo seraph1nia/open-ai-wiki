@@ -2,8 +2,13 @@ node_modules/
 dist/
 .astro/
 .env
+.env.*
+!.env.example
 .DS_Store
-ingestion/inbox/*.json
-!ingestion/inbox/.gitkeep
-ingestion/state/content/
-
+coverage/
+*.tsbuildinfo
+mise.local.toml
+package-lock.json
+yarn.lock
+ingestion/state/*.tmp
+ingestion/state/last-harvest-summary.md
