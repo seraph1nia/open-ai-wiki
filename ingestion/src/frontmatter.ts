@@ -1,17 +1,16 @@
 import matter from "gray-matter";
-import { z } from "zod";
-
-const known = z.looseObject({
-  type: z.string().min(1),
-  title: z.string().optional(),
-  description: z.string().optional(),
-  tags: z.array(z.string()).optional(),
-  timestamp: z.string().datetime().optional(),
-});
+import { validateOkfFrontmatter } from "openwiki/dist/okf/frontmatter.js";
 
 export function parseOkf(markdown: string) {
+  const validation = validateOkfFrontmatter(markdown);
+  if (!validation.valid)
+    throw new Error(
+      validation.issues
+        .map((finding) => `[${finding.code}] ${finding.message}`)
+        .join("\n"),
+    );
   const parsed = matter(markdown);
-  return { data: known.parse(parsed.data), content: parsed.content };
+  return { data: parsed.data, content: parsed.content };
 }
 
 export function stringifyOkf(markdown: string): string {

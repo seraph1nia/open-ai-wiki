@@ -12,7 +12,7 @@ try {
     throw error;
 }
 
-const defaultModel = "~deepseek/deepseek-v4-flash-latest";
+const defaultModel = "deepseek/deepseek-v4-flash-0731";
 
 export function createAIClient(): OpenAI {
   if (!process.env.OPENROUTER_API_KEY)
@@ -32,4 +32,5 @@ export function createAIClient(): OpenAI {
   });
 }
 
-export const model = process.env.OPENROUTER_MODEL ?? defaultModel;
+export const model =
+  process.env.OPENWIKI_MODEL_ID ?? process.env.OPENROUTER_MODEL ?? defaultModel;

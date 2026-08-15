@@ -66,6 +66,9 @@ export interface WikiChange {
   markdown: string;
   supportingSourcePath: string;
   changed: boolean;
+  files?: string[];
+  engine?: "openwiki";
+  engineSummary?: string;
 }
 export interface Candidate {
   id: string;

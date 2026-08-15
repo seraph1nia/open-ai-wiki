@@ -1,3 +1,3 @@
-# Frameworks
+# Files
 
-- [LangGraph](langgraph.md)
+- [LangGraph](langgraph.md) - A graph-oriented framework for stateful, controllable agent workflows.

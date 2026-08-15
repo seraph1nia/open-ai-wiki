@@ -3,11 +3,7 @@ import { acquireSource } from "./acquire.js";
 import { deduplicate } from "./dedupe.js";
 import { extractKnowledge } from "./extract.js";
 import { writeCandidate } from "./inbox.js";
-import {
-  applyWikiChange,
-  summarizeWiki,
-  synthesizeCandidate,
-} from "./openwiki.js";
+import { summarizeWiki, synthesizeCandidate } from "./openwiki.js";
 import { rankCandidate } from "./rank.js";
 import type {
   Candidate,
@@ -73,12 +69,11 @@ export async function processUrl(
       ? "enrich_concept"
       : "source_only",
   };
-  const change = await synthesizeCandidate(candidate, {
-    client: deps.client,
-    dryRun: true,
-  });
+  const inboxPath = deps.dryRun ? undefined : await writeCandidate(candidate);
+  const change = await synthesizeCandidate(candidate, { dryRun: deps.dryRun });
   candidate.recommendedAction = change.action;
   candidate.proposedChange = change;
+  if (!deps.dryRun) await writeCandidate(candidate);
   if (change.action === "no_durable_knowledge") {
     if (!deps.dryRun)
       deps.state.sources[source.metadata.canonicalUrl] = {
@@ -90,6 +85,7 @@ export async function processUrl(
         discoveredAt: new Date().toISOString(),
         decision: "rejected",
         score,
+        ...(inboxPath ? { inboxPath } : {}),
       };
     return {
       status: "rejected",
@@ -99,8 +95,6 @@ export async function processUrl(
     };
   }
   if (!deps.dryRun) {
-    const inboxPath = await writeCandidate(candidate);
-    await applyWikiChange(candidate, change);
     deps.state.sources[source.metadata.canonicalUrl] = {
       canonicalUrl: source.metadata.canonicalUrl,
       contentHash: source.contentHash,
@@ -110,7 +104,7 @@ export async function processUrl(
       discoveredAt: new Date().toISOString(),
       decision: "accepted",
       score,
-      inboxPath,
+      ...(inboxPath ? { inboxPath } : {}),
     };
   }
   return { status: "accepted", candidate, change };

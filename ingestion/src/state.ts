@@ -1,7 +1,8 @@
 import { mkdir, readFile, rename, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import type { HarvestState } from "./types.js";
-export const statePath = resolve("ingestion/state/seen.json");
+import { stateRoot } from "./paths.js";
+export const statePath = resolve(stateRoot, "seen.json");
 export async function loadState(path = statePath): Promise<HarvestState> {
   try {
     return JSON.parse(await readFile(path, "utf8")) as HarvestState;

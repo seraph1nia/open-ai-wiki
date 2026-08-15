@@ -16,6 +16,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "pnpm -r typecheck",
+    "wiki:check": "pnpm --filter @ai-knowledge/ingestion wiki:check",
+    "wiki:visualize": "pnpm exec openwiki visualize openwiki",
     "ingest": "pnpm --filter @ai-knowledge/ingestion ingest",
     "harvest": "pnpm --filter @ai-knowledge/ingestion harvest"
   },
@@ -25,6 +27,9 @@
     "eslint": "10.8.1",
     "eslint-plugin-astro": "3.1.0",
     "globals": "17.4.0",
+    "jsdom": "29.1.1",
+    "mermaid": "11.16.0",
+    "openwiki": "0.3.3",
     "prettier": "3.9.6",
     "prettier-plugin-astro": "0.14.1",
     "typescript": "5.9.3",

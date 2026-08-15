@@ -18,10 +18,13 @@ jobs:
     runs-on: ubuntu-latest
     env:
       OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      OPENWIKI_PROVIDER: openrouter
+      OPENWIKI_MODEL_ID: deepseek/deepseek-v4-flash-0731
+      OPENWIKI_TELEMETRY_DISABLED: "1"
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v6
-      - uses: jdx/mise-action@v3
+      - uses: jdx/mise-action@v4
         with:
           cache: true
       - name: Install repository toolchain
@@ -35,6 +38,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: Discover, evaluate, extract, and synthesize
         run: pnpm harvest
+      - run: pnpm wiki:check
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm build

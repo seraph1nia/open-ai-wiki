@@ -2,14 +2,10 @@
 okf_version: "0.1"
 ---
 
-# AI Knowledge
+# Directories
 
-Durable knowledge about agent protocols, interoperability, frameworks, and the engineering practices around them.
-
-## Collections
-
-- [Protocols](protocols/index.md)
-- [Frameworks](frameworks/index.md)
-- [Concepts](concepts/index.md)
-- [References](references/index.md)
-- [Sources](sources/index.md)
+- [concepts](concepts/)
+- [frameworks](frameworks/)
+- [protocols](protocols/)
+- [references](references/)
+- [sources](sources/)

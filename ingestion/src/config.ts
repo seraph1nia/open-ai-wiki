@@ -3,6 +3,7 @@ import { resolve } from "node:path";
 import YAML from "yaml";
 import { z } from "zod";
 import type { InterestConfig } from "./types.js";
+import { ingestionRoot } from "./paths.js";
 
 const schema = z.object({
   topics: z.record(z.string(), z.array(z.string())),
@@ -18,7 +19,7 @@ const schema = z.object({
   github_repositories: z.array(z.string()).default([]),
 });
 export async function loadInterests(
-  path = resolve("ingestion/config/interests.yaml"),
+  path = resolve(ingestionRoot, "config/interests.yaml"),
 ): Promise<InterestConfig> {
   return schema.parse(YAML.parse(await readFile(path, "utf8")));
 }

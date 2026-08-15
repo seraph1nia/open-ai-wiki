@@ -1,0 +1,16 @@
+# Secrets and local credentials are never visible to the OpenWiki agent.
+.env
+.env.*
+!.env.example
+
+# Generated dependencies, build output, caches, and private VCS state.
+.git/
+node_modules/
+dist/
+.astro/
+coverage/
+*.tsbuildinfo
+
+# Incremental scheduler state is not knowledge evidence. Accepted inbox records
+# remain readable because they are the controlled input to synthesis.
+ingestion/state/
