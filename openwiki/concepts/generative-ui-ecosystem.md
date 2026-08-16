@@ -68,11 +68,11 @@ Key relationships, with the page where each is explained:
 - **Differentiation from text-only output** — all four exist because text-only agent replies are inefficient (booking flows, dashboards, wizards).
 - **Human-in-the-loop** is treated as first-class: AG-UI lists it as a stack feature (with a dedicated Dojo demo category); Mastra's dojo trails workflow suspend/resume for user approval; CopilotKit has `useHumanInTheLoop` approval flows (e.g. a `TaskApprovalCard` in its playground).
 - **A multi-frontend market** — Mastra and OpenUI both treat CopilotKit, assistant-ui, Vercel AI SDK as interchangeable, signaling that no single generative-UI protocol has won yet.
-- **Token/stream efficiency is a shared design goal** — OpenUI markets "up to 67% fewer tokens than JSON" and its streaming-first DSL; A2UI describes itself as "LLM-friendly" and streams JSONL for progressive rendering.
+- **Token/stream efficiency is a shared design goal** — OpenUI markets "up to 67% fewer tokens than JSON" and its streaming-first DSL; A2UI describes itself as "LLM-friendly" and streams JSONL for progressive rendering. OpenUI's own [feature-comparison page](/frameworks/openui.md) extends this to a vendor-perspective token/latency matrix (OpenUI 1x tokens/4.9s vs Vercel `json-render` 3x/14.2s, A2UI 3x/14.2s, CopilotKit OpenGenUI 4x/~20s).
 
 ## Status and confidence
 
-- The ecosystem is actively consolidating: CopilotKit monorepo (generative-UI playground and ADK demo moved in; `with-adk` archived 2026-03-12), A2UI v1.0 candidate with v0.8/v0.9 renderer stability, MCP Apps spec 2026-01-26 with SDK adoption requests (csharp-sdk #1431, java-sdk #780), and AG-UI growing integrations (official Java/Go SDKs, Oracle/gov-toolkit proposals). A2UI's roadmap targets full-app UIs and multi-agent coordination through 2026–2027.
+- The ecosystem is actively consolidating: CopilotKit monorepo (generative-UI playground, ADK demo, and `with-langgraph-python` moved in; `with-adk` archived 2026-03-12), A2UI v1.0 candidate with v0.8/v0.9 renderer stability, MCP Apps spec 2026-01-26 with SDK adoption requests (csharp-sdk #1431, java-sdk #780), and AG-UI growing integrations (official Java/Go SDKs plus community Swift, Oracle/gov-toolkit proposals). A2UI's roadmap targets full-app UIs and multi-agent coordination through 2026–2027.
 - **Confidence:** the protocol/framework characteristics are **source-backed** from each project's primary docs. Explicit interop claims (AG-UI↔A2UI, A2UI↔MCP Apps, CopilotKit's three-type playground) are **confirmed** in the sense of being directly claimed in the sources, but not independently cross-checked. Adoption/open-issue items are **watchlist**.
 
 ## Source Map

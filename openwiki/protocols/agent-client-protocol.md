@@ -1,7 +1,7 @@
 ---
 type: Protocol
 title: Agent Client Protocol (ACP)
-description: The Agent Client Protocol (ACP) is a standardized communication protocol between code editors and AI-powered coding agents, officially implemented in TypeScript by the @agentclientprotocol/sdk package.
+description: The Agent Client Protocol (ACP) is a standardized communication protocol between code editors and AI-powered coding agents, officially implemented in TypeScript by the @agentclientprotocol/sdk package; the spec repo also ships Rust/schema artifacts and GitHub Copilot CLI is an official ACP server.
 resource: https://github.com/agentclientprotocol/agent-client-protocol
 tags: [agent-client-protocol, acp, protocol, ai-agents, editors]
 timestamp: 2026-08-16
@@ -26,6 +26,12 @@ ACP is a JSON-RPC-based request/notification protocol. The two roles are:
 
 The protocol is versioned by an **ACP JSON Schema** that the SDK tracks. Because both editors (e.g. [Zed](https://zed.dev)) and agents are independently released, the protocol ships capability flags and an explicit `protocolVersion`, and SDKs expose surface for gating features (methods are marked *unstable* until they stabilize, then promoted).
 
+### Rust/schema artifact versioning (spec repo, confirmed 2026-08-16)
+
+The spec repository's root Rust crate is **`agent-client-protocol-schema`** (crates.io), which provides the Rust data model for ACP wire messages (request, response, notification, JSON-RPC envelope, and protocol-version types) for schema-oriented tooling and code-generation inputs. Rust agents/clients should start with the higher-level **`agent-client-protocol`** runtime crate instead.
+
+Generated JSON Schema artifacts live in `schema/v1` and `schema/v2` in the spec repo; on a schema release, the versioned `.json` files are attached to the corresponding `schema-v*` GitHub release (the recommended download surface for SDK generators). **Version semantics:** the current stable ACP protocol version is `1`, and wire compatibility is determined by the `protocolVersion` negotiated during `initialize`, *not* by the crate/schema release version. Two JSON Schema artifact versions can therefore describe the same wire-compatible protocol version while differing in structure for SDK generators. Consumers pair the negotiated `protocolVersion` with exchanged capabilities to decide which optional ACP messages/features are supported.
+
 ### Ecosystem launch patterns and registry
 
 Retrieved evidence (2026-08-16) documents how agents typically expose an ACP server, and the ecosystem's distribution mechanism:
@@ -34,6 +40,17 @@ Retrieved evidence (2026-08-16) documents how agents typically expose an ACP ser
 - **ACP Registry** — a central registry at `agentclientprotocol.com/registry`; agents register once and become available in all ACP clients. Zed is deprecating its proprietary extension approach in favor of ACP.
 - **Official SDKs** — Python `agent-client-protocol` (PyPI), TypeScript `@agentclientprotocol/sdk` (npm), Rust `agent-client-protocol` (crates.io), Kotlin `acp-kotlin` (JVM).
 - **Citation note** — this ecosystem sketch is sourced from a third-party feature issue (NousResearch/hermes-agent#569), labeled **watchlist** until confirmed against the primary ACP registry docs.
+
+### GitHub Copilot CLI ACP server (official, source-backed 2026-08-16)
+
+GitHub Copilot CLI ships an official ACP server, documented on GitHub Enterprise Cloud docs (`copilot --acp`). Factual surface (source-backed from the docs):
+
+- **Launch & transport:** `copilot --acp` starts the ACP server; transport is `--stdio` (default) or `--port 3000` (TCP, loopback `127.0.0.1`). The two modes are mutually exclusive. Both carry the same ACP messages as newline-delimited JSON (NDJSON) over stdio (per-editor subprocess) or a TCP socket (separate process/container, longer-lived server).
+- **BYOK without login:** ACP mode lets sessions with a configured bring-your-own-key provider (`COPILOT_PROVIDER_*` env vars) run without GitHub login.
+- **Server-side session options:** `session/new` only sets a few parameters (cwd, MCP servers) and does not carry tool-filtering or reasoning settings; the *server* applies `--available-tools`, `--excluded-tools`, and `--effort`/`--reasoning-effort` to every session it creates, and clients cannot change them per session.
+- **Slash commands over ACP:** the server advertises supported commands through the `available_commands_update` session notification; built-ins (`/compact`, `/context`, `/usage`, `/model`, `/mcp`, `/plan`, `/review`, `/research`, `/session`, `/rename`) and enabled skills appear as `/SKILL-NAME`. Clients invoke them by sending the command text as an ordinary prompt. Interactive-terminal commands (pickers/dialogs such as `/diff`, `/resume`, `/theme`) are not handled.
+- **Consumption:** docs example uses the official `@agentclientprotocol/sdk` (Node ≥ 18); rendering via `acp.ndJsonStream`, `acp.ClientSideConnection`, and `initialize`/`newSession`/`prompt`.
+- **Use cases:** IDE integrations, CI/CD pipelines, custom frontends, and multi-agent systems — positioning Copilot CLI as one concrete ACP server instance in the [factory toolchain](/concepts/factory-toolchain.md).
 
 ### The SDK's agent/client model
 

@@ -42,6 +42,43 @@ s2 = Series("Product B", [5, 15, 25])
 
 OpenUI Cloud is the managed backend: conversation history (threads and messages stored/reloaded with no database to run), production-grade pre-tested responsive components, invalid model output detected and corrected before the user sees it, a middleware layer that normalizes model quirks across providers, prebuilt report/presentation artifacts, theming and white-labeling (multiple brand configs), model fallbacks and a degraded mode, version pinning and rollback, and observability with an audit trail (render success, latency, token usage, what was rendered for whom). Per the docs comparison table, the open-source OpenUI gives generative-UI rendering plus streaming/progressive rendering, while Cloud additionally adds production-grade components, prebuilt artifacts, theming, error detection/correction, cross-model consistency, and fallbacks/versioning/observability.
 
+## Repo package structure
+
+The `thesysdev/openui` monorepo organizes the stack into `packages/`:
+
+- **react-lang** — core runtime (parser, renderer, prompt generation)
+- **react-headless** — headless chat state & streaming adapters
+- **react-ui** — prebuilt chat layouts & component libraries
+- **react-email** — React Email component library for generated emails
+- **lang-core** — framework-agnostic parser, prompt, and runtime layer
+- **langchain** — LangChain/LangGraph streaming integration
+- **vue-lang** / **svelte-lang** — Vue/Svelte runtime bindings for OpenUI Lang
+- **browser-bundle** — script-tag bundle for CDN / iframe / no-build embeds
+- **openui-cli** — CLI for scaffolding & prompt generation
+- Plus a `skills/openui` Claude Code skill for AI-assisted development.
+
+This confirms the official **React** support plus community runtime bindings (Vue, Svelte) and a no-build script-tag bundle (see the [MCP Apps](/protocols/mcp-apps.md) iframe/embedding thread in the ecosystem comparison). **Confidence: source-backed** (repo README structure from `thesysdev/openui`).
+
+## OpenUI Lang comparison
+
+The docs' **Feature Comparison** page positions OpenUI against three other streaming generative-UI approaches:
+
+| | OpenUI | Vercel `json-render` | A2UI (Google) | CopilotKit OpenGenUI |
+|---|---|---|---|---|
+| Tokens | 1x | 3x | 3x | 4x |
+| Latency (60 tok/s) | 4.9s | 14.2s | 14.2s | ~20s |
+| Streaming | Yes | Yes | Yes | Partial |
+| Consistent output | Yes | Yes | Yes | No |
+| Design system | Yes | Yes | Yes | No |
+| Components | Library + custom | Library + custom | Custom only | None |
+| Built-in data fetching | Yes | No | No | No |
+| Chat UI included | Yes | No | No | Yes |
+| Multi-platform | Web, mobile, email | Web, mobile, PDF, email, video | Web, iOS, Android | Web |
+| Security risk | Minimal | Minimal | Minimal | Medium |
+| License | MIT | Apache 2.0 | Apache 2.0 | MIT |
+
+**Confidence: source-backed** (OpenUI's own comparison page, i.e. a vendor positioning claim not independently cross-checked). The "best for" guidance routes data-driven chat UIs and dashboards, cross-platform multi-agent systems, and one-UI-across-web/mobile/PDF/email to OpenUI, and creative one-off visuals (animations, generative art) to CopilotKit OpenGenUI.
+
 ## Where OpenUI sits
 
 - **Rival/alternative** to the event-based [AG-UI](/protocols/ag-ui.md) and the declarative-JSON [A2UI](/protocols/a2ui.md) protocol: OpenUI is a *language-and-runtime* approach (a DSL + a streaming runtime + a managed backend), whereas AG-UI is an *event wire protocol* and A2UI is a *JSON payload schema*. See the [Generative-UI ecosystem](/concepts/generative-ui-ecosystem.md) comparison.

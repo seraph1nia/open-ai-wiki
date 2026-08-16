@@ -113,7 +113,7 @@ stateDiagram-v2
 
 ## Servers and clients
 
-- **Servers:** The first-party reference server is the [VS Code agent host](https://github.com/microsoft/vscode) (`src/vs/platform/agentHost/node/`).
+- **Servers:** The first-party reference server is the [VS Code agent host](https://github.com/microsoft/vscode) (`src/vs/platform/agentHost/node/`). It is the subsystem that hosts AI coding agents (e.g. Copilot) and powers them through AHP, and the VS Code team is broadening *self-hosting* coverage across the configurations it runs in (issue microsoft/vscode#311105), with a related issue for agent-host terminal shell integration (#329538).
 - **Client libraries** (each on its own SemVer release track): Rust (`ahp`, `ahp-types`, `ahp-ws`), TypeScript (`@microsoft/agent-host-protocol`), Kotlin (`com.microsoft.agenthostprotocol`), Go (`clients/go`), and Swift (SwiftPM `microsoft/agent-host-protocol`).
 - **Other clients:** [AHPX](https://github.com/TylerLeonhardt/ahpx) (CLI + Node.js) and the VS Code built-in Agent Sessions client.
 - **Multi-host:** Rust, Swift, and Go SDKs ship a `MultiHostClient` for talking to two or more hosts at once; single-host consumers use the same API (`MultiHostClient::single` / `.single(...)` / `hosts.Single(...)`).
