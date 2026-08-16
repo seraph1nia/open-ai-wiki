@@ -26,9 +26,10 @@ t3code is the **control/orchestration surface** of the [agentic SDLC factory too
 ## Durable signals from retrieved evidence
 
 - Supports provider subscriptions for Claude Code, Codex, Cursor, Grok Build, and OpenCode; the [OpenCode SDK](/frameworks/opencode-sdk.md) page describes one of those controllable agents.
-- Early public issues flag performance overhead vs Codex (issue #695, "significantly slower"), a sub-agent customization UI gap (issue #1740), and a planned first-class remote backend target model (`local`/`wsl:`/`ssh:`, issue #671).
+- Early public issues flag performance overhead vs Codex (issue #695, "significantly slower"), a sub-agent customization UI gap (issue #1740), and a planned first-class remote backend target model (`local`/`wsl:`/`ssh:`, issue #671 — described as an architecture proposal, closed).
 - A provider-adapter friction example: newer Codex CLI rejected `interactionMode: default` in favor of `code`/`plan` etc., hanging chat turns (issue #386) — illustrating the harness's dependency on provider server schema.
+- The repo is active: ~**18.5k stars**, 4.2k forks per the retrieved GitHub page (2026-08-16 fetch), and a community **nix packaging flake** (`Sawrz/t3code-nix`) follows upstream releases. Windows onboarding friction is visible in issue #335 ("codex cli on windows").
 
 ## Confidence
 - **Source-backed:** purpose, install paths, provider list, and openness ("very very early") come directly from the retrieved `pingdotgg/t3code` README and issues.
-- **Watchlist:** specific issue claims (performance ratios, remote-backend roadmap) reflect single user/feature reports, not confirmed shipped behavior.
+- **Watchlist:** specific issue claims (performance ratios, remote-backend roadmap) reflect single user/feature reports, not confirmed shipped behavior; star/fork counts are GitHub page snapshots, not official release metadata.

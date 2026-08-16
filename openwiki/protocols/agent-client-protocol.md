@@ -15,7 +15,7 @@ Canonical materials:
 - Spec repository: [`agentclientprotocol/agent-client-protocol`](https://github.com/agentclientprotocol/agent-client-protocol) (Rust tooling, Apache-2.0)
 - Official documentation and protocol overview: <https://agentclientprotocol.com>
 - Official TypeScript implementation: [`@agentclientprotocol/sdk`](https://www.npmjs.com/package/@agentclientprotocol/sdk), release history on the [ACP TypeScript SDK releases](/references/agent-client-protocol-typescript-sdk-releases.md) page
-- Official SDK set (org listing, confirmed 2026-08-16): TypeScript, Python (`python-sdk`), Rust (`rust-sdk`), and Kotlin (`kotlin-sdk`), plus a `registry` of implementing agents. Evidence: [web-search Factory tools source page](/sources/web-search-factory-tools.md).
+- Official SDK set (org listing + spec README, confirmed 2026-08-16): TypeScript (`@agentclientprotocol/sdk`), Python (`python-sdk`), Rust (`rust-sdk`), Kotlin (`acp-kotlin`), and Java (`java-sdk`), plus a `registry` of implementing agents. Evidence: [web-search Factory tools source page](/sources/web-search-factory-tools.md).
 
 ## What ACP standardizes
 
@@ -25,6 +25,15 @@ ACP is a JSON-RPC-based request/notification protocol. The two roles are:
 - **Client** — the editor/IDE host, implements `requestPermission`, `sessionUpdate`, and other client-side handlers.
 
 The protocol is versioned by an **ACP JSON Schema** that the SDK tracks. Because both editors (e.g. [Zed](https://zed.dev)) and agents are independently released, the protocol ships capability flags and an explicit `protocolVersion`, and SDKs expose surface for gating features (methods are marked *unstable* until they stabilize, then promoted).
+
+### Ecosystem launch patterns and registry
+
+Retrieved evidence (2026-08-16) documents how agents typically expose an ACP server, and the ecosystem's distribution mechanism:
+
+- **Launch patterns** — native subcommand (`agent-name acp`: Goose, Kiro, Kimi, OpenCode), flag-based (`agent --acp` / `--experimental-acp`: Copilot, Gemini), adapter binaries (`claude-code-acp`, `vibe-acp`), and NPX adapters (`npx @zed-industries/codex-acp`). This is one of the concrete ways ACP agents plug into the [factory toolchain](/concepts/factory-toolchain.md).
+- **ACP Registry** — a central registry at `agentclientprotocol.com/registry`; agents register once and become available in all ACP clients. Zed is deprecating its proprietary extension approach in favor of ACP.
+- **Official SDKs** — Python `agent-client-protocol` (PyPI), TypeScript `@agentclientprotocol/sdk` (npm), Rust `agent-client-protocol` (crates.io), Kotlin `acp-kotlin` (JVM).
+- **Citation note** — this ecosystem sketch is sourced from a third-party feature issue (NousResearch/hermes-agent#569), labeled **watchlist** until confirmed against the primary ACP registry docs.
 
 ### The SDK's agent/client model
 

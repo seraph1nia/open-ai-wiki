@@ -34,7 +34,13 @@ s2 = Series("Product B", [5, 15, 25])
 ```
 
 - **Expressions & types** — a strict subset of JavaScript values: component calls `Type(arg1, arg2)`, strings, numbers, booleans, null, arrays, objects, and identifier references.
-- **Component resolution** — the parser maps **positional arguments** in OpenUI Lang to **named props** in the target component library (e.g. React), i.e. agents emit components from your library while the runtime resolves and renders them.
+- **Component resolution** — the parser maps **positional arguments** in OpenUI Lang to **named props** in the target component library (e.g. React) using the library's Zod schemas; the order of keys in the `z.object` schema defines the expected argument order. Agents emit components from *your* library while the runtime resolves and renders them.
+- **Versions** — the v0.1 specification is the original static-UI language. The current language (v0.5) adds **reactive state, data queries, `$variables`, and actions** (e.g. `@Reset` after a form submit rather than `@Set($var, "")`), with custom system-prompt preambles and additional rules for agent steering.
+- **Token efficiency** — the reference repo claims OpenUI Lang uses **up to 67% fewer tokens than JSON** for the same UI.
+
+## OpenUI Cloud
+
+OpenUI Cloud is the managed backend: conversation history (threads and messages stored/reloaded with no database to run), production-grade pre-tested responsive components, invalid model output detected and corrected before the user sees it, a middleware layer that normalizes model quirks across providers, prebuilt report/presentation artifacts, theming and white-labeling (multiple brand configs), model fallbacks and a degraded mode, version pinning and rollback, and observability with an audit trail (render success, latency, token usage, what was rendered for whom). Per the docs comparison table, the open-source OpenUI gives generative-UI rendering plus streaming/progressive rendering, while Cloud additionally adds production-grade components, prebuilt artifacts, theming, error detection/correction, cross-model consistency, and fallbacks/versioning/observability.
 
 ## Where OpenUI sits
 
@@ -43,11 +49,11 @@ s2 = Series("Product B", [5, 15, 25])
 
 ## Disambiguation
 
-There is an unrelated `Fallomai/openui` repo pitched as "an AI command center for your AI coding agents" (100% local, free, open source). It shares only the name with the Open Standard — the canonical OpenUI is [`thesysdev/openui`](https://github.com/thesysdev/openui) and <https://www.openui.com>. These are **not** the same project.
+There is an unrelated `Fallomai/openui` repo pitched as "an AI command center for your AI coding agents" (100% local, free, open source). It shares only the name with the Open Standard — the canonical OpenUI is [`thesysdev/openui`](https://github.com/thesysdev/openui) and <https://www.openui.com>. These are **not** the same project. Note also the OpenUI repo's explicit disclaimer that OpenUI has **no official cryptocurrency, token, or coin**; any asset using the OpenUI name is unaffiliated.
 
 ## Status
 
-- **Confidence:** source-backed (openui.com overview and `openui-lang` v0.1 specification pages plus the `thesysdev/openui` repo; single primary source, not independently cross-checked).
+- **Confidence:** source-backed (openui.com overview, `openui-lang` v0.1 and v0.5 specification pages, OpenUI Cloud docs, plus the `thesysdev/openui` repo; single primary source on most points, not independently cross-checked).
 - Actively marketed as *the* open standard for generative UI with a growing first-party backend (OpenUI Cloud).
 
 ## Source Map
