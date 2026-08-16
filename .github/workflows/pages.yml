@@ -33,6 +33,10 @@ jobs:
           key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: ${{ runner.os }}-pnpm-
       - run: pnpm install --frozen-lockfile
+      # Generates apps/web/.astro/types.d.ts, which is gitignored but required
+      # for `astro:content` and `import.meta.env` to type check.
+      - name: Generate Astro types
+        run: pnpm --filter @ai-knowledge/web exec astro sync
       - name: Format, lint and type check
         run: pnpm exec vp check
       - name: Check Astro formatting

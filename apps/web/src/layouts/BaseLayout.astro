@@ -75,7 +75,15 @@ const nav = (await getCollection("wiki"))
         } catch (error) {
           console.error("Failed to render mermaid diagrams", error);
         } finally {
-          blocks.forEach((block) => block.classList.remove("mermaid-pending"));
+          blocks.forEach((block) => {
+            block.classList.remove("mermaid-pending");
+            // `mermaid.run` aborts the whole batch on the first bad diagram, so
+            // flag every block that never received an SVG rather than assuming
+            // a thrown error means none of them rendered.
+            if (!block.querySelector("svg")) {
+              block.classList.add("mermaid-failed");
+            }
+          });
         }
       }
     </script>
@@ -229,6 +237,19 @@ const nav = (await getCollection("wiki"))
   }
   pre.mermaid-pending {
     visibility: hidden;
+  }
+  .prose pre.mermaid-failed {
+    display: block;
+    background: #030807;
+    border-color: var(--accent2);
+  }
+  .prose pre.mermaid-failed::before {
+    content: "Diagram failed to render — see the browser console.";
+    display: block;
+    margin-bottom: 0.75rem;
+    color: var(--accent2);
+    font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.8rem;
   }
   .prose blockquote {
     border-left: 3px solid var(--accent);

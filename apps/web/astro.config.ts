@@ -36,4 +36,11 @@ export default defineConfig({
     }),
   },
   integrations: [sitemap()],
+  vite: {
+    // Pre-bundle mermaid at server start. It is only reachable through a
+    // dynamic import on diagram pages, so lazily discovering it mid-session
+    // re-runs the optimizer and can leave already-served modules pointing at a
+    // stale `?v=` hash, which then 504s as an outdated optimize dep.
+    optimizeDeps: { include: ["mermaid"] },
+  },
 });
