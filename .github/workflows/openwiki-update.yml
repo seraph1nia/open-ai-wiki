@@ -16,6 +16,9 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
+    # OPENROUTER_API_KEY and TAVILY_API_KEY are environment secrets on `prd`,
+    # so the job has to claim that environment or they resolve to empty strings.
+    environment: prd
     steps:
       - name: Check out repository
         uses: actions/checkout@v6

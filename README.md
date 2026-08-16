@@ -149,7 +149,9 @@ Astro uses one permissive content collection over `openwiki/**/*.md`. It validat
 
 `.github/workflows/ci.yml` runs the full `vp` validation sequence — format, lint, wiki validation, type check, tests, and build — on every pull request, so the generated OpenWiki pull requests are checked before merge.
 
-`.github/workflows/pages.yml` runs that same sequence and then deploys the Astro site after changes reach `main`. Configure both `OPENROUTER_API_KEY` and `TAVILY_API_KEY` as Actions secrets for scheduled OpenWiki updates. Enable GitHub Pages with **GitHub Actions** as its source before the first deployment.
+`.github/workflows/pages.yml` runs that same sequence and then deploys the Astro site after changes reach `main`. Enable GitHub Pages with **GitHub Actions** as its source before the first deployment.
+
+Scheduled OpenWiki updates read `OPENROUTER_API_KEY` and `TAVILY_API_KEY` as secrets on the `prd` environment, which is why the update job declares `environment: prd`. Keeping them there rather than at repository level means the environment's protection rules gate every run that can spend provider credit. A job that uses these keys without claiming the environment sees empty strings, not an error.
 
 ## Repository layout
 
