@@ -3,36 +3,30 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@11.20.0",
-  "engines": {
-    "node": ">=24.19.0",
-    "pnpm": ">=11.20.0"
-  },
   "scripts": {
-    "dev": "pnpm --filter @ai-knowledge/web dev",
-    "build": "pnpm --filter @ai-knowledge/web build",
-    "test": "pnpm -r test",
-    "lint": "eslint .",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "typecheck": "pnpm -r typecheck",
-    "wiki:check": "pnpm --filter @ai-knowledge/ingestion wiki:check",
-    "wiki:visualize": "pnpm exec openwiki visualize openwiki",
-    "ingest": "pnpm --filter @ai-knowledge/ingestion ingest",
-    "harvest": "pnpm --filter @ai-knowledge/ingestion harvest"
+    "wiki": "bash scripts/wiki-update.sh chat",
+    "wiki:update": "bash scripts/wiki-update.sh update",
+    "wiki:ingest": "bash scripts/wiki-update.sh ingest",
+    "wiki:changelog": "node scripts/wiki-changelog.ts",
+    "wiki:visualize": "openwiki visualize openwiki",
+    "wiki:help": "openwiki --help"
   },
   "devDependencies": {
-    "@eslint/js": "10.0.1",
     "@types/node": "24.13.3",
     "eslint": "10.8.1",
     "eslint-plugin-astro": "3.1.0",
-    "globals": "17.4.0",
     "jsdom": "29.1.1",
     "mermaid": "11.16.0",
     "openwiki": "0.3.3",
     "prettier": "3.9.6",
     "prettier-plugin-astro": "0.14.1",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.67.0"
-  }
+    "vite-plus": "0.2.9",
+    "vitest": "4.1.10"
+  },
+  "engines": {
+    "node": ">=24.19.0",
+    "pnpm": ">=11.20.0"
+  },
+  "packageManager": "pnpm@11.20.0"
 }

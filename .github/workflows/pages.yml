@@ -33,10 +33,20 @@ jobs:
           key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: ${{ runner.os }}-pnpm-
       - run: pnpm install --frozen-lockfile
-      - run: pnpm wiki:check
-      - run: pnpm typecheck
-      - run: pnpm test
-      - run: pnpm build
+      - name: Format, lint and type check
+        run: pnpm exec vp check
+      - name: Check Astro formatting
+        run: pnpm exec vp run fmt:astro:check
+      - name: Lint Astro components
+        run: pnpm exec vp run lint:astro
+      - name: Validate OpenWiki bundle
+        run: pnpm exec vp run lint:wiki
+      - name: Type check Astro app
+        run: pnpm exec vp run -r typecheck
+      - name: Test
+        run: pnpm exec vp test
+      - name: Build
+        run: pnpm exec vp run -r build
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5

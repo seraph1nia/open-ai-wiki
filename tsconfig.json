@@ -8,6 +8,10 @@
     "exactOptionalPropertyTypes": true,
     "verbatimModuleSyntax": true,
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    // `scripts/` runs straight through Node 24's type stripping, which resolves
+    // relative imports by their real `.ts` path. Nothing is emitted from here.
+    "allowImportingTsExtensions": true,
+    "noEmit": true
   }
 }

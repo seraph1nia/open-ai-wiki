@@ -1,8 +1,8 @@
 import { defineConfig } from "astro/config";
-import mdx from "@astrojs/mdx";
 import { unified } from "@astrojs/markdown-remark";
 import sitemap from "@astrojs/sitemap";
 import { fileURLToPath } from "node:url";
+import { remarkMermaid } from "./src/lib/remark-mermaid";
 import { remarkWikiLinks } from "./src/lib/remark-wiki-links";
 
 const repository = process.env.GITHUB_REPOSITORY?.split("/")[1];
@@ -24,6 +24,7 @@ export default defineConfig({
   markdown: {
     processor: unified({
       remarkPlugins: [
+        remarkMermaid,
         [
           remarkWikiLinks,
           {
@@ -34,5 +35,5 @@ export default defineConfig({
       ],
     }),
   },
-  integrations: [mdx(), sitemap()],
+  integrations: [sitemap()],
 });

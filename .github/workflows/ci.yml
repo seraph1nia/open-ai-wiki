@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: jdx/mise-action@v4
+        with:
+          cache: true
+      - name: Install repository toolchain
+        run: mise install
+      - name: Restore pnpm store
+        uses: actions/cache@v5
+        with:
+          path: ~/.local/share/pnpm/store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: ${{ runner.os }}-pnpm-
+      - run: pnpm install --frozen-lockfile
+      - name: Format, lint and type check
+        run: pnpm exec vp check
+      - name: Check Astro formatting
+        run: pnpm exec vp run fmt:astro:check
+      - name: Lint Astro components
+        run: pnpm exec vp run lint:astro
+      - name: Validate OpenWiki bundle
+        run: pnpm exec vp run lint:wiki
+      - name: Type check Astro app
+        run: pnpm exec vp run -r typecheck
+      - name: Test
+        run: pnpm exec vp test
+      - name: Build
+        run: pnpm exec vp run -r build

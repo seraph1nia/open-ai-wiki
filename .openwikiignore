@@ -1,7 +1,10 @@
 # Secrets and local credentials are never visible to the OpenWiki agent.
 .env
 .env.*
-!.env.example
+
+# The wiki's own change history, derived from Git after each run. It describes
+# the corpus rather than being evidence for it.
+changelog/
 
 # Generated dependencies, build output, caches, and private VCS state.
 .git/
@@ -10,7 +13,3 @@ dist/
 .astro/
 coverage/
 *.tsbuildinfo
-
-# Incremental scheduler state is not knowledge evidence. Accepted inbox records
-# remain readable because they are the controlled input to synthesis.
-ingestion/state/

@@ -1,13 +1,12 @@
 packages:
   - "apps/*"
-  - "ingestion"
 
 allowBuilds:
   better-sqlite3: true
   esbuild: true
 
 # openwiki@0.3.3 resolves langsmith 0.8.x while deepagents still declares its
-# older 0.7.x peer range. The pinned combination is exercised by wiki smoke tests.
+# older 0.7.x peer range.
 peerDependencyRules:
   allowedVersions:
     "deepagents@1.12.0>langsmith": "0.8.11"

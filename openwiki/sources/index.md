@@ -1,1 +1,7 @@
 # Files
+
+- [GitHub ACP TypeScript SDK source evidence](github-acp-typescript-sdk.md) - Ingestion and coverage notes for the agentclientprotocol/typescript-sdk GitHub releases resource used as evidence for the Agent Client Protocol wiki pages.
+- [GitHub agent-host-protocol source evidence](github-agent-host-protocol.md) - Ingestion and coverage notes for the Microsoft agent-host-protocol GitHub releases resource and repository used as evidence for the Agent Host Protocol wiki pages.
+- [Web-search Factory tools source evidence](web-search-factory-tools.md) - Ingestion and coverage notes for the 2026-08-16 web-search-factory-tools run over the agentic SDLC factory toolchain (ACP TypeScript SDK, AHP, Pierre, t3code, Effect v4, OpenCode SDK, Pi SDK), including reliability warnings for synthesized answers and the Effect durable-execution gap.
+- [Web-search generative-UI source evidence](web-search-generative-ui.md) - Ingestion and coverage notes for the 2026-08-16 web-search-generative-ui run over the AG-UI, CopilotKit, OpenUI, Mastra agentic-UI, A2UI, and MCP Apps sources, with reliability warnings for off-target synthesized answers.
+- [Web-search agent-protocols source evidence](web-search.md) - Ingestion and coverage notes for the 2026-08-16 web-search-agent-protocols run, which returned zero in-scope results for the canonical Agent Host Protocol, ACP TypeScript SDK, and Pierre repositories and carried unreliable synthesized answers.

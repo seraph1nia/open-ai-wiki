@@ -10,5 +10,4 @@ coverage/
 mise.local.toml
 package-lock.json
 yarn.lock
-ingestion/state/*.tmp
-ingestion/state/last-harvest-summary.md
+.test-wiki-lint/

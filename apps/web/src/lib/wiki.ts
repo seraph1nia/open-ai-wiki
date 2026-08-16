@@ -1,10 +1,6 @@
 import type { CollectionEntry } from "astro:content";
 
 export type WikiEntry = CollectionEntry<"wiki">;
-export type WikiGraph = {
-  outbound: Map<string, string[]>;
-  backlinks: Map<string, string[]>;
-};
 
 export function normalizeWikiId(value: string): string {
   return value
@@ -15,16 +11,22 @@ export function normalizeWikiId(value: string): string {
 }
 
 export function entryPath(id: string): string {
-  const clean = normalizeWikiId(id);
-  return clean === "index" ? "/" : `/${clean}/`;
+  let clean = normalizeWikiId(id);
+  if (clean === "index") return "/";
+  if (clean.endsWith("/index")) clean = clean.slice(0, -6);
+  return `/${clean}/`;
 }
 
-export function isReservedEntry(entry: WikiEntry): boolean {
-  return (
-    entry.id === "index" ||
-    entry.id === "log" ||
-    /(?:^|\/)index\.md$/.test(entry.filePath ?? "")
-  );
+export function isConceptEntry(entry: WikiEntry): boolean {
+  return Boolean(entry.data.type);
+}
+
+export function isRootIndex(entry: WikiEntry): boolean {
+  return normalizeWikiId(entry.id) === "index";
+}
+
+export function isDirectoryIndex(entry: WikiEntry): boolean {
+  return !isRootIndex(entry) && /(?:^|\/)index\.md$/.test(entry.filePath ?? "");
 }
 
 export function renderedWikiHref(
@@ -51,6 +53,23 @@ export function renderedWikiHref(
   return fragment ? `${result}#${fragment}` : result;
 }
 
+export function titleFor(entry: WikiEntry): string {
+  const id = normalizeWikiId(entry.id);
+  if (isDirectoryIndex(entry)) {
+    const directory = id.split("/").at(-1) ?? id;
+    return directory
+      .split("-")
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" ");
+  }
+  return (
+    entry.data.title ??
+    entry.body?.match(/^#\s+(.+)$/m)?.[1] ??
+    id.split("/").at(-1) ??
+    entry.id
+  );
+}
+
 export function withBase(pathname: string, base: string): string {
   if (/^(?:[a-z]+:|#)/i.test(pathname)) return pathname;
   const normalizedBase =
@@ -59,63 +78,4 @@ export function withBase(pathname: string, base: string): string {
     /\/+/g,
     "/",
   );
-}
-
-export function extractInternalLinks(
-  markdown: string,
-  fromId: string,
-): string[] {
-  const links = [...markdown.matchAll(/\[[^\]]*\]\(([^)]+)\)/g)].map(
-    (match) => match[1] ?? "",
-  );
-  const directory = fromId.includes("/")
-    ? fromId.slice(0, fromId.lastIndexOf("/"))
-    : "";
-  return [
-    ...new Set(
-      links
-        .filter((link) => !/^(?:[a-z]+:|#)/i.test(link))
-        .map((link) => {
-          const noHash = link.split("#")[0] ?? "";
-          if (noHash.startsWith("/")) return normalizeWikiId(noHash);
-          const parts = `${directory}/${noHash}`.split("/");
-          const resolved: string[] = [];
-          for (const part of parts) {
-            if (part === "..") resolved.pop();
-            else if (part !== "." && part !== "") resolved.push(part);
-          }
-          return normalizeWikiId(resolved.join("/"));
-        })
-        .filter(Boolean),
-    ),
-  ];
-}
-
-export function buildGraph(entries: WikiEntry[]): WikiGraph {
-  const ids = new Set(entries.map((entry) => normalizeWikiId(entry.id)));
-  const outbound = new Map<string, string[]>();
-  const backlinks = new Map<string, string[]>();
-  for (const entry of entries) {
-    const from = normalizeWikiId(entry.id);
-    const links = extractInternalLinks(entry.body ?? "", from).filter((link) =>
-      ids.has(link),
-    );
-    outbound.set(from, links);
-    for (const target of links)
-      backlinks.set(target, [...(backlinks.get(target) ?? []), from]);
-  }
-  return { outbound, backlinks };
-}
-
-export function titleFor(entry: WikiEntry): string {
-  return (
-    entry.data.title ??
-    entry.body?.match(/^#\s+(.+)$/m)?.[1] ??
-    entry.id.split("/").at(-1) ??
-    entry.id
-  );
-}
-
-export function sectionFor(entry: WikiEntry): string {
-  return normalizeWikiId(entry.id).split("/")[0] ?? "";
 }

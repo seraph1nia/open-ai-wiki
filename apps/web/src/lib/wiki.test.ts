@@ -1,23 +1,21 @@
 import { describe, expect, test } from "vitest";
-import {
-  buildGraph,
-  extractInternalLinks,
-  renderedWikiHref,
-  withBase,
-} from "./wiki";
-describe("wiki graph helpers", () => {
-  test("resolves internal markdown links", () =>
-    expect(
-      extractInternalLinks(
-        "[MCP](../protocols/mcp.md) [web](https://x.test)",
-        "concepts/auth",
-      ),
-    ).toEqual(["protocols/mcp"]));
+import { entryPath, renderedWikiHref, withBase } from "./wiki";
+
+describe("OKF route helpers", () => {
+  test("maps root, directory indexes, and concepts to clean routes", () => {
+    expect(entryPath("index")).toBe("/");
+    expect(entryPath("concepts/index")).toBe("/concepts/");
+    expect(entryPath("concepts/context-engineering")).toBe(
+      "/concepts/context-engineering/",
+    );
+  });
+
   test("prefixes project Pages paths", () => {
     expect(withBase("/concepts/auth/", "/wiki/")).toBe("/wiki/concepts/auth/");
     expect(withBase("/concepts/auth/", "/")).toBe("/concepts/auth/");
   });
-  test("rewrites wiki-relative links for project Pages", () => {
+
+  test("rewrites wiki-relative concept and index links", () => {
     expect(
       renderedWikiHref(
         "../protocols/mcp.md#auth",
@@ -25,14 +23,8 @@ describe("wiki graph helpers", () => {
         "/repo/",
       ),
     ).toBe("/repo/protocols/mcp/#auth");
-  });
-  test("generates backlinks from outbound Markdown links", () => {
-    const entries = [
-      { id: "concepts/auth", body: "[MCP](../protocols/mcp.md)" },
-      { id: "protocols/mcp", body: "" },
-    ] as never;
-    expect(buildGraph(entries).backlinks.get("protocols/mcp")).toEqual([
-      "concepts/auth",
-    ]);
+    expect(renderedWikiHref("concepts/", "index", "/repo/")).toBe(
+      "/repo/concepts/",
+    );
   });
 });

@@ -1,26 +1,14 @@
-import js from "@eslint/js";
-import globals from "globals";
 import astro from "eslint-plugin-astro";
-import tseslint from "typescript-eslint";
 
+// Oxlint (via `vp lint`) owns every .js/.ts file in the repository. ESLint is
+// kept only for `.astro` components, which Oxlint cannot parse yet.
 export default [
   {
-    ignores: [
-      "**/dist/**",
-      "**/.astro/**",
-      "**/node_modules/**",
-      "ingestion/inbox/**",
-    ],
+    ignores: ["**/dist/**", "**/.astro/**", "**/node_modules/**"],
   },
-  js.configs.recommended,
-  ...tseslint.configs.recommended,
   ...astro.configs.recommended,
   {
-    files: ["**/*.{js,mjs,cjs}"],
-    languageOptions: {
-      globals: { ...globals.node, ...globals.browser },
-      parserOptions: { ecmaVersion: "latest", sourceType: "module" },
-    },
+    files: ["**/*.astro"],
     rules: {
       "no-unused-vars": [
         "error",

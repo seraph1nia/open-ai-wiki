@@ -1,4 +1,7 @@
 ---
+import { getCollection } from "astro:content";
+import { entryPath, isDirectoryIndex, titleFor, withBase } from "../lib/wiki";
+
 interface Props {
   title: string;
   description?: string;
@@ -8,14 +11,14 @@ const {
   description = "A self-updating knowledge base for AI protocols and agent systems.",
 } = Astro.props;
 const base = import.meta.env.BASE_URL;
-const nav = [
-  ["Protocols", "protocols/"],
-  ["Frameworks", "frameworks/"],
-  ["Concepts", "concepts/"],
-  ["References", "references/"],
-  ["Sources", "sources/"],
-  ["Updates", "updates/"],
-];
+const nav = (await getCollection("wiki"))
+  .filter(isDirectoryIndex)
+  .filter((entry) => !entry.id.includes("/"))
+  .map((entry) => ({
+    href: withBase(entryPath(entry.id), base),
+    label: titleFor(entry),
+  }))
+  .sort((a, b) => a.label.localeCompare(b.label));
 ---
 
 <!doctype html>
@@ -24,18 +27,58 @@ const nav = [
     ><meta charset="UTF-8" /><meta
       name="viewport"
       content="width=device-width"
-    /><meta name="description" content={description} /><title>
+    /><meta name="description" content={description} /><link
+      rel="alternate"
+      type="application/rss+xml"
+      title="AI Knowledge — What's new"
+      href={`${base}whats-new.xml`}
+    /><title>
       {title} · AI Knowledge
     </title></head
   >
   <body>
     <header>
       <a class="brand" href={base}>AI Knowledge</a><nav>
-        {nav.map(([label, path]) => <a href={`${base}${path}`}>{label}</a>)}
-      </nav><a class="search-link" href={`${base}search/`}>Search</a>
+        {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+      </nav><a class="search-link" href={`${base}whats-new/`}
+        >What&rsquo;s new</a
+      ><a class="search-link" href={`${base}search/`}>Search</a>
     </header>
     <main><slot /></main>
     <footer>Durable technical knowledge, synthesized with provenance.</footer>
+    <script>
+      const blocks = document.querySelectorAll<HTMLElement>("pre.mermaid");
+      if (blocks.length > 0) {
+        blocks.forEach((block) => block.classList.add("mermaid-pending"));
+        try {
+          const { default: mermaid } = await import("mermaid");
+          mermaid.initialize({
+            startOnLoad: false,
+            securityLevel: "strict",
+            theme: "base",
+            fontFamily: "Inter, ui-sans-serif, system-ui, sans-serif",
+            themeVariables: {
+              darkMode: true,
+              background: "#0d1917",
+              primaryColor: "#10201d",
+              primaryTextColor: "#edf6f1",
+              primaryBorderColor: "#477a68",
+              secondaryColor: "#123329",
+              tertiaryColor: "#07100f",
+              lineColor: "#72e1b4",
+              textColor: "#edf6f1",
+              mainBkg: "#10201d",
+              nodeBorder: "#477a68",
+            },
+          });
+          await mermaid.run({ nodes: blocks });
+        } catch (error) {
+          console.error("Failed to render mermaid diagrams", error);
+        } finally {
+          blocks.forEach((block) => block.classList.remove("mermaid-pending"));
+        }
+      }
+    </script>
   </body>
 </html>
 <style is:global>
@@ -89,6 +132,9 @@ const nav = [
     color: var(--muted);
     text-decoration: none;
     font-size: 0.92rem;
+  }
+  .search-link {
+    white-space: nowrap;
   }
   nav a:hover,
   .search-link:hover,
@@ -172,9 +218,30 @@ const nav = [
     border: 1px solid var(--line);
     border-radius: 8px;
   }
+  .prose pre.mermaid {
+    display: flex;
+    justify-content: center;
+    background: var(--panel);
+  }
+  .prose pre.mermaid svg {
+    max-width: 100%;
+    height: auto;
+  }
+  pre.mermaid-pending {
+    visibility: hidden;
+  }
   .prose blockquote {
     border-left: 3px solid var(--accent);
     padding-left: 1rem;
+    color: var(--muted);
+  }
+  .concept-meta {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    margin-top: 2.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--line);
     color: var(--muted);
   }
   .chips {

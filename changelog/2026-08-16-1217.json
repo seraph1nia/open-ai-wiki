@@ -1,0 +1,362 @@
+{
+  "runAt": "2026-08-16T12:17:21.205Z",
+  "entries": [
+    {
+      "kind": "new",
+      "path": "concepts/factory-toolchain.md",
+      "title": "Agentic SDLC factory toolchain",
+      "summary": "Added a new hub page describing the agentic SDLC factory toolchain, covering ACP and AHP wire protocols and the tooling layer (Pierre, t3code, Effect, OpenCode SDK, Pi SDK) and how they compose into one pipeline.",
+      "minor": false,
+      "added": 54,
+      "removed": 0,
+      "type": "Concept",
+      "tags": [
+        "factory",
+        "toolchain",
+        "agentic-sdlc",
+        "ai-agents",
+        "sdks"
+      ]
+    },
+    {
+      "kind": "new",
+      "path": "concepts/generative-ui-ecosystem.md",
+      "title": "Generative-UI ecosystem",
+      "summary": "Added a cross-source comparison of generative-UI approaches (AG-UI, A2UI, OpenUI, MCP Apps) and their relationships, tradeoffs, and interoperability.",
+      "minor": false,
+      "added": 79,
+      "removed": 0,
+      "type": "Concept",
+      "tags": [
+        "generative-ui",
+        "agent-ui",
+        "comparison",
+        "ecosystem",
+        "ai-agents"
+      ]
+    },
+    {
+      "kind": "new",
+      "path": "frameworks/copilotkit.md",
+      "title": "CopilotKit (generative-UI frontend stack)",
+      "summary": "Added a page on CopilotKit as a 1st-party AG-UI client and generative-UI frontend stack, covering its monorepo consolidation, support for static generative UI, A2UI, and MCP Apps, and its dependency on AG-UI.",
+      "minor": false,
+      "added": 57,
+      "removed": 0,
+      "type": "Framework",
+      "tags": [
+        "copilotkit",
+        "generative-ui",
+        "framework",
+        "agent-ui",
+        "ag-ui"
+      ],
+      "resource": "https://github.com/CopilotKit/CopilotKit"
+    },
+    {
+      "kind": "new",
+      "path": "frameworks/effect.md",
+      "title": "Effect",
+      "summary": "Added a page on the Effect TypeScript library, noting its v4 era and the unverified durable-execution surface (Workflow, Activity, DurableQueue) that remains a gap.",
+      "minor": false,
+      "added": 32,
+      "removed": 0,
+      "type": "Framework",
+      "tags": [
+        "effect",
+        "typescript",
+        "durable-execution",
+        "framework",
+        "v4"
+      ],
+      "resource": "https://www.effect.website/docs/v4/api/effect"
+    },
+    {
+      "kind": "new",
+      "path": "frameworks/mastra-agentic-ui.md",
+      "title": "Mastra agentic-UI integration",
+      "summary": "Added a page on Mastra's agentic-UI integration, covering its @mastra/ai-sdk integration with AI SDK UI hooks and the UI dojo of examples for multiple frontends.",
+      "minor": false,
+      "added": 56,
+      "removed": 0,
+      "type": "Framework",
+      "tags": [
+        "mastra",
+        "agentic-ui",
+        "framework",
+        "generative-ui",
+        "ai-sdk"
+      ],
+      "resource": "https://mastra.ai/integrations/agentic-ui"
+    },
+    {
+      "kind": "new",
+      "path": "frameworks/opencode-sdk.md",
+      "title": "OpenCode",
+      "summary": "Added a page on OpenCode and its type-safe JavaScript/TypeScript SDK (@opencode-ai/sdk) for controlling the opencode server programmatically.",
+      "minor": false,
+      "added": 34,
+      "removed": 0,
+      "type": "Reference",
+      "tags": [
+        "opencode",
+        "sdk",
+        "coding-agent",
+        "typescript",
+        "ai-agents"
+      ],
+      "resource": "https://opencode.ai/docs/sdk/"
+    },
+    {
+      "kind": "new",
+      "path": "frameworks/openui.md",
+      "title": "OpenUI (Open Standard for Generative UI)",
+      "summary": "Added a page on OpenUI as a generative-UI toolkit with three surfaces (Agent Interface, OpenUI Lang, OpenUI Cloud), describing its streaming declarative language and runtime.",
+      "minor": false,
+      "added": 58,
+      "removed": 0,
+      "type": "Framework",
+      "tags": [
+        "openui",
+        "generative-ui",
+        "framework",
+        "agent-ui",
+        "language",
+        "runtime"
+      ],
+      "resource": "https://www.openui.com/docs/overview"
+    },
+    {
+      "kind": "new",
+      "path": "frameworks/pi-sdk.md",
+      "title": "Pi SDK",
+      "summary": "Added a page on the Pi SDK for programmatic access to the Pi coding agent, covering embedding, custom interfaces, and automated workflows.",
+      "minor": false,
+      "added": 29,
+      "removed": 0,
+      "type": "SDK",
+      "tags": [
+        "pi",
+        "sdk",
+        "coding-agent",
+        "automation",
+        "workflows"
+      ],
+      "resource": "https://pi.dev/docs/latest/sdk"
+    },
+    {
+      "kind": "new",
+      "path": "frameworks/pierre.md",
+      "title": "Pierre (Pierre Computer Company)",
+      "summary": "Added a page on Pierre, the open-source TypeScript toolkit for diffs, trees, and memes, including the @pierre/diffs v1.3.0 release with in-place editing.",
+      "minor": false,
+      "added": 34,
+      "removed": 0,
+      "type": "Reference",
+      "tags": [
+        "pierre",
+        "diffs",
+        "sdlc",
+        "toolkit",
+        "typescript"
+      ],
+      "resource": "https://github.com/pierrecomputer/pierre"
+    },
+    {
+      "kind": "new",
+      "path": "frameworks/t3code.md",
+      "title": "t3code",
+      "summary": "Added a page on T3 Code, an agent harness control surface for managing coding agents (Claude Code, Codex, Cursor, Grok Build, OpenCode) from mobile, web, or desktop apps.",
+      "minor": false,
+      "added": 34,
+      "removed": 0,
+      "type": "Reference",
+      "tags": [
+        "t3code",
+        "agent-control",
+        "harness",
+        "ai-agents",
+        "desktop"
+      ],
+      "resource": "https://github.com/pingdotgg/t3code"
+    },
+    {
+      "kind": "new",
+      "path": "open-questions.md",
+      "title": "Open Questions",
+      "summary": "Added a page tracking open, answered, and stale questions about the wiki's coverage, including the unverified Effect durable-execution semantics.",
+      "minor": false,
+      "added": 27,
+      "removed": 0,
+      "type": "Reference",
+      "tags": [
+        "open-questions",
+        "memory-graph",
+        "wiki-quality"
+      ]
+    },
+    {
+      "kind": "new",
+      "path": "protocols/a2ui.md",
+      "title": "A2UI (Agent to UI) Protocol",
+      "summary": "Added a page on the A2UI declarative UI protocol, covering its concepts (Surface, Component, Data Model, Catalog), transports, progressive rendering, and security model.",
+      "minor": false,
+      "added": 83,
+      "removed": 0,
+      "type": "Protocol",
+      "tags": [
+        "a2ui",
+        "protocol",
+        "agent-ui",
+        "generative-ui",
+        "declarative",
+        "ai-agents"
+      ],
+      "resource": "https://a2ui.org"
+    },
+    {
+      "kind": "new",
+      "path": "protocols/ag-ui.md",
+      "title": "AG-UI (Agent-User Interaction Protocol)",
+      "summary": "AG-UI is an open, lightweight, event-based wire protocol for streaming AI agent output to user-facing applications, standardizing how agents describe and stream UI over SSE, WebSockets, HTTP, and custom transports.",
+      "minor": false,
+      "added": 85,
+      "removed": 0,
+      "type": "Protocol",
+      "tags": [
+        "ag-ui",
+        "protocol",
+        "agent-ui",
+        "ai-agents",
+        "streaming",
+        "generative-ui"
+      ],
+      "resource": "https://github.com/ag-ui-protocol/ag-ui"
+    },
+    {
+      "kind": "new",
+      "path": "protocols/agent-client-protocol.md",
+      "title": "Agent Client Protocol (ACP)",
+      "summary": "The Agent Client Protocol (ACP) is a standardized communication protocol between code editors and AI-powered coding agents, officially implemented in TypeScript by the @agentclientprotocol/sdk package.",
+      "minor": false,
+      "added": 80,
+      "removed": 0,
+      "type": "Protocol",
+      "tags": [
+        "agent-client-protocol",
+        "acp",
+        "protocol",
+        "ai-agents",
+        "editors"
+      ],
+      "resource": "https://github.com/agentclientprotocol/agent-client-protocol"
+    },
+    {
+      "kind": "new",
+      "path": "protocols/agent-host-protocol.md",
+      "title": "Agent Host Protocol (AHP)",
+      "summary": "The Agent Host Protocol (AHP) is Microsoft's synchronized, multi-client state protocol for AI agent sessions, framed on JSON-RPC 2.0 with channel-based routing, immutable state, pure reducers, and write-ahead reconciliation.",
+      "minor": false,
+      "added": 132,
+      "removed": 0,
+      "type": "Protocol",
+      "tags": [
+        "agent-host-protocol",
+        "protocol",
+        "ai-agents",
+        "json-rpc",
+        "sessions"
+      ],
+      "resource": "https://github.com/microsoft/agent-host-protocol"
+    },
+    {
+      "kind": "new",
+      "path": "protocols/mcp-apps.md",
+      "title": "MCP Apps (Model Context Protocol Apps extension)",
+      "summary": "MCP Apps is the first official extension to the Model Context Protocol, co-developed by Anthropic and OpenAI, letting MCP servers deliver interactive UIs (charts, forms, dashboards) rendered securely in iframes inside any compliant host.",
+      "minor": false,
+      "added": 68,
+      "removed": 0,
+      "type": "Protocol",
+      "tags": [
+        "mcp",
+        "mcp-apps",
+        "protocol",
+        "extension",
+        "agent-ui",
+        "generative-ui"
+      ],
+      "resource": "https://github.com/modelcontextprotocol/ext-apps"
+    },
+    {
+      "kind": "new",
+      "path": "quickstart.md",
+      "title": "AI Knowledge Wiki Quickstart",
+      "summary": "Navigation and current status for the AI knowledge corpus \u2014 the Agent Host Protocol (AHP), Agent Client Protocol (ACP), the generative-UI / agent-UI protocol ecosystem, and the agentic SDLC factory toolchain (Pierre, t3code, Effect, OpenCode, Pi SDK).",
+      "minor": false,
+      "added": 100,
+      "removed": 0,
+      "type": "Guide",
+      "tags": [
+        "quickstart",
+        "index",
+        "navigation",
+        "ai-agents",
+        "generative-ui"
+      ]
+    },
+    {
+      "kind": "new",
+      "path": "references/agent-client-protocol-typescript-sdk-releases.md",
+      "title": "ACP TypeScript SDK Releases",
+      "summary": "Durable reference to the agentclientprotocol/typescript-sdk GitHub releases resource for the Agent Client Protocol, mapping the release history and current-version features of the @agentclientprotocol/sdk package through v1.3.0.",
+      "minor": false,
+      "added": 69,
+      "removed": 0,
+      "type": "Reference",
+      "tags": [
+        "agent-client-protocol",
+        "acp",
+        "reference",
+        "releases",
+        "changelog",
+        "typescript-sdk"
+      ],
+      "resource": "https://github.com/agentclientprotocol/typescript-sdk/releases"
+    },
+    {
+      "kind": "new",
+      "path": "references/agent-host-protocol-releases.md",
+      "title": "Agent Host Protocol Releases",
+      "summary": "Durable reference to the Microsoft agent-host-protocol GitHub releases resource, mapping the release history and current-version headline features of the Agent Host Protocol through spec v0.7.0.",
+      "minor": false,
+      "added": 70,
+      "removed": 0,
+      "type": "Reference",
+      "tags": [
+        "agent-host-protocol",
+        "reference",
+        "releases",
+        "changelog"
+      ],
+      "resource": "https://github.com/microsoft/agent-host-protocol/releases"
+    },
+    {
+      "kind": "new",
+      "path": "themes.md",
+      "title": "Recurring themes and trends",
+      "summary": "Compact index of recurring signals across the AI knowledge corpus, notably the standardization and convergence of generative-UI / agent-UI protocols in 2026.",
+      "minor": false,
+      "added": 21,
+      "removed": 0,
+      "type": "Reference",
+      "tags": [
+        "themes",
+        "index",
+        "generative-ui",
+        "agent-ui",
+        "trends"
+      ]
+    }
+  ]
+}
