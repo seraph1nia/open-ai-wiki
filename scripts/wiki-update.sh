@@ -71,8 +71,14 @@ case "$action" in
     openwiki personal "$@"
     ;;
   ingest)
-    target="${1:-all}"
-    shift || true
+    # The target is optional, so only consume the first argument when it is a
+    # source id rather than a flag; otherwise `ingest --scheduled` would send
+    # `--scheduled` where the CLI expects `<source|source-instance|all>`.
+    target=all
+    if [[ -n "${1:-}" && "$1" != -* ]]; then
+      target="$1"
+      shift
+    fi
     openwiki ingest "$target" --print "$@"
     ;;
   update)
