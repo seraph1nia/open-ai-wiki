@@ -1,0 +1,165 @@
+{
+  "runAt": "2026-08-16T20:24:54.763Z",
+  "entries": [
+    {
+      "kind": "updated",
+      "path": "concepts/factory-toolchain.md",
+      "title": "Agentic SDLC factory toolchain",
+      "summary": "Adds GitHub Copilot CLI (`copilot --acp`) as a concrete ACP server instance in the wire-protocol layer, positioned for CI/CD and multi-agent delivery paths. Readers tracking the factory toolchain now have a real, official ACP server example rather than only the SDK.",
+      "minor": true,
+      "added": 1,
+      "removed": 1,
+      "type": "Concept",
+      "tags": [
+        "factory",
+        "toolchain",
+        "agentic-sdlc",
+        "ai-agents",
+        "sdks"
+      ]
+    },
+    {
+      "kind": "updated",
+      "path": "concepts/generative-ui-ecosystem.md",
+      "title": "Generative-UI ecosystem",
+      "summary": "Adds OpenUI's vendor-perspective token/latency comparison matrix (OpenUI 1x/4.9s vs Vercel json-render 3x/14.2s, A2UI 3x/14.2s, CopilotKit OpenGenUI 4x/~20s) and updates consolidation evidence: CopilotKit's `with-langgraph-python` moved into the monorepo, and AG-UI now has a community Swift SDK. This strengthens the cross-protocol comparison and the picture of ecosystem consolidation.",
+      "minor": true,
+      "added": 2,
+      "removed": 2,
+      "type": "Concept",
+      "tags": [
+        "generative-ui",
+        "agent-ui",
+        "comparison",
+        "ecosystem",
+        "ai-agents"
+      ]
+    },
+    {
+      "kind": "updated",
+      "path": "frameworks/copilotkit.md",
+      "title": "CopilotKit (generative-UI frontend stack)",
+      "summary": "Documents that `CopilotKit/with-langgraph-python` was archived and consolidated into the monorepo at `examples/integrations/langgraph-python`, marked source-backed. This extends the known CopilotKit monorepo consolidation pattern to the LangGraph Python integration.",
+      "minor": true,
+      "added": 1,
+      "removed": 0,
+      "type": "Framework",
+      "tags": [
+        "copilotkit",
+        "generative-ui",
+        "framework",
+        "agent-ui",
+        "ag-ui"
+      ],
+      "resource": "https://github.com/CopilotKit/CopilotKit"
+    },
+    {
+      "kind": "updated",
+      "path": "frameworks/openui.md",
+      "title": "OpenUI (Open Standard for Generative UI)",
+      "summary": "Adds the `thesysdev/openui` monorepo package structure (react-lang, react-headless, react-ui, react-email, lang-core, langchain, vue-lang, svelte-lang, browser-bundle, openui-cli, skills/openui) and a feature-comparison table against Vercel json-render, A2UI, and CopilotKit OpenGenUI with token/latency claims. This gives readers a concrete implementation map and OpenUI's own competitive positioning.",
+      "minor": false,
+      "added": 37,
+      "removed": 0,
+      "type": "Framework",
+      "tags": [
+        "openui",
+        "generative-ui",
+        "framework",
+        "agent-ui",
+        "language",
+        "runtime"
+      ],
+      "resource": "https://www.openui.com/docs/overview"
+    },
+    {
+      "kind": "updated",
+      "path": "protocols/ag-ui.md",
+      "title": "AG-UI (Agent-User Interaction Protocol)",
+      "summary": "Adds the community Swift SDK (`paduh/ag-ui-swift`) with AGUIClient, AGUICore, and AGUITools modules, and retitles the SDK section to cover Java, Go, and Swift. This expands AG-UI's client-language coverage beyond the official TypeScript/Python and community Java/Go SDKs.",
+      "minor": true,
+      "added": 3,
+      "removed": 2,
+      "type": "Protocol",
+      "tags": [
+        "ag-ui",
+        "protocol",
+        "agent-ui",
+        "ai-agents",
+        "streaming",
+        "generative-ui"
+      ],
+      "resource": "https://github.com/ag-ui-protocol/ag-ui"
+    },
+    {
+      "kind": "updated",
+      "path": "protocols/agent-client-protocol.md",
+      "title": "Agent Client Protocol (ACP)",
+      "summary": "Adds the Rust/schema artifact versioning model: `agent-client-protocol-schema` crate for wire-message data models, `schema/v1` and `schema/v2` JSON Schema artifacts attached to `schema-v*` releases, and wire compatibility determined by negotiated `protocolVersion` rather than release version. Also documents GitHub Copilot CLI as an official ACP server (`copilot --acp`) with stdio/TCP transports, BYOK-without-login, server-side tool/effort options, and slash-command handling. This clarifies ACP's versioning semantics and provides a concrete official server implementation.",
+      "minor": false,
+      "added": 18,
+      "removed": 1,
+      "type": "Protocol",
+      "tags": [
+        "agent-client-protocol",
+        "acp",
+        "protocol",
+        "ai-agents",
+        "editors"
+      ],
+      "resource": "https://github.com/agentclientprotocol/agent-client-protocol"
+    },
+    {
+      "kind": "updated",
+      "path": "protocols/agent-host-protocol.md",
+      "title": "Agent Host Protocol (AHP)",
+      "summary": "Adds detail that the VS Code agent host is the first-party reference server and that the VS Code team is broadening self-hosting coverage (issue microsoft/vscode#311105) plus a related agent-host terminal shell integration issue (#329538). This signals active expansion of AHP hosting configurations beyond the initial reference implementation.",
+      "minor": true,
+      "added": 1,
+      "removed": 1,
+      "type": "Protocol",
+      "tags": [
+        "agent-host-protocol",
+        "protocol",
+        "ai-agents",
+        "json-rpc",
+        "sessions"
+      ],
+      "resource": "https://github.com/microsoft/agent-host-protocol"
+    },
+    {
+      "kind": "updated",
+      "path": "quickstart.md",
+      "title": "AI Knowledge Wiki Quickstart",
+      "summary": "Updates the ingestion note to include the third generative-UI pull (AG-UI Swift SDK, OpenUI package structure and comparison page, CopilotKit `with-langgraph-python` archive) and the third Factory tools pull (ACP Rust/schema artifact split, GitHub Copilot CLI as official ACP server). Key facts now also cover ACP's version model and Copilot CLI ACP server. This keeps the quickstart aligned with the latest source-backed evidence.",
+      "minor": true,
+      "added": 4,
+      "removed": 2,
+      "type": "Guide",
+      "tags": [
+        "quickstart",
+        "index",
+        "navigation",
+        "ai-agents",
+        "generative-ui"
+      ]
+    },
+    {
+      "kind": "updated",
+      "path": "themes.md",
+      "title": "Recurring themes and trends",
+      "summary": "Updates the generative-ui-protocols and factory-toolchain theme rows and notes to include the third-pull additions: AG-UI community Swift SDK, OpenUI repo package map and feature-comparison page, CopilotKit `with-langgraph-python` archive, and ACP Rust/schema versioning plus GitHub Copilot CLI as an official ACP server. This keeps the theme index current with the newest evidence.",
+      "minor": true,
+      "added": 3,
+      "removed": 3,
+      "type": "Reference",
+      "tags": [
+        "themes",
+        "index",
+        "generative-ui",
+        "agent-ui",
+        "trends"
+      ]
+    }
+  ]
+}

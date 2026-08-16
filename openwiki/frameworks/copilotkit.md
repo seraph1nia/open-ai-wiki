@@ -33,6 +33,7 @@ The playground also demonstrates `useHumanInTheLoop` — interactive approval fl
 
 Also relevant:
 - `CopilotKit/with-adk` (demo of CopilotKit with the AG-UI `ada-middleware`, i.e. Google ADK support) was **archived on 2026-03-12** and consolidated into the monorepo at `examples/integrations/adk`.
+- `CopilotKit/with-langgraph-python` (CopilotKit with LangGraph in Python, star ~24) was likewise **archived** and consolidated into the monorepo at `examples/integrations/langgraph-python` (revealed by the 2026-08-16 third generative-UI pull). **Confidence: source-backed** (repo archive banner; archive date not retrieved for this repo).
 - CopilotKit's **skills** (open Agent Skills standard) live under the monorepo, with a routing table across specialized sub-skills (setup, develop, integrations, debug, upgrade, `copilotkit-agui` for building AG-UI backends, contribute, self-update).
 - The CopilotKit README's "AG-UI: The Agent–User Interaction Protocol" section promotes `npx create-ag-ui-app` for new AG-UI apps.
 
