@@ -4,7 +4,7 @@ import { z } from "astro/zod";
 
 const wiki = defineCollection({
   loader: glob({
-    pattern: ["**/*.md", "!INSTRUCTIONS.md"],
+    pattern: ["**/*.md", "!INSTRUCTIONS.md", "!large_tool_results/**"],
     base: "../../openwiki",
   }),
   schema: z.looseObject({

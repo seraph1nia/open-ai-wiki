@@ -46,7 +46,7 @@
       "name": "Generative UI",
       "connectorId": "web-search",
       "connectedAt": "2026-08-16T00:00:00.000Z",
-      "ingestionGoal": "Use only the configured Generative UI sources: the AG-UI and CopilotKit repositories, the OpenUI documentation, the Mastra agentic-UI integration guides, the A2UI specification site, and the Model Context Protocol apps extension. Extract durable general concepts, architecture, protocol surfaces, terminology, relationships, and usage guidance for streaming agent-driven user interfaces: how agents describe UI to clients, component and tool contracts, event and streaming models, rendering and state synchronization, human-in-the-loop interaction, and interoperability between these efforts. Compare and cross-link the competing approaches rather than summarizing each source in isolation. Preserve the canonical source URLs, update existing canonical concepts and references instead of creating duplicates, and exclude unrelated search results.",
+      "ingestionGoal": "Use only the configured Generative UI sources: the AG-UI and CopilotKit repositories, the OpenUI documentation, the Mastra agentic-UI integration guides, and the A2UI specification site. Extract durable general concepts, architecture, protocol surfaces, terminology, relationships, and usage guidance for streaming agent-driven user interfaces: how agents describe UI to clients, component and tool contracts, event and streaming models, rendering and state synchronization, human-in-the-loop interaction, and interoperability between these efforts. Compare and cross-link the competing approaches rather than summarizing each source in isolation. Preserve the canonical source URLs, update existing canonical concepts and references instead of creating duplicates, and exclude unrelated search results.",
       "connectorConfig": {
         "enabled": true,
         "includeAnswer": true,
@@ -61,7 +61,56 @@
           "https://mastra.ai/integrations/agentic-ui/copilotkit",
           "https://mastra.ai/integrations/agentic-ui/openui",
           "https://a2ui.org/concepts/glossary/",
-          "https://a2ui.org/roadmap/",
+          "https://a2ui.org/roadmap/"
+        ],
+        "searchDepth": "advanced",
+        "timeRange": "year",
+        "topic": "general"
+      }
+    },
+    {
+      "id": "web-search-agent-wiki",
+      "name": "Agent wiki",
+      "connectorId": "web-search",
+      "connectedAt": "2026-08-16T00:00:00.000Z",
+      "ingestionGoal": "Use only the configured Agent wiki sources: the OpenWiki repository and its release pages, and the Open Knowledge Format specification in the Google Cloud knowledge-catalog repository. Extract durable general concepts, architecture, terminology, relationships, and usage guidance for agent-maintained knowledge bases: the OKF bundle structure and required and reserved fields, concept typing and relationships, wiki modes, connectors and ingestion, evidence handling and provenance, and how a wiki is reconciled and consumed as agent context. From release pages, extract versioned release information, including release dates, breaking changes, compatibility changes, deprecations, fixes, and significant additions. Cross-link the format specification with the tooling that produces it rather than summarizing each source in isolation. Preserve the canonical source URLs, update existing canonical concepts and references instead of creating duplicates, and exclude unrelated search results.",
+      "connectorConfig": {
+        "enabled": true,
+        "includeAnswer": true,
+        "includeDomains": ["github.com"],
+        "includeImages": false,
+        "includeRawContent": true,
+        "maxResults": 5,
+        "queries": [
+          "https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md",
+          "https://github.com/langchain-ai/openwiki",
+          "https://github.com/langchain-ai/openwiki/releases"
+        ],
+        "searchDepth": "advanced",
+        "timeRange": "year",
+        "topic": "general"
+      }
+    },
+    {
+      "id": "web-search-agent-integration-protocols",
+      "name": "Agent integration protocols",
+      "connectorId": "web-search",
+      "connectedAt": "2026-08-16T00:00:00.000Z",
+      "ingestionGoal": "Use only the configured agent integration protocol sources, currently the Model Context Protocol blog, the specification repository's release pages, and the MCP apps extension repository. Extract durable general concepts, architecture, protocol surfaces, terminology, relationships, and usage guidance for how agents integrate with external tools, data, and other agents: transports and session lifecycle, capability negotiation, the tool, resource, and prompt primitives, sampling and elicitation, authorization, server and client responsibilities, registries and extensions, including the apps extension's interface surface. From release and specification revision pages, extract versioned protocol information, including revision dates, breaking changes, compatibility changes, deprecations, fixes, and significant additions. Treat blog posts as announcements pointing at the specification rather than as durable pages of their own, and cross-link this protocol with the other protocols already in the wiki, including the generative UI efforts the apps extension relates to. Preserve the canonical source URLs, update existing canonical concepts and references instead of creating duplicates, and exclude unrelated search results.",
+      "connectorConfig": {
+        "enabled": true,
+        "includeAnswer": true,
+        "includeDomains": [
+          "blog.modelcontextprotocol.io",
+          "modelcontextprotocol.io",
+          "github.com"
+        ],
+        "includeImages": false,
+        "includeRawContent": true,
+        "maxResults": 5,
+        "queries": [
+          "https://blog.modelcontextprotocol.io/posts/",
+          "https://github.com/modelcontextprotocol/modelcontextprotocol/releases",
           "https://github.com/modelcontextprotocol/ext-apps"
         ],
         "searchDepth": "advanced",
