@@ -23,10 +23,10 @@ Different answers produce the four families below.
 
 | Protocol / framework | Kind | How UI is described | Streaming & transport | State sync | HITL / security stance | Canonical home |
 |---|---|---|---|---|---|---|
-| [AG-UI](/protocols/ag-ui.md) | Event wire protocol | Typed event stream (~16 event types) + `RunAgentInput` | SSE, WebSockets, HTTP binary, custom via middleware layer | Bi-directional + `STATE_SNAPSHOT`/`STATE_DELTA` | Human-in-the-loop collaboration built-in | `ag-ui-protocol/ag-ui` |
+| [AG-UI](/protocols/ag-ui.md) | Event wire protocol | Typed event stream (~16 event types) + `RunAgentInput` | SSE, WebSockets, HTTP binary, custom via middleware layer; official Java and Go SDKs stream over SSE | Bi-directional + `STATE_SNAPSHOT`/`STATE_DELTA` | Human-in-the-loop collaboration built-in | `ag-ui-protocol/ag-ui` |
 | [A2UI](/protocols/a2ui.md) | Declarative JSON protocol | `A2UI Response` JSON (abstract component tree; Surfaces, Components, Catalogs) | Any JSON transport: A2A, AG-UI, SSE/WS, REST, gRPC; progressive rendering | Data model binding + `dataModelUpdate` | Declarative data, no code execution; client owns styling | a2ui.org |
-| [OpenUI](/frameworks/openui.md) | Declarative language + runtime | OpenUI Lang DSL (assignment statements, component calls) → runtime parses/progressive-renders | Streaming-first language runtime | Conversation/artifact persistence (OpenUI Cloud) | Output validation via OpenUI Cloud; agent composes from client's component library | openui.com |
-| [MCP Apps](/protocols/mcp-apps.md) | MCP extension (iframe apps) | Server-declared HTML UI resources (`mimeType text/html;profile=mcp-app`) | N/A at UI layer — secure iframe messaging | Host communicates with iframe app; mobile/desktop device caps | CSP-sandboxed iframe (connect-src, static origins), secure-by-default | `modelcontextprotocol/ext-apps` |
+| [OpenUI](/frameworks/openui.md) | Declarative language + runtime | OpenUI Lang DSL (assignment statements, component calls) → runtime parses/progressive-renders; up to 67% fewer tokens than JSON | Streaming-first language runtime | Conversation/artifact persistence (OpenUI Cloud) | Output validation via OpenUI Cloud; agent composes from client's component library | openui.com |
+| [MCP Apps](/protocols/mcp-apps.md) | MCP extension (iframe apps) | Server-declared HTML UI resources (`mimeType text/html;profile=mcp-app`); extension id `io.modelcontextprotocol/ui` | N/A at UI layer — secure iframe messaging | Host communicates with iframe app; mobile/desktop device caps | CSP-sandboxed iframe (connect-src, static origins), secure-by-default | `modelcontextprotocol/ext-apps` |
 
 ## How the approaches relate
 
@@ -49,11 +49,12 @@ flowchart LR
 
 Key relationships, with the page where each is explained:
 
-- **AG-UI *carries* A2UI** — A2UI lists [AG-UI](/protocols/ag-ui.md) as one of the transports its JSON messages can travel over, and the AG-UI repo ships an `ag-ui-a2ui-integration` skill for adding A2UI rendering to AG-UI apps (see [AG-UI](/protocols/ag-ui.md) and [A2UI](/protocols/a2ui.md)).
+- **AG-UI *carries* A2UI** — A2UI lists [AG-UI](/protocols/ag-ui.md) as one of the transports its JSON messages can travel over, and the AG-UI repo ships an `ag-ui-a2ui-integration` skill for adding A2UI rendering to AG-UI apps; A2UI's "who is it for" guidance routes rapid "agent + UI app built together" use cases to AG-UI / CopilotKit rather than A2UI (see [AG-UI](/protocols/ag-ui.md) and [A2UI](/protocols/a2ui.md)).
 - **A2UI *interops with* MCP Apps** — the A2UI site documents *A2UI over MCP*, *MCP Apps in A2UI*, and *A2UI in MCP Apps*; yet A2UI routes non-integrated remote widgets to iframes "like MCP Apps", marking a different integration depth (declarative in-renderer components vs iframe-wrapped apps) — see [A2UI](/protocols/a2ui.md) and [MCP Apps](/protocols/mcp-apps.md).
-- **CopilotKit *consumes* all three generative-UI types** — its generative-UI playground renders static generative UI (`useRenderToolCall`), A2UI (`A2UIRenderer` + `HttpAgent` to an A2A backend), and MCP Apps (`MCPAppsMiddleware`) in one app, and it is **built on AG-UI** as its 1st-party client — see [CopilotKit](/frameworks/copilotkit.md).
+- **CopilotKit *consumes* all three generative-UI types** — its generative-UI playground renders static generative UI (`useRenderToolCall`), A2UI (`A2UIRenderer` + `HttpAgent` to an A2A backend), and MCP Apps (`MCPAppsMiddleware`) in one app (plus `useHumanInTheLoop` approval flows), and it is **built on AG-UI** as its 1st-party client — see [CopilotKit](/frameworks/copilotkit.md).
 - **Mastra drives multiple frontends** — the same agent framework runs under Vercel AI SDK, assistant-ui, CopilotKit, and HITL via its UI dojo and `@mastra/ai-sdk` — see [Mastra agentic-UI](/frameworks/mastra-agentic-ui.md).
 - **OpenUI targets the same agent frameworks** — it lists CopilotKit, LangGraph, Mastra, and Vercel AI SDK as integration surfaces, but as a language-and-runtime stack rather than a pure wire protocol — see [OpenUI](/frameworks/openui.md).
+- **AG-UI / CopilotKit adoption signals** — open proposals exist to bridge Oracle's Open Agent Spec agents into AG-UI (issue #828) and to align Microsoft's agent-governance toolkit dashboard with AG-UI event streams (issue #1443); DataFoundry cites AG-UI event-stream design and CopilotKit UX patterns. **Confidence: watchlist** for all (open issues / single project).
 
 ## Design-space tradeoffs
 
@@ -65,13 +66,14 @@ Key relationships, with the page where each is explained:
 ## Where they agree
 
 - **Differentiation from text-only output** — all four exist because text-only agent replies are inefficient (booking flows, dashboards, wizards).
-- **Human-in-the-loop** is treated as first-class: AG-UI lists it as a stack feature; Mastra's dojo trails workflow suspend/resume for user approval; CopilotKit has `useHumanInTheLoop` approval flows.
+- **Human-in-the-loop** is treated as first-class: AG-UI lists it as a stack feature (with a dedicated Dojo demo category); Mastra's dojo trails workflow suspend/resume for user approval; CopilotKit has `useHumanInTheLoop` approval flows (e.g. a `TaskApprovalCard` in its playground).
 - **A multi-frontend market** — Mastra and OpenUI both treat CopilotKit, assistant-ui, Vercel AI SDK as interchangeable, signaling that no single generative-UI protocol has won yet.
+- **Token/stream efficiency is a shared design goal** — OpenUI markets "up to 67% fewer tokens than JSON" and its streaming-first DSL; A2UI describes itself as "LLM-friendly" and streams JSONL for progressive rendering.
 
 ## Status and confidence
 
-- The ecosystem is actively consolidating (CopilotKit monorepo, A2UI v1.0 candidate, MCP Apps spec 2026-01-26, AG-UI growing integrations). A2UI's roadmap targets full-app UIs and multi-agent coordination through 2026–2027.
-- **Confidence:** the protocol/framework characteristics are **source-backed** from each project's primary docs. Explicit interop claims (AG-UI↔A2UI, A2UI↔MCP Apps, CopilotKit's three-type playground) are **confirmed** in the sense of being directly claimed in the sources, but not independently cross-checked.
+- The ecosystem is actively consolidating: CopilotKit monorepo (generative-UI playground and ADK demo moved in; `with-adk` archived 2026-03-12), A2UI v1.0 candidate with v0.8/v0.9 renderer stability, MCP Apps spec 2026-01-26 with SDK adoption requests (csharp-sdk #1431, java-sdk #780), and AG-UI growing integrations (official Java/Go SDKs, Oracle/gov-toolkit proposals). A2UI's roadmap targets full-app UIs and multi-agent coordination through 2026–2027.
+- **Confidence:** the protocol/framework characteristics are **source-backed** from each project's primary docs. Explicit interop claims (AG-UI↔A2UI, A2UI↔MCP Apps, CopilotKit's three-type playground) are **confirmed** in the sense of being directly claimed in the sources, but not independently cross-checked. Adoption/open-issue items are **watchlist**.
 
 ## Source Map
 

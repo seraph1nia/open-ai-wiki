@@ -23,26 +23,29 @@ CopilotKit projects are consolidated into a single monorepo:
 
 ## Generative UI types
 
-The `generative-ui-playground` demo ("Interact with all three types of generative UI, all in one interface"), now consolidated into the monorepo at `examples/…`, shows the three generative-UI categories CopilotKit can render:
+The `generative-ui-playground` demo ("Interact with all three types of generative UI, all in one interface"), now consolidated into the monorepo at `examples/showcases/generative-ui-playground`, shows the three generative-UI categories CopilotKit can render:
 
 1. **Static Generative UI** — tool-call-driven UI rendered via `useRenderToolCall` (e.g. WeatherCard, StockCard) using `CopilotKitProvider` agent switching and `CopilotSidebar` chat.
 2. **A2UI** — declarative JSON rendered via `A2UIRenderer` (from agent responses), with a theme configuration (`theme.ts`) on the frontend; `HttpAgent` connects to a Python A2A backend for A2UI.
 3. **MCP Apps** — UIs bridged from MCP server tools via `MCPAppsMiddleware`; `BasicAgent` runs static GenUI + MCP Apps on a TypeScript agent, backed by an `mcp-server/` and `a2a-agent/` project layout.
 
-This makes CopilotKit a concrete example of **interoperability among the competing generative-UI approaches** — it consumes all three in one app — see the [Generative-UI ecosystem](/concepts/generative-ui-ecosystem.md).
+The playground also demonstrates `useHumanInTheLoop` — interactive approval flows such as a `TaskApprovalCard` (WeatherCard/StockCard rendering for display-only tool calls). This makes CopilotKit a concrete example of **interoperability among the competing generative-UI approaches** — it consumes all three in one app — see the [Generative-UI ecosystem](/concepts/generative-ui-ecosystem.md).
 
-Also relevant: `CopilotKit/with-langgraph-python` and `CopilotKit/canvas-with-langgraph-python` provide AG-UI canvas copilots using CopilotKit with Python agent backends.
+Also relevant:
+- `CopilotKit/with-adk` (demo of CopilotKit with the AG-UI `ada-middleware`, i.e. Google ADK support) was **archived on 2026-03-12** and consolidated into the monorepo at `examples/integrations/adk`.
+- CopilotKit's **skills** (open Agent Skills standard) live under the monorepo, with a routing table across specialized sub-skills (setup, develop, integrations, debug, upgrade, `copilotkit-agui` for building AG-UI backends, contribute, self-update).
+- The CopilotKit README's "AG-UI: The Agent–User Interaction Protocol" section promotes `npx create-ag-ui-app` for new AG-UI apps.
 
 ## Tooling and versioning
 
-- **v2 API surface** — CopilotKit skills and docs target the v2 API (`@copilotkit/react-core`, `@copilotkit/runtime`, `@copilotkit/react-ui`, etc.).
+- **v2 API surface** — CopilotKit skills and docs target the v2 API (`@copilotkit/react-core`, `@copilotkit/runtime`, `@copilotkit/react-ui`, etc.). Setup packages: frontend `@copilotkit/react` + `@copilotkit/core`; runtime `@copilotkit/runtime` + `@copilotkit/agent` (with Express/single-route endpoint factories such as `createCopilotEndpoint`, `createCopilotEndpointExpress`).
 - **Dependency coupling to AG-UI** — `@copilotkit/runtime` declares a peer dependency on `@ag-ui/client` (≥0.0.39), and the AG-UI LangGraph adapter pins `@ag-ui/langgraph`; the open issue [CopilotKit/CopilotKit#2840](https://github.com/CopilotKit/CopilotKit/issues/2840) documents an `ERESOLVE` peer-dependency conflict between `@ag-ui/client@0.0.41` and `@ag-ui/langgraph`'s pinned `@ag-ui/client@0.0.40-alpha.7`. **Confidence: watchlist** — a single bug report, not a stable fact, but it evidences the tight CopilotKit↔AG-UI coupling.
 
 ## Relationship to other frameworks/protocols
 
 - **1st-party client of [AG-UI](/protocols/ag-ui.md)** (built-in agent support; AG-UI was born from CopilotKit's partnership with LangGraph and CrewAI).
 - **Renders [A2UI](/protocols/a2ui.md) and [MCP Apps](/protocols/mcp-apps.md)** UIs alongside its own static generative UI, demonstrating multi-standard consumption.
-- Alternative to [OpenUI](/frameworks/openui.md) (which lists CopilotKit as one of the agent interfaces it integrates with) and to Mastra's agentic-UI layer.
+- Alternative to [OpenUI](/frameworks/openui.md) (which lists CopilotKit as one of the agent interfaces it integrates with) and to Mastra's agentic-UI layer (whose UI dojo includes CopilotKit as one of the frontends it drives).
 
 ## Status
 

@@ -31,12 +31,16 @@ The **Mastra UI dojo** (live at `ui-dojo.mastra.ai`, source `mastra-ai/ui-dojo`)
 - **Mastra client tools** — live, in-browser feedback
 - **HITL** — trialing how Mastra workflows suspend and resume with human input
 
-Mastra states continued first-class support for **AI SDK, assistant-ui, and CopilotKit** — evidence of the multi-standard frontend market the [Generative-UI ecosystem](/concepts/generative-ui-ecosystem.md) compares.
+Announced in the Mastra blog post "Mastra UI Dojo: Choose your frontend" (2025-11-14, CEO Sam Bhagwat), the dojo is built around the recurring user question "How do I build a frontend for my Mastra project?", and Mastra states continued first-class support for **AI SDK, assistant-ui, and CopilotKit** — evidence of the multi-standard frontend market the [Generative-UI ecosystem](/concepts/generative-ui-ecosystem.md) compares.
+
+## Third-party adoption signal
+
+The open-source [DataFoundry](https://github.com/datagallery-lab/datafoundry) AI workbench (data analysis, governed workspace) acknowledges **CopilotKit / AG-UI event stream** for its agent runtime and web/TUI frontends, alongside Mastra agent-runtime patterns, Ink terminal foundations, and MCP for tool integration. It is one of several third-party projects adopting the [AG-UI](/protocols/ag-ui.md) event-stream design. **Confidence: watchlist** — single third-party project, not a framework-level agreement.
 
 ## Other integration notes from this run
 
 - The Mastra docs also reference integrating a **Cedar-OS** copilot component into a Mastra app (v0.x docs).
-- Two of this run's canonical Mastra URLs (`…/agentic-ui/copilotkit` and `…/agentic-ui/openui`) did not resolve to their own pages in the Tavily results — the returned results drifted to the AI SDK UI page and off-target star lists (see the reliability notes on the [source page](/sources/web-search-generative-ui.md)). Only directly matching content above is treated as source-backed.
+- The 2026-08-16 pull's canonical Mastra URLs (`…/agentic-ui/copilotkit` and `…/agentic-ui/openui`) did not resolve to their own pages in the Tavily results — the returned results again drifted to the AI SDK UI page and off-target star lists (see the reliability notes on the [source page](/sources/web-search-generative-ui.md)). Only directly matching content above is treated as source-backed.
 
 ## Relationship to other frameworks
 

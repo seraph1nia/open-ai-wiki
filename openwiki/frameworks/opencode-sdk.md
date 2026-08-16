@@ -17,7 +17,9 @@ Source: [`opencode.ai/docs/sdk`](https://opencode.ai/docs/sdk). Evidence for thi
 
 - Install: `npm install @opencode-ai/sdk`.
 - Create a client: `import { createOpencode } from "@opencode-ai/sdk"` then `const { client } = await createOpencode()` — this starts both a server and a client.
-- Options include `baseUrl` (server URL) and a custom `fetch` implementation.
+- Client options (official docs table): `baseUrl` (server URL; default empty), `fetch` (custom fetch, default `globalThis.fetch`), `parseAs` (`auto`), `responseStyle` (`data` | `fields`, default `fields`), `throwOnError` (default `false`).
+- Types are exported for the API surface: `import type { Session, Message, Part } from "@opencode-ai/sdk"`.
+- The session API is typed: `session.list()`, `session.get({ path })`, `session.children({ path })`, `session.create({ body })`, `session.update({ path, body })`, `session.init({ path, body })` (AGENTS.md init), `session.abort({ path })`, `session.share({ path })` / `unshare`, `session.summarize({ path, body })`, `session.messages({ path })` returning `{ info: Message, parts: Part[] }[]`, `session.message({ path })`, and `session.prompt({ path, body })` with `noReply` support.
 
 ## Position in the factory toolchain
 

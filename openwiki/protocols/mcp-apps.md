@@ -45,13 +45,27 @@ The returned UI runs in a sandboxed iframe whose network and static-resource ori
 
 ## Tooling and specs
 
-- The repository ships **four agent skills** (`agent-skills.md`): `create-mcp-app` (scaffolds a new MCP App with an interactive UI), `migrate-oai-app` (migrates an existing OpenAI App to the MCP Apps SDK), and `add-…` (assembly/extension helpers).
-- **Specification**: the extension is defined under `specification/2026-01-26/apps.mdx`.
-- Adoption requests are already filed across official SDKs — e.g. `modelcontextprotocol/csharp-sdk` issue #1431 (SEP-1865, the MCP Apps proposal) and `modelcontextprotocol/java-sdk` issue #780 (UI capability support). **Confidence: watchlist** for these SDK requests (single issues, not shipped), but the extension itself and its January 2026 open-standard release are source-backed from the repo overview and specification.
+- The repository ships **four agent skills** (`agent-skills.md`): `create-mcp-app` (scaffolds a new MCP App with an interactive UI), `migrate-oai-app` (migrates an existing OpenAI App to the MCP Apps SDK), `add-app-to-server` (adds interactive UI to an existing MCP server's tools), and `convert-web-app` (converts an existing web application into an MCP App). Skills install via a Claude Code plugin (`/plugin marketplace add modelcontextprotocol/ext-apps`) or the Vercel Skills CLI (`npx skills add modelcontextprotocol/ext-apps`), and work across Claude Code, VS Code/GitHub Copilot, Codex, Gemini CLI, Cline, and Goose.
+- **Specification**: the extension is defined under `specification/2026-01-26/apps.mdx` and is identified by the extension ID **`io.modelcontextprotocol/ui`**.
+
+### Client/server capability negotiation
+
+The spec formalizes how a host advertises UI support and how a server reacts (from `apps.mdx`):
+
+- On `initialize`, the client sends the extension capability under `capabilities.extensions`, e.g. `"io.modelcontextprotocol/ui": { "mimeTypes": ["text/html;profile=mcp-app"] }`. `mimeTypes` is a required array of supported content types; future versions may add `features` (e.g. `["streaming","persistence"]`) and `sandboxPolicies` (supported sandbox attribute configurations).
+- Servers **SHOULD check client capabilities before registering UI-enabled tools**; the SDK provides the `getUiCapability()` helper for this.
+
+### Reference TypeScript SDK surface
+
+The dedicated package `@modelcontextprotocol/ext-apps` is the reference implementation alongside `@modelcontextprotocol/sdk`:
+
+- `extensions` fields on `ClientCapabilities` and `ServerCapabilities`; generic `_meta` on tool definitions.
+- `@modelcontextprotocol/ext-apps/server` module: `registerAppTool()` (tools with normalized UI metadata), `registerAppResource()` (resources with the default MCP Apps MIME type), `getUiCapability()`; typed interfaces `McpUiToolMeta`, `McpUiResourceMeta`, `McpUiResourceCsp`, `McpUiClientCapabilities`; constants `RESOURCE_MIME_TYPE`, `EXTENSION_ID`, `RESOURCE_URI_META_KEY`.
 
 ## Relationship to other generative-UI efforts
 
 - **Extends** the Model Context Protocol (see <https://modelcontextprotocol.io>) itself — it is the UI branch of the MCP family rather than a standalone agent-UI wire protocol like [AG-UI](/protocols/ag-ui.md).
+- Adoption requests are filed across official SDKs — `modelcontextprotocol/csharp-sdk` issue #1431 (SEP-1865, milestone "2026-07-28 Spec Compliance") and `modelcontextprotocol/java-sdk` issue #780 (2026-02-12, waiting for triage). **Confidence: watchlist** (open issues, not yet shipped), but the extension itself and its January 2026 open-standard release are source-backed from the repo overview and specification.
 - **Served over the Agent Host Protocol's `mcp://` side-channel** — AHP hosts run the MCP server whose `AhpMcpUiHostCapabilities` advertise the tools/resources an [AHP](/protocols/agent-host-protocol.md) client can address, letting host-served UIs render MCP Apps resources (see the [AHP page](/protocols/agent-host-protocol.md)).
 - **Complementary to, and explicitly interoperable with, [A2UI](/protocols/a2ui.md)** — the A2UI site documents *A2UI over MCP*, *MCP Apps in A2UI*, and *A2UI in MCP Apps*. Note one distinction: the [A2UI](/protocols/a2ui.md) "What A2UI is not" guidance routes non-integrated remote widgets to iframes "like MCP Apps", showing the two target different integration depths (declarative in-renderer components vs iframe-wrapped apps).
 - See the [Generative-UI ecosystem](/concepts/generative-ui-ecosystem.md) comparison for the fuller map.

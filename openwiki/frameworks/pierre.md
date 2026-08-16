@@ -32,3 +32,9 @@ Project repo metadata (path listing) shows a pnpm/moon workspace with `packages/
 - **Source-backed:** the repo's existence, TypeScript/monorepo nature, `@pierre/diffs` v1.3.0 release content, and focus on diffs/trees (retrieved from the GitHub repo and releases pages this run).
 - **Watchlist:** the Tavily `answer` fields (e.g. "over 6,000 stars", focus claims) are synthesized and not independently verified; treat star counts as unconfirmed.
 - Gap: the repository and its releases resource were only witnessed via web-search results this run, not ingested directly. Direct repo/release ingestion would confirm version history and cadence.
+
+## Activity signals (2026-08-16 run, watchlist)
+
+- Open issue #331 proposes a `collapsed` prop / collapse–expand control for individual file diffs — consistent with large-file diff performance concerns (issue #273: loading-state request for thousands-of-lines diffs).
+- Open bug issue #450: `FileContent.lang` override does not change syntax highlighting in `@pierre/diffs` — a concrete library bug report.
+- A companion `pierrecomputer/sdk` ("Code Storage SDKs") exists alongside the main repo and an `icons` repo, indicating a growing org surface.

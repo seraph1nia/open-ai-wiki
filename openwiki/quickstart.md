@@ -31,9 +31,9 @@ As of this update (2026-08-16), the wiki documents two high-value **agent protoc
 - **[Factory toolchain hub](/concepts/factory-toolchain.md)** — canonical cross-source hub for how wire/state protocols, SDKs, and control surfaces compose into one agent-driven delivery pipeline.
 - **[Pierre](/frameworks/pierre.md)** — the Pierre Computer Company's open-source diff/tree toolkit; `@pierre/diffs` v1.3.0 ("the Edit release") and the answered Pierre open question.
 - **[t3code](/frameworks/t3code.md)** — the "agent harness control surface" (mobile/web/desktop) that drives Claude Code, Codex, Cursor, Grok Build, and OpenCode.
-- **[Effect](/frameworks/effect.md)** — the typed TypeScript orchestration library (v4 era); durable-execution surface is a confirmed evidence gap.
+- **[Effect](/frameworks/effect.md)** — the typed TypeScript orchestration library (v4 era); durable-execution surface is now source-backed (`DurableQueue` ported from v3, `@effect/workflow` in alpha).
 - **[OpenCode SDK](/frameworks/opencode-sdk.md)** — the type-safe `@opencode-ai/sdk` client for controlling the opencode server.
-- **[Pi SDK](/frameworks/pi-sdk.md)** — programmatic access to the Pi coding agent for embedding and automation.
+- **[Pi SDK](/frameworks/pi-sdk.md)** — programmatic access to the Pi coding agent for embedding and automation, with an official release trail through v0.84.2.
 
 ## How the wiki is organized
 
@@ -63,24 +63,26 @@ As of this update (2026-08-16), the wiki documents two high-value **agent protoc
 | Sources | `/sources/web-search-generative-ui.md` | Web-search generative-UI run evidence (2026-08-16) |
 | Sources | `/sources/web-search-factory-tools.md` | Web-search Factory tools run evidence (2026-08-16) |
 | Memory | `/themes.md` | Recurring themes index (generative-UI standardization; factory toolchain) |
-| Memory | `/open-questions.md` | Unresolved questions about corpus coverage (Effect durable-execution) |
+| Memory | `/open-questions.md` | Unresolved questions about corpus coverage (Effect Workflow/Activity deep API semantics) |
 
 ## Latest ingestion note (2026-08-16)
 
-Two web-search runs this day. The **generative-UI run** (Tavily, 8 queries) introduced the generative-UI domain and its [ecosystem hub](/concepts/generative-ui-ecosystem.md). The **Factory tools run** (Tavily, 12 queries) added the [agentic-SDLC factory toolchain](/concepts/factory-toolchain.md), its tool pages, durable AHP `mcp://` channel evidence, and answered the Pierre open question. Reliability caveats (drifted `answer` fields, off-target results, Effect gap) are on the [Factory tools source-evidence page](/sources/web-search-factory-tools.md).
+Two web-search runs this day plus a second Factory tools pull. The **generative-UI runs** (Tavily, 8 queries each) introduced the generative-UI domain and its [ecosystem hub](/concepts/generative-ui-ecosystem.md); the second pull deepened SDK/interop evidence on the same pages. The **Factory tools runs** (Tavily, 12 queries each) added the [agentic-SDLC factory toolchain](/concepts/factory-toolchain.md), its tool pages, durable AHP `mcp://` channel evidence, and — in the second pull — closed the **Effect durable-execution evidence gap** (official v4 beta recap: `DurableQueue` ported from v3, `@effect/workflow` in alpha), added the Pi official release trail (0.80.x–0.84.2), and expanded ACP ecosystem facts. Reliability caveats (drifted `answer` fields, off-target results) are on the [Factory tools source-evidence page](/sources/web-search-factory-tools.md).
 
 ## Key facts (confirmed / source-backed)
 
 - Generative-UI approaches answer two questions — *how agents describe UI to clients* and *how streaming/state/HITL work* — via four distinct designs: event wire protocol (AG-UI), declarative JSON (A2UI), declarative language + runtime (OpenUI), and iframe-wrapped MCP extension (MCP Apps). See [the ecosystem comparison](/concepts/generative-ui-ecosystem.md).
-- **MCP Apps** is the first official MCP extension, co-developed by Anthropic and OpenAI, released as an open standard in **January 2026** (spec `2026-01-26`); renders server-declared HTML resources in CSP-sandboxed iframes.
-- **A2UI** is declarative, no-code-execution, uses negotiated component Catalogs and Surfaces; current stable v0.9.1, v1.0 candidate, roadmap targets full-app UIs and multi-agent coordination.
-- **AG-UI** is event-based (≈16 event types), has official TypeScript/Python and community Kotlin/Go SDKs, and lists **human-in-the-loop** as a first-class stack feature.
-- **CopilotKit** consolidated to a monorepo and renders **all three** generative-UI types (static, A2UI, MCP Apps) in one playground; it is the 1st-party client of AG-UI.
+- **MCP Apps** is the first official MCP extension, co-developed by Anthropic and OpenAI, released as an open standard in **January 2026** (spec `2026-01-26`); extension id **`io.modelcontextprotocol/ui`**; renders server-declared HTML resources in CSP-sandboxed iframes. Host-SDK adoption requests are open in csharp-sdk (#1431, SEP-1865) and java-sdk (#780).
+- **A2UI** is declarative, no-code-execution, uses negotiated component Catalogs and Surfaces; current stable v0.9.1, v1.0 candidate targets Q4 2026; maintained renderers cover React, Lit, Angular, Flutter (SwiftUI/Jetpack Compose planned); streams JSONL with JSON-Pointer data binding and separate A2A `userAction`/`error` client messages.
+- **AG-UI** is event-based (≈16 event types), has official TypeScript/Python plus Java and Go SDKs (SSE-based), and lists **human-in-the-loop** as a first-class stack feature. Open proposals would bridge Oracle's Open Agent Spec and Microsoft's agent-governance toolkit onto AG-UI (watchlist).
+- **OpenUI** markets "up to 67% fewer tokens than JSON" for its streaming-first OpenUI Lang (v0.5 adds reactive state/data queries/interactive apps); OpenUI Cloud adds validation, theming, fallbacks, versioning, and observability; the repo carries an explicit no-cryptocurrency disclaimer.
+- **CopilotKit** consolidated to a monorepo and renders **all three** generative-UI types (static, A2UI, MCP Apps) in one playground, including `useHumanInTheLoop` approval flows; its `with-adk` (Google ADK) demo was archived 2026-03-12 into the monorepo.
 - Earlier confirmed AHP facts remain: transport-agnostic JSON-RPC 2.0, per-message `channel: URI` routing, per-artifact SemVer releases, latest spec v0.7.0 (2026-07-31), active working draft.
 - **AHP's `mcp://` side-channel** lets an AHP client originate a capability-gated subset of MCP traffic (MCP wire format verbatim) against a host-run MCP server; it ties AHP into the [MCP Apps](/protocols/mcp-apps.md) generative-UI domain.
 - **[Pierre](/frameworks/pierre.md)** is confirmed as the Pierre Computer Company's open-source diff/tree toolkit; `@pierre/diffs` reached **v1.3.0** (the "Edit release", in-place diff editing). This answers the prior Pierre open question.
 - **[t3code](/frameworks/t3code.md)** is an early-stage "agent harness control surface" (mobile/web/desktop) that drives Claude Code, Codex, Cursor, Grok Build, and OpenCode; launched via `npx t3@latest`.
-- **[Effect](/frameworks/effect.md)** v4 beta confirms broad API changes; its **durable-execution surface (Workflow/Activity/DurableQueue) is a confirmed evidence gap**.
+- **[Effect](/frameworks/effect.md)** v4 beta (launched 2026-02-18) confirms broad API changes; its **durable-execution surface is now source-backed** — `DurableQueue` ported from v3 with persistent queue semantics, workflow suspension/failure fixes in the beta, and `@effect/workflow` delivering durable workflows in alpha.
+- **[Pi SDK](/frameworks/pi-sdk.md)** has an official release trail (0.80.x–0.84.2 on `pi.dev/news`); v0.84.0 carried major SDK breaking changes (session/`SessionRepo` rework, `message_update` delta-only events, model-registry refresh changes).
 
 ## Start here
 
@@ -90,9 +92,9 @@ For the generative-UI domain, start at the [Generative-UI ecosystem](/concepts/g
 
 Deferred additions, with the evidence gap or scope reason:
 
-- **Effect durable-execution surface** — Workflow, Activity, and DurableQueue semantics are in scope but were not retrieved this run; the single query returned an off-target hit. Target the Effect v4 workflow docs directly (see [Effect page](/frameworks/effect.md) and the [open question](/open-questions.md)).
-- **Direct ingestion of Pierre, t3code, Effect, OpenCode, and Pi repo/release resources** — each was only witnessed via web-search results this run; direct repo/release ingestion would confirm version history and cadence.
-- **Generative-UI release/version resources** — this run ingested docs/README pages, not formal release files. Verify AG-UI SDK, A2UI (v1.0), and CopilotKit version claims against their release resources before promoting them to canonical facts.
+- **Effect Workflow/Activity deep API semantics** — the DurableQueue port and `@effect/workflow` alpha existence are source-backed, but the precise Workflow/Activity primitive semantics and packaging were not fully retrieved; target the official Effect v4 workflow docs directly (see [Effect page](/frameworks/effect.md) and the [open question](/open-questions.md)).
+- **Direct ingestion of Pierre, t3code, Effect, OpenCode, and Pi repo/release resources** — each was witnessed via web-search results this run only; direct repo/release ingestion would confirm version history and cadence (Pi's `pi.dev/news` trail is covered only partially, 0.80.x–0.84.2).
+- **Generative-UI release/version resources** — this run ingested docs/README pages, not formal release files. Verify AG-UI SDK, A2UI (v1.0), and CopilotKit version claims (e.g. `@copilotkit/runtime@1.10.6`, `@ag-ui/client@0.0.41` from issue #2840; AG-UI Java/Go SDK package versions) against release resources before promoting them to canonical facts. See the [open question](/open-questions.md).
 - **Client-registry changelogs (Rust/TS/Kotlin)** for AHP — release evidence lives in crates.io/npm/Maven Central, not the GitHub releases resource; ingest those registries to extend the reference.
 - **Deeper AHP channel specs (chat, session, terminal, changeset)** — pull the individual specification docs to the [AHP page](/protocols/agent-host-protocol.md) when a fuller protocol reference is wanted.
 - **Deepen the ACP canonical protocol detail** — the ACP *spec* lives in the `agentclientprotocol/agent-client-protocol` repo and <https://agentclientprotocol.com>, not in the TypeScript SDK releases resource.
