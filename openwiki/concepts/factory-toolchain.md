@@ -50,5 +50,9 @@ The same ACP/AHP foundation that powers editors and agent hosts is reused by con
 - Pierre's `@pierre/diffs` reached v1.3.0 ("the Edit release") — adopting in-place code editing for rendered diffs (see [Pierre page](/frameworks/pierre.md)).
 - t3code is early-stage, launched via `npx t3@latest`, and controls OpenCode among other agents (see [t3code page](/frameworks/t3code.md)).
 
+## Followed idea feeds
+
+Since 2026-08-17 this hub is also fed by three engineering blogs, tracked by the same `web-search-factory-tools` source instance: the [Zed blog](https://zed.dev/blog) (editor and agent-harness design, the ACP end of the factory), the [Solo.io blog](https://www.solo.io/blog) (gateway and agent-infrastructure layer), and the [Mastra blog](https://mastra.ai/blog) (agent runtime, workflows, memory). Durable concepts and ideas from those posts are folded into this hub and the tool pages above rather than kept as per-post summaries. Which posts have already been consumed is recorded in the [blog post ingestion ledger](/sources/blog-post-ledger.md), which is what keeps repeated scheduled runs from ingesting the same post twice.
+
 ## Backlog
 - **Effect durable-execution surface** (Workflow, Activity, DurableQueue): no in-scope evidence was retrieved this run (the one result was off-target for a different agent). Confirm against the Effect v4 docs before promoting claims to canonical fact.
