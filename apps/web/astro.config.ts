@@ -4,7 +4,7 @@ import { defineConfig } from "astro/config";
 import mermaid from "astro-mermaid";
 import { fileURLToPath } from "node:url";
 import starlightTags from "starlight-tags";
-import starlightThemeRapide from "starlight-theme-rapide";
+import starlightThemeGalaxy from "starlight-theme-galaxy";
 import { SITE_DESCRIPTION, SITE_TITLE, WIKI_ROOT } from "./src/lib/constants";
 import { remarkWikiLinks } from "./src/okf/links";
 
@@ -48,7 +48,9 @@ export default defineConfig({
       // `trailingSlash: "always"` requires. See the file for the specifics.
       routeMiddleware: "./src/starlight-route-data.ts",
       plugins: [
-        starlightThemeRapide(),
+        // Overrides Header and ThemeSelect and prepends its own CSS ahead of
+        // any `customCss`, so it belongs before plugins that touch those slots.
+        starlightThemeGalaxy(),
         // Surfaces the `tags` OKF already writes on every document. `create`
         // rather than the default `warn`: without it the plugin requires a
         // `tags.yml` declaring every tag up front and throws when it is
