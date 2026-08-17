@@ -6,6 +6,11 @@
 # the corpus rather than being evidence for it.
 changelog/
 
+# Raw tool results the agent spilled to disk when a response was too large to
+# hold in context. Reading them back would let an unreviewed search payload
+# re-enter the corpus as if it were evidence.
+large_tool_results/
+
 # Generated dependencies, build output, caches, and private VCS state.
 .git/
 node_modules/

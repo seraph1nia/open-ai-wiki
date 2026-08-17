@@ -12,7 +12,6 @@ okf_version: "0.1"
 
 - [concepts](concepts/)
 - [frameworks](frameworks/)
-- [large_tool_results](large_tool_results/)
 - [protocols](protocols/)
 - [references](references/)
 - [sources](sources/)

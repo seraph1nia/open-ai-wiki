@@ -52,6 +52,12 @@ The same ACP/AHP foundation that powers editors and agent hosts is reused by con
 - t3code is early-stage, launched via `npx t3@latest`, and controls OpenCode among other agents (see [t3code page](/frameworks/t3code.md)).
 - **Effect's durable-execution surface is now source-backed**: the v4 beta launch (2026-02-18) and February–May recap confirm `DurableQueue` was ported from v3 to v4 with persistent queue semantics, and `@effect/workflow` delivers durable workflows in alpha (see [Effect page](/frameworks/effect.md)).
 
+## Followed idea feeds
+
+Since 2026-08-17 this hub is also fed by four engineering blogs, tracked by the same `web-search-factory-tools` source instance: the [Zed blog](https://zed.dev/blog) (editor and agent-harness design, the ACP end of the factory), the [Solo.io blog](https://www.solo.io/blog) (gateway and agent-infrastructure layer), the [Mastra blog](https://mastra.ai/blog) (agent runtime, workflows, memory), and the [GitHub Agentic Workflows blog](https://github.github.com/gh-aw/blog) (agents running as CI workflows, with their trigger, permission, and safe-output model). Durable concepts and ideas from those posts are folded into this hub and the tool pages above rather than kept as per-post summaries. Which posts have already been consumed is recorded in the [blog post ingestion ledger](/sources/blog-post-ledger.md), which is what keeps repeated scheduled runs from ingesting the same post twice.
+
+The [gh-aw workflow gallery](https://github.github.com/gh-aw/index.html#gallery) is followed alongside it as a catalogue of reusable agentic workflow patterns — the CI-side counterpart to the editor-side and control-surface tools above. Being a living index rather than a post feed, it sits outside the ledger and is re-read each run, contributing only when its entries actually change.
+
 ## Backlog
 - **Activity semantics + full `@effect/workflow` API surface** — the DurableQueue port and workflow fixes are source-backed, but the exact Workflow/Activity primitive semantics and packaging were not fully retrieved; target the official v4 workflow docs directly.
 - **Direct ingestion of Pierre, t3code, Effect, OpenCode, and Pi repo/release resources** — each was only witnessed via web-search results this run; direct repo/release ingestion would confirm version history and cadence. (Pi's official release trail exists at `pi.dev/news` but is only partially covered this run.)
