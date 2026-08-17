@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { derivedTitle, toStarlightFrontmatter } from "./okf";
+import { derivedTitle, toStarlightFrontmatter } from "./loader";
 
 describe("OKF to Starlight frontmatter", () => {
   test("titles the index pages OKF leaves without frontmatter", () => {

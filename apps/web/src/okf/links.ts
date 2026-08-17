@@ -1,5 +1,5 @@
 import { relative } from "node:path";
-import { renderedWikiHref } from "./wiki.js";
+import { renderedWikiHref } from "./routes.js";
 
 interface Node {
   type?: string;

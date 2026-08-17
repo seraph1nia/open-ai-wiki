@@ -62,6 +62,12 @@ importers:
       mermaid:
         specifier: 11.16.0
         version: 11.16.0
+      starlight-tags:
+        specifier: ^1.0.1
+        version: 1.0.1(@astrojs/starlight@0.41.7(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(astro@7.2.2(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(tsx@4.21.0)(yaml@2.9.0))(supports-color@7.2.0)(typescript@5.9.3))
+      starlight-theme-rapide:
+        specifier: ^0.5.2
+        version: 0.5.2(@astrojs/starlight@0.41.7(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(astro@7.2.2(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(tsx@4.21.0)(yaml@2.9.0))(supports-color@7.2.0)(typescript@5.9.3))
     devDependencies:
       '@astrojs/check':
         specifier: 0.9.5
@@ -4447,6 +4453,18 @@ packages:
 
   standardwebhooks@1.0.0:
     resolution: {integrity: sha512-BbHGOQK9olHPMvQNHWul6MYlrRTAOKn03rOe4A8O3CLWhNf4YHBqq2HJKKC+sfqpxiBY52pNeesD6jIiLDz8jg==}
+
+  starlight-tags@1.0.1:
+    resolution: {integrity: sha512-h6LbISwiYiP5pAyD59CyU6KTY0g0wmQi3WJcXDMYfjEeejye3UH6jNOhG1JlcGk/mMpAQKDQ0zj8OKWtHiYcYw==}
+    engines: {node: '>=22.12.0'}
+    peerDependencies:
+      '@astrojs/starlight': '>=0.38.0'
+
+  starlight-theme-rapide@0.5.2:
+    resolution: {integrity: sha512-4kNJutt0/3E0rjZvG9hvKeTTHGOHC97t2ZQDwDcokTM25yLgxavFu7BCm2Dm2UTw7fJpRXpu4gUWJ9xAOBmNww==}
+    engines: {node: '>=18'}
+    peerDependencies:
+      '@astrojs/starlight': '>=0.34.0'
 
   std-env@4.2.0:
     resolution: {integrity: sha512-oCUKSupKTHX53EyjDtuZQ64pjLJ6yYCtpmEw0goYxtjG9KpbRe8KAsl2tBUGU9DyMcJ0RwJ8GqJAFzMXcXW1Rw==}
@@ -10004,6 +10022,15 @@ snapshots:
     dependencies:
       '@stablelib/base64': 1.0.1
       fast-sha256: 1.3.0
+
+  starlight-tags@1.0.1(@astrojs/starlight@0.41.7(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(astro@7.2.2(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(tsx@4.21.0)(yaml@2.9.0))(supports-color@7.2.0)(typescript@5.9.3)):
+    dependencies:
+      '@astrojs/starlight': 0.41.7(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(astro@7.2.2(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(tsx@4.21.0)(yaml@2.9.0))(supports-color@7.2.0)(typescript@5.9.3)
+      js-yaml: 4.3.1
+
+  starlight-theme-rapide@0.5.2(@astrojs/starlight@0.41.7(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(astro@7.2.2(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(tsx@4.21.0)(yaml@2.9.0))(supports-color@7.2.0)(typescript@5.9.3)):
+    dependencies:
+      '@astrojs/starlight': 0.41.7(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(astro@7.2.2(@astrojs/markdown-remark@7.2.2(supports-color@7.2.0))(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.3)(@types/node@24.13.3)(tsx@4.21.0)(yaml@2.9.0))(supports-color@7.2.0)(typescript@5.9.3)
 
   std-env@4.2.0: {}
 

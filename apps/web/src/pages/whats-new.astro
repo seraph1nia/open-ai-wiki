@@ -2,7 +2,7 @@
 import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import { getCollection } from "astro:content";
 import { groupByDay, toItems } from "../lib/changelog";
-import { withBase } from "../lib/wiki";
+import { withBase } from "../okf";
 
 const base = import.meta.env.BASE_URL;
 const items = toItems(

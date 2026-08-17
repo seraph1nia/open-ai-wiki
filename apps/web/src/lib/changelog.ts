@@ -1,4 +1,4 @@
-import { entryPath } from "./wiki.js";
+import { entryPath } from "../okf/routes.js";
 
 /**
  * Reads the changelog fragments that `scripts/wiki-changelog.ts` records after

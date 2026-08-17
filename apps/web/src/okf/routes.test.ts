@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { entryPath, renderedWikiHref, withBase } from "./wiki";
+import { entryPath, renderedWikiHref, withBase } from "./routes";
 
 describe("OKF route helpers", () => {
   test("maps root, directory indexes, and concepts to clean routes", () => {

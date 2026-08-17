@@ -2,7 +2,7 @@ import rss from "@astrojs/rss";
 import type { APIContext } from "astro";
 import { getCollection } from "astro:content";
 import { highlights, toItems } from "../lib/changelog.js";
-import { entryPath, withBase } from "../lib/wiki.js";
+import { entryPath, withBase } from "../okf/index.js";
 
 /**
  * The changelog as a feed, so the wiki can be followed without visiting it.

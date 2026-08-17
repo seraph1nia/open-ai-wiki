@@ -18,15 +18,6 @@ import type { Loader } from "astro/loaders";
  * same way the wiki's own index pages label a directory.
  */
 
-/** OKF frontmatter fields Starlight has no equivalent for. */
-export interface OkfFields {
-  type?: string | undefined;
-  tags?: string[] | undefined;
-  timestamp?: unknown;
-  resource?: string | undefined;
-  okf_version?: string | undefined;
-}
-
 interface OkfLoaderOptions {
   /** Corpus root, relative to the Astro project root. */
   base: string;
