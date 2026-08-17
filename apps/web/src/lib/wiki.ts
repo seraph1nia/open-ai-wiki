@@ -1,6 +1,11 @@
-import type { CollectionEntry } from "astro:content";
-
-export type WikiEntry = CollectionEntry<"wiki">;
+/**
+ * Route helpers for the OKF corpus.
+ *
+ * Starlight owns page rendering and routing now, so what is left here is the
+ * mapping between an OKF path and the URL Starlight publishes it at: used by
+ * `remarkWikiLinks` to rewrite the corpus's internal `.md` links, and by the
+ * changelog, whose fragments record wiki-relative paths rather than URLs.
+ */
 
 export function normalizeWikiId(value: string): string {
   return value
@@ -15,18 +20,6 @@ export function entryPath(id: string): string {
   if (clean === "index") return "/";
   if (clean.endsWith("/index")) clean = clean.slice(0, -6);
   return `/${clean}/`;
-}
-
-export function isConceptEntry(entry: WikiEntry): boolean {
-  return Boolean(entry.data.type);
-}
-
-export function isRootIndex(entry: WikiEntry): boolean {
-  return normalizeWikiId(entry.id) === "index";
-}
-
-export function isDirectoryIndex(entry: WikiEntry): boolean {
-  return !isRootIndex(entry) && /(?:^|\/)index\.md$/.test(entry.filePath ?? "");
 }
 
 export function renderedWikiHref(
@@ -51,23 +44,6 @@ export function renderedWikiHref(
   if (target.endsWith("/index")) target = target.slice(0, -6);
   const result = withBase(entryPath(target), base);
   return fragment ? `${result}#${fragment}` : result;
-}
-
-export function titleFor(entry: WikiEntry): string {
-  const id = normalizeWikiId(entry.id);
-  if (isDirectoryIndex(entry)) {
-    const directory = id.split("/").at(-1) ?? id;
-    return directory
-      .split("-")
-      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-      .join(" ");
-  }
-  return (
-    entry.data.title ??
-    entry.body?.match(/^#\s+(.+)$/m)?.[1] ??
-    id.split("/").at(-1) ??
-    entry.id
-  );
 }
 
 export function withBase(pathname: string, base: string): string {

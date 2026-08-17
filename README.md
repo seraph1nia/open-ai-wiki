@@ -158,7 +158,7 @@ Scheduled OpenWiki updates read `OPENROUTER_API_KEY` and `TAVILY_API_KEY` as sec
 - `openwiki/` — canonical OpenWiki/OKF knowledge bundle
 - `changelog/` — one immutable fragment per update run, derived from Git
 - `config/openwiki/onboarding.json` — public personal-mode connector configuration
-- `apps/web/` — read-only Astro static renderer
+- `apps/web/` — read-only Astro + Starlight static renderer; `src/lib/okf.ts` adapts the OKF bundle to Starlight's `docs` collection
 - `scripts/wiki-update.sh` — guarded personal-workspace staging and publication wrapper
 - `scripts/wiki-changelog.ts` — records what a run changed, for `/whats-new`
 - `scripts/wiki-lint.ts` — offline OKF validation of the bundle (`vp run lint:wiki`)

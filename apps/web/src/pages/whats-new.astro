@@ -1,6 +1,6 @@
 ---
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
 import { getCollection } from "astro:content";
-import BaseLayout from "../layouts/BaseLayout.astro";
 import { groupByDay, toItems } from "../lib/changelog";
 import { withBase } from "../lib/wiki";
 
@@ -19,119 +19,109 @@ const dayFormat = new Intl.DateTimeFormat("en-GB", {
 const kindLabels = { new: "New", updated: "Updated", removed: "Removed" };
 ---
 
-<BaseLayout
-  title="What's new"
-  description="Every change to the AI Knowledge wiki, newest first: new pages, substantive updates, and what each one means."
+<StarlightPage
+  frontmatter={{
+    title: "What's new",
+    description:
+      "Every change to the AI Knowledge wiki, newest first: new pages, substantive updates, and what each one means.",
+    tableOfContents: false,
+  }}
 >
-  <article>
-    <p class="eyebrow">Changelog</p>
-    <h1>What&rsquo;s new</h1>
-    <p class="lede">
-      Scheduled ingestion reconciles this wiki against its configured sources
-      every day. Each run that changes a page is recorded here, newest first.
-    </p>
-    <p class="meta feed-link">
-      <a href={withBase("/whats-new.xml", base)}>Subscribe via RSS</a>
-    </p>
+  <p>
+    Scheduled ingestion reconciles this wiki against its configured sources
+    every day. Each run that changes a page is recorded here, newest first.
+    <a href={withBase("/whats-new.xml", base)}>Subscribe via RSS</a>.
+  </p>
 
-    {
-      days.length === 0 && (
-        <p class="meta">
-          No runs recorded yet. The next scheduled update will start this log.
-        </p>
-      )
-    }
+  {
+    days.length === 0 && (
+      <p>
+        No runs recorded yet. The next scheduled update will start this log.
+      </p>
+    )
+  }
 
-    {
-      days.map((day) => {
-        const notable = day.items.filter((item) => !item.minor);
-        const minor = day.items.filter((item) => item.minor);
-        return (
-          <section class="day">
-            <h2>
-              <time datetime={day.day}>{dayFormat.format(day.date)}</time>
-            </h2>
+  {
+    days.map((day) => {
+      const notable = day.items.filter((item) => !item.minor);
+      const minor = day.items.filter((item) => item.minor);
+      return (
+        <section class="day">
+          <h2>
+            <time datetime={day.day}>{dayFormat.format(day.date)}</time>
+          </h2>
 
-            {notable.map((item) => (
-              <div class="entry">
-                <p class="entry-head">
-                  <span class={`badge badge-${item.kind}`}>
-                    {kindLabels[item.kind]}
-                  </span>
-                  {item.href ? (
-                    <a class="entry-title" href={withBase(item.href, base)}>
-                      {item.title}
-                    </a>
-                  ) : (
-                    <span class="entry-title removed">{item.title}</span>
-                  )}
-                </p>
-                {item.summary && <p class="entry-summary">{item.summary}</p>}
-                <p class="meta entry-meta">
-                  {item.type && <span>{item.type}</span>}
-                  <span>
-                    +{item.added} / &minus;{item.removed} lines
-                  </span>
-                  {item.resource && (
-                    <a
-                      href={item.resource}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Source &nearr;
-                    </a>
-                  )}
-                </p>
-              </div>
-            ))}
+          {notable.map((item) => (
+            <div class="entry">
+              <p class="entry-head">
+                <span class={`badge badge-${item.kind}`}>
+                  {kindLabels[item.kind]}
+                </span>
+                {item.href ? (
+                  <a class="entry-title" href={withBase(item.href, base)}>
+                    {item.title}
+                  </a>
+                ) : (
+                  <span class="entry-title removed">{item.title}</span>
+                )}
+              </p>
+              {item.summary && <p class="entry-summary">{item.summary}</p>}
+              <p class="entry-meta">
+                {item.type && <span>{item.type}</span>}
+                <span>
+                  +{item.added} / &minus;{item.removed} lines
+                </span>
+                {item.resource && (
+                  <a
+                    href={item.resource}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Source &nearr;
+                  </a>
+                )}
+              </p>
+            </div>
+          ))}
 
-            {minor.length > 0 && (
-              <details class="minor">
-                <summary>
-                  {minor.length} smaller edit{minor.length === 1 ? "" : "s"}
-                </summary>
-                <ul>
-                  {minor.map((item) => (
-                    <li>
-                      {item.href ? (
-                        <a href={withBase(item.href, base)}>{item.title}</a>
-                      ) : (
-                        item.title
-                      )}
-                      <span class="meta">
-                        {" "}
-                        +{item.added} / &minus;{item.removed}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </details>
-            )}
-          </section>
-        );
-      })
-    }
-  </article>
-</BaseLayout>
+          {minor.length > 0 && (
+            <details class="minor">
+              <summary>
+                {minor.length} smaller edit{minor.length === 1 ? "" : "s"}
+              </summary>
+              <ul>
+                {minor.map((item) => (
+                  <li>
+                    {item.href ? (
+                      <a href={withBase(item.href, base)}>{item.title}</a>
+                    ) : (
+                      item.title
+                    )}
+                    <span class="entry-meta">
+                      {" "}
+                      +{item.added} / &minus;{item.removed}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          )}
+        </section>
+      );
+    })
+  }
+</StarlightPage>
 
 <style>
-  article {
-    max-width: 800px;
-  }
-  .feed-link {
-    margin-bottom: 3rem;
-  }
   .day {
-    border-top: 1px solid var(--line);
-    padding-top: 1.6rem;
-    margin-top: 2.6rem;
+    border-top: 1px solid var(--sl-color-hairline);
+    padding-top: 1.5rem;
+    margin-top: 2.5rem;
   }
   .day h2 {
     margin: 0 0 1.4rem;
-    font-size: 1.05rem;
-    letter-spacing: 0.02em;
-    color: var(--muted);
-    font-weight: 600;
+    font-size: var(--sl-text-base);
+    color: var(--sl-color-gray-3);
   }
   .entry {
     margin-bottom: 2rem;
@@ -145,31 +135,28 @@ const kindLabels = { new: "New", updated: "Updated", removed: "Removed" };
   .badge {
     flex: none;
     border-radius: 999px;
-    border: 1px solid var(--line);
+    border: 1px solid currentcolor;
     padding: 0.1rem 0.6rem;
-    font-size: 0.7rem;
-    font-weight: 800;
+    font-size: var(--sl-text-xs);
+    font-weight: 700;
     letter-spacing: 0.09em;
     text-transform: uppercase;
   }
   .badge-new {
-    color: var(--accent);
-    border-color: #477a68;
+    color: var(--sl-color-green-high);
   }
   .badge-updated {
-    color: var(--accent2);
-    border-color: #6b5a33;
+    color: var(--sl-color-orange-high);
   }
   .badge-removed {
-    color: var(--muted);
+    color: var(--sl-color-gray-3);
   }
   .entry-title {
-    font-size: 1.15rem;
-    font-weight: 700;
-    text-decoration: none;
+    font-size: var(--sl-text-lg);
+    font-weight: 600;
   }
   .entry-title.removed {
-    color: var(--muted);
+    color: var(--sl-color-gray-3);
     text-decoration: line-through;
   }
   .entry-summary {
@@ -180,14 +167,12 @@ const kindLabels = { new: "New", updated: "Updated", removed: "Removed" };
     flex-wrap: wrap;
     gap: 1rem;
     margin: 0;
-    font-size: 0.85rem;
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-gray-3);
   }
   .minor summary {
     cursor: pointer;
-    color: var(--muted);
-    font-size: 0.9rem;
-  }
-  .minor ul {
-    padding-left: 1.2rem;
+    color: var(--sl-color-gray-3);
+    font-size: var(--sl-text-sm);
   }
 </style>

@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "dev": "pnpm --filter @ai-knowledge/web dev",
     "wiki": "bash scripts/wiki-update.sh chat",
     "wiki:update": "bash scripts/wiki-update.sh update",
     "wiki:ingest": "bash scripts/wiki-update.sh ingest",
