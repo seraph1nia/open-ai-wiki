@@ -3,7 +3,7 @@ type: Concept
 title: Generative-UI ecosystem
 description: Cross-source comparison of the competing approaches to streaming agent-driven UI — AG-UI (event wire protocol), A2UI (declarative JSON), OpenUI (declarative language + runtime), MCP Apps (iframe apps on MCP), and the frameworks that consume them.
 tags: [generative-ui, agent-ui, comparison, ecosystem, ai-agents]
-timestamp: 2026-08-16
+timestamp: 2026-08-17
 ---
 
 # Generative-UI ecosystem
@@ -23,10 +23,10 @@ Different answers produce the four families below.
 
 | Protocol / framework | Kind | How UI is described | Streaming & transport | State sync | HITL / security stance | Canonical home |
 |---|---|---|---|---|---|---|
-| [AG-UI](/protocols/ag-ui.md) | Event wire protocol | Typed event stream (~16 event types) + `RunAgentInput` | SSE, WebSockets, HTTP binary, custom via middleware layer; official Java and Go SDKs stream over SSE | Bi-directional + `STATE_SNAPSHOT`/`STATE_DELTA` | Human-in-the-loop collaboration built-in | `ag-ui-protocol/ag-ui` |
+| [AG-UI](/protocols/ag-ui.md) | Event wire protocol | Typed event stream (~16 event types) + `RunAgentInput` | SSE, WebSockets, HTTP binary, custom via middleware layer; official Java/Go plus community Kotlin and Swift SDKs stream over SSE | Bi-directional + `STATE_SNAPSHOT`/`STATE_DELTA` | Human-in-the-loop collaboration built-in; `THINKING_` telemetry surfaced by the Kotlin SDK so UIs can show agent reasoning | `ag-ui-protocol/ag-ui` |
 | [A2UI](/protocols/a2ui.md) | Declarative JSON protocol | `A2UI Response` JSON (abstract component tree; Surfaces, Components, Catalogs) | Any JSON transport: A2A, AG-UI, SSE/WS, REST, gRPC; progressive rendering | Data model binding + `dataModelUpdate` | Declarative data, no code execution; client owns styling | a2ui.org |
 | [OpenUI](/frameworks/openui.md) | Declarative language + runtime | OpenUI Lang DSL (assignment statements, component calls) → runtime parses/progressive-renders; up to 67% fewer tokens than JSON | Streaming-first language runtime | Conversation/artifact persistence (OpenUI Cloud) | Output validation via OpenUI Cloud; agent composes from client's component library | openui.com |
-| [MCP Apps](/protocols/mcp-apps.md) | MCP extension (iframe apps) | Server-declared HTML UI resources (`mimeType text/html;profile=mcp-app`); extension id `io.modelcontextprotocol/ui` | N/A at UI layer — secure iframe messaging | Host communicates with iframe app; mobile/desktop device caps | CSP-sandboxed iframe (connect-src, static origins), secure-by-default | `modelcontextprotocol/ext-apps` |
+| [MCP Apps](/protocols/mcp-apps.md) | [MCP](/protocols/model-context-protocol.md) extension (iframe apps) | Server-declared HTML UI resources (`mimeType text/html;profile=mcp-app`); extension id `io.modelcontextprotocol/ui` | N/A at UI layer — secure iframe messaging (JSON-RPC over postMessage) | Host communicates with iframe app; `ui/initialize` handshake, `content`/`structuredContent` results; mobile/desktop device caps | CSP-sandboxed iframe (connect-src, static origins), secure-by-default | `modelcontextprotocol/ext-apps` |
 
 ## How the approaches relate
 
@@ -54,14 +54,14 @@ Key relationships, with the page where each is explained:
 - **CopilotKit *consumes* all three generative-UI types** — its generative-UI playground renders static generative UI (`useRenderToolCall`), A2UI (`A2UIRenderer` + `HttpAgent` to an A2A backend), and MCP Apps (`MCPAppsMiddleware`) in one app (plus `useHumanInTheLoop` approval flows), and it is **built on AG-UI** as its 1st-party client — see [CopilotKit](/frameworks/copilotkit.md).
 - **Mastra drives multiple frontends** — the same agent framework runs under Vercel AI SDK, assistant-ui, CopilotKit, and HITL via its UI dojo and `@mastra/ai-sdk` — see [Mastra agentic-UI](/frameworks/mastra-agentic-ui.md).
 - **OpenUI targets the same agent frameworks** — it lists CopilotKit, LangGraph, Mastra, and Vercel AI SDK as integration surfaces, but as a language-and-runtime stack rather than a pure wire protocol — see [OpenUI](/frameworks/openui.md).
-- **AG-UI / CopilotKit adoption signals** — open proposals exist to bridge Oracle's Open Agent Spec agents into AG-UI (issue #828) and to align Microsoft's agent-governance toolkit dashboard with AG-UI event streams (issue #1443); DataFoundry cites AG-UI event-stream design and CopilotKit UX patterns. **Confidence: watchlist** for all (open issues / single project).
+- **AG-UI / CopilotKit adoption signals** — open proposals exist to bridge Oracle's Open Agent Spec agents into AG-UI (issue #828) and to align Microsoft's agent-governance toolkit dashboard with AG-UI event streams (issue #1443); DataFoundry cites AG-UI event-stream design and CopilotKit UX patterns, and [Cedar-OS](/frameworks/mastra-agentic-ui.md#third-party-adoption-signals) builds a separate AI-native frontend stack over the same provider/frontend space (Vercel AI SDK, Mastra, CopilotKit-style agentic state). **Confidence: watchlist** for all (open issues / single projects).
 
 ## Design-space tradeoffs
 
 - **Event-based vs declarative.** [AG-UI](/protocols/ag-ui.md) streams *typed events* (a running, tool-calling, state-changing process), while [A2UI](/protocols/a2ui.md) sends a *declarative JSON payload* describing the end UI. Event-based suits live, long-running agent sessions with human-in-the-loop; declarative suits safe, renderer-agnostic, no-code-execution UIs.
 - **Language vs schema.** [OpenUI](/frameworks/openui.md) is a streaming *language and runtime* (agent composes from *your* component library); A2UI is a *JSON schema* with negotiated component catalogs (client maps to native widgets on web/mobile/desktop).
 - **In-renderer vs iframe.** [MCP Apps](/protocols/mcp-apps.md) wraps third-party HTML in a CSP-sandboxed iframe (richer, but code-bearing and host-integrated via messaging); A2UI/OpenUI stay purely data-driven inside the client's own renderer.
-- **Standalone vs ecosystem extension.** MCP Apps extends the [Model Context Protocol](/protocols/mcp-apps.md); AG-UI is a standalone agent-to-UI protocol that pairs with MCP (agent-to-tools); A2UI and OpenUI are transport-agnostic formats/languages.
+- **Standalone vs ecosystem extension.** MCP Apps extends the [Model Context Protocol](/protocols/model-context-protocol.md); AG-UI is a standalone agent-to-UI protocol that pairs with MCP (agent-to-tools); A2UI and OpenUI are transport-agnostic formats/languages.
 
 ## Where they agree
 
@@ -72,7 +72,7 @@ Key relationships, with the page where each is explained:
 
 ## Status and confidence
 
-- The ecosystem is actively consolidating: CopilotKit monorepo (generative-UI playground, ADK demo, and `with-langgraph-python` moved in; `with-adk` archived 2026-03-12), A2UI v1.0 candidate with v0.8/v0.9 renderer stability, MCP Apps spec 2026-01-26 with SDK adoption requests (csharp-sdk #1431, java-sdk #780), and AG-UI growing integrations (official Java/Go SDKs plus community Swift, Oracle/gov-toolkit proposals). A2UI's roadmap targets full-app UIs and multi-agent coordination through 2026–2027.
+- The ecosystem is actively consolidating: CopilotKit monorepo (generative-UI playground, ADK demo, and `with-langgraph-python` moved in; `with-adk` archived 2026-03-12), A2UI v1.0 candidate with v0.8/v0.9 renderer stability, MCP Apps spec 2026-01-26 with SDK adoption requests (csharp-sdk #1431, java-sdk #780), and AG-UI growing integrations (official Java/Go plus community Kotlin and Swift SDKs, Oracle/gov-toolkit proposals). A2UI's roadmap targets full-app UIs and multi-agent coordination through 2026–2027. A 2026-08-17 re-pull of the same sources confirms the durable material held and added the AG-UI Kotlin SDK overview plus a second third-party multi-frontend stack (Cedar-OS) on the Mastra axis.
 - **Confidence:** the protocol/framework characteristics are **source-backed** from each project's primary docs. Explicit interop claims (AG-UI↔A2UI, A2UI↔MCP Apps, CopilotKit's three-type playground) are **confirmed** in the sense of being directly claimed in the sources, but not independently cross-checked. Adoption/open-issue items are **watchlist**.
 
 ## Source Map

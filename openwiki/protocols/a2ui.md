@@ -82,7 +82,7 @@ A2UI is explicitly "declarative data, no code execution": agents send abstract c
 
 ## Interoperability surfaces
 
-A2UI is designed to interop with the rest of the agent-UI space rather than replace it. The site documents explicit cross-integrations: **A2UI over MCP**, **MCP Apps in A2UI**, and **A2UI in MCP Apps** (see the [MCP Apps page](/protocols/mcp-apps.md)). Its roadmap mentions supporting more renderers (Jetpack Compose, SwiftUI) and more transports (REST). The v1.0 candidate spec adds transport contracts/binings, a functions-in-content execution model (with async evaluation and pending states), and agent/renderer capability negotiation. Interactive tools on a2ui.org include the **A2UI Composer** (visual widget builder that generates A2UI JSON for pasting into agent prompts) and **A2UI Theater** (step-through streaming scenarios across Lit, React, and Angular renderers).
+A2UI is designed to interop with the rest of the agent-UI space rather than replace it. The site documents explicit cross-integrations: **A2UI over [MCP](/protocols/model-context-protocol.md)**, **MCP Apps in A2UI**, and **A2UI in MCP Apps** (see the [MCP Apps page](/protocols/mcp-apps.md)). Its roadmap mentions supporting more renderers (Jetpack Compose, SwiftUI) and more transports (REST). The v1.0 candidate spec adds transport contracts/binings, a functions-in-content execution model (with async evaluation and pending states), and agent/renderer capability negotiation. Interactive tools on a2ui.org include the **A2UI Composer** (visual widget builder that generates A2UI JSON for pasting into agent prompts) and **A2UI Theater** (step-through streaming scenarios across Lit, React, and Angular renderers).
 
 ## Status
 

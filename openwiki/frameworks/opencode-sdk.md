@@ -4,7 +4,7 @@ title: OpenCode
 description: OpenCode is an open-source AI coding agent available as a terminal UI, desktop app, or IDE extension, with a type-safe JavaScript/TypeScript SDK (@opencode-ai/sdk) for building integrations and controlling the opencode server programmatically.
 resource: https://opencode.ai/docs/sdk/
 tags: [opencode, sdk, coding-agent, typescript, ai-agents]
-timestamp: 2026-08-16
+timestamp: 2026-08-17
 ---
 
 # OpenCode
@@ -28,8 +28,9 @@ OpenCode is one of the coding agents the [t3code](/frameworks/t3code.md) harness
 ## Durable signals from retrieved evidence
 
 - A community Vercel-AI-SDK provider for OpenCode (`ai-sdk-provider-opencode-sdk`) documents almost full support for text generation, streaming (SSE), multi-turn session context, tool observation, reasoning parts, per-request model/agent selection (build, plan, general, explore), and abort; partial for image input and JSON-schema output; no custom client tools (server-side only).
-- Docs list common model/provider wiring through the AI SDK (`@ai-sdk/openai`, `@ai-sdk/openai-compatible`) for many providers (OpenAI-compatible endpoints).
-- A community integration note flags that Claude OAuth was removed from OpenCode in March 2026 (Anthropic legal action) and that the reliable path is the `@ai-sdk/openai-compatible` provider config — **watchlist**, single third-party source.
+- Docs list common model/provider wiring through the AI SDK (`@ai-sdk/openai`, `@ai-sdk/openai-compatible`) for many providers (OpenAI-compatible endpoints). The 2026-08-17 pull captured the official **Go SDK** (`opencode.ai/docs/go`) model/provider table (e.g. Grok 4.5, GPT 5.6 Luna, GLM-5.x, Kimi K3 via `@ai-sdk/openai` / `@ai-sdk/openai-compatible`) and an **ecosystem catalogue** (`opencode.ai/docs/ecosystem`: `opencode-background-agents`, `opencode-notify`, `opencode-workspace` multi-agent orchestration harness, browser UI `octto`).
+- A community integration note flags that Claude OAuth was removed from OpenCode in March 2026 (Anthropic legal action) and that the reliable path is the `@ai-sdk/openai-compatible` provider config — **watchlist**, single third-party source (headroomlabs-ai/headroom issue #78); note `ANTHROPIC_BASE_URL` env-var path construction differs across the Vercel AI SDK.
+- A community REST API client (`anomalyco/opencode-sdk-js`) mirrors the OpenCode REST API for server-side TS/JS — evidence of ecosystem traction, watchlist.
 
 ## Confidence
 - **Source-backed:** SDK identity, purpose, and `createOpencode`/`@opencode-ai/sdk` usage from the official docs.

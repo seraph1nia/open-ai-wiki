@@ -1,9 +1,9 @@
 ---
 type: Reference
 title: Open Questions
-description: Active, answered, and stale questions about the AI knowledge wiki's coverage and memory graph, including gaps in evidence about projects tracked in this corpus (e.g. Effect's deep Workflow/Activity API semantics).
-tags: [open-questions, memory-graph, wiki-quality]
-timestamp: 2026-08-16
+description: Active, answered, and stale questions about the AI knowledge wiki's coverage and memory graph, including gaps in evidence about projects tracked in this corpus (e.g. Effect's deep Workflow/Activity API semantics, version alignment between OKF v0.2 and the OpenWiki README, and OpenWiki's current release).
+tags: [open-questions, memory-graph, wiki-quality, okf, openwiki]
+timestamp: 2026-08-17
 ---
 
 # Open Questions
@@ -18,9 +18,21 @@ timestamp: 2026-08-16
 
 ### generative-ui-sdk-versions: Do the AG-UI / CopilotKit SDK versions and A2UI v1.0 match the release resources?
 - Owner: unknown
-- Seen: 2026-08-16
-- Evidence: Version-adjacent claims in the second generative-UI pull — CopilotKit issue #2840's `@copilotkit/runtime@1.10.6` / `@ag-ui/client@0.0.41` peer conflict (watchlist bug), the A2UI v1.0 candidate spec, and AG-UI Java/Go SDK package structure — come from docs/README/issues, not formal release files. See [web-search generative-UI source page](/sources/web-search-generative-ui.md) and the [OpenUI](/frameworks/openui.md) page.
+- Seen: 2026-08-17
+- Evidence: Version-adjacent claims — CopilotKit issue #2840's `@copilotkit/runtime@1.10.6` / `@ag-ui/client@0.0.41` peer conflict (watchlist bug), the A2UI v1.0 candidate spec, and AG-UI Java/Go/Kotlin SDK package structure — come from docs/README/issues, not formal release files. The 2026-08-17 re-pull re-surfaced the SDK docs tree (including `docs/sdk/kotlin/overview.mdx`) but no package registry/release resources. See [web-search generative-UI source page](/sources/web-search-generative-ui.md) and the [AG-UI](/protocols/ag-ui.md) / [OpenUI](/frameworks/openui.md) pages.
 - Notes: This is a corpus-coverage gap (version claims not yet cross-checked against release resources), matching the existing backlog entry in [quickstart](/quickstart.md). Watchlist confidence.
+
+### openwiki-okf-version: Which OKF version does OpenWiki actually emit — v0.1 or v0.2?
+- Owner: unknown
+- Seen: 2026-08-17
+- Evidence: The [OpenWiki README](/frameworks/openwiki.md) advertises "Open Knowledge Format (OKF v0.1) output", while the upstream [OKF spec](/protocols/open-knowledge-format.md) is at **v0.2** (2026-07-24 SPEC.md revision). The 2026-08-17 web-search Agent wiki run retrieved repository docs, not release artifacts, so the emitted version could not be confirmed.
+- Notes: Affects how producers/consumers treat this corpus (v0.1 fallbacks like legacy `timestamp` and `# Citations`). Resolve by direct release-file ingestion of `langchain-ai/openwiki` or its `src/okf/` source. Watchlist confidence.
+
+### openwiki-current-release: What is the current released OpenWiki version (npm), and what does the release trail contain?
+- Owner: unknown
+- Seen: 2026-08-17
+- Evidence: The OpenWiki repo shows a Changesets release flow (`CHANGELOG.md`, `chore: version packages` PRs), but the 2026-08-17 web-search Agent wiki run returned **no release artifacts** — only repository docs (README, quickstart, architecture overview, credentials/CI page). Current npm version and release dates are unknown.
+- Notes: Direct release ingestion of `langchain-ai/openwiki/releases` would close this; the Tavily `answer` ("team of inventors at Amazon") was hallucinated and rejected. Watchlist confidence.
 
 ## Answered
 
