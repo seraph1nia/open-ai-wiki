@@ -30,18 +30,31 @@ export interface ChangelogEntryData {
 export interface ChangelogFragmentData {
   runAt: Date;
   commit?: string | undefined;
+  /** Prose about the run as a whole. Absent when no model was available. */
+  narrative?: string | undefined;
   entries: ChangelogEntryData[];
+}
+
+/**
+ * A fragment paired with the collection id it was loaded under. The id is the
+ * fragment's file name (`2026-08-16-2024`), which is already URL-safe and is
+ * what `/whats-new/[run]/` publishes each run at.
+ */
+export interface ChangelogFragmentInput extends ChangelogFragmentData {
+  runId: string;
 }
 
 export interface ChangelogItem extends ChangelogEntryData {
   runAt: Date;
+  runId: string;
   /** Site-relative route, absent once the page no longer exists. */
   href?: string;
 }
 
-export interface ChangelogDay {
-  day: string;
-  date: Date;
+export interface ChangelogRun {
+  runId: string;
+  runAt: Date;
+  narrative?: string | undefined;
   items: ChangelogItem[];
 }
 
@@ -51,42 +64,56 @@ const kindOrder: Record<ChangeKind, number> = {
   removed: 2,
 };
 
-function isoDay(date: Date): string {
-  return date.toISOString().slice(0, 10);
-}
-
 /**
  * Newest run first; within a run, substantive changes before reworded ones and
  * new pages before edits, so the top of the list is the part worth reading.
  */
-export function toItems(fragments: ChangelogFragmentData[]): ChangelogItem[] {
-  return fragments
-    .flatMap((fragment) =>
-      fragment.entries.map((entry) => ({
-        ...entry,
-        runAt: fragment.runAt,
-        ...(entry.kind === "removed" ? {} : { href: entryPath(entry.path) }),
-      })),
-    )
-    .sort(
-      (first, second) =>
-        second.runAt.getTime() - first.runAt.getTime() ||
-        Number(first.minor) - Number(second.minor) ||
-        kindOrder[first.kind] - kindOrder[second.kind] ||
-        first.title.localeCompare(second.title),
-    );
+function byNewsValue(first: ChangelogItem, second: ChangelogItem): number {
+  return (
+    second.runAt.getTime() - first.runAt.getTime() ||
+    Number(first.minor) - Number(second.minor) ||
+    kindOrder[first.kind] - kindOrder[second.kind] ||
+    first.title.localeCompare(second.title)
+  );
 }
 
-/** Two runs on the same day read as one day's news, not two. */
-export function groupByDay(items: ChangelogItem[]): ChangelogDay[] {
-  const days: ChangelogDay[] = [];
-  for (const item of items) {
-    const day = isoDay(item.runAt);
-    const current = days.at(-1);
-    if (current?.day === day) current.items.push(item);
-    else days.push({ day, date: item.runAt, items: [item] });
-  }
-  return days;
+function toItem(
+  fragment: ChangelogFragmentInput,
+): (entry: ChangelogEntryData) => ChangelogItem {
+  return (entry) => ({
+    ...entry,
+    runAt: fragment.runAt,
+    runId: fragment.runId,
+    ...(entry.kind === "removed" ? {} : { href: entryPath(entry.path) }),
+  });
+}
+
+/** The whole feed as one flat list, for the RSS feed and the homepage digest. */
+export function toItems(fragments: ChangelogFragmentInput[]): ChangelogItem[] {
+  return fragments
+    .flatMap((fragment) => fragment.entries.map(toItem(fragment)))
+    .sort(byNewsValue);
+}
+
+/**
+ * The feed as one section per ingestion run, newest first. Runs rather than
+ * calendar days: several runs can land on the same day, and each is its own
+ * update with its own narrative and its own permalink.
+ */
+export function toRuns(fragments: ChangelogFragmentInput[]): ChangelogRun[] {
+  return fragments
+    .map((fragment) => ({
+      runId: fragment.runId,
+      runAt: fragment.runAt,
+      narrative: fragment.narrative,
+      items: fragment.entries.map(toItem(fragment)).sort(byNewsValue),
+    }))
+    .sort((first, second) => second.runAt.getTime() - first.runAt.getTime());
+}
+
+/** Where `/whats-new/[run].astro` publishes a single run. */
+export function runPath(runId: string): string {
+  return `/whats-new/${runId}/`;
 }
 
 /**

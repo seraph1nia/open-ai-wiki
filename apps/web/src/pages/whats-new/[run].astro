@@ -1,0 +1,73 @@
+---
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import ChangeList from "../../components/ChangeList.astro";
+import type { ChangelogRun } from "../../lib/changelog";
+import { toRuns } from "../../lib/changelog";
+import { withBase } from "../../okf";
+
+interface Props {
+  run: ChangelogRun;
+}
+
+/**
+ * One page per ingestion run, so an update can be linked to and read on its own
+ * rather than only as a section of the combined feed. The route parameter is the
+ * fragment's collection id, which is its file name (`2026-08-16-2024`) and is
+ * already URL-safe.
+ */
+export const getStaticPaths: GetStaticPaths = async () => {
+  const runs = toRuns(
+    (await getCollection("changelog")).map((fragment) => ({
+      ...fragment.data,
+      runId: fragment.id,
+    })),
+  );
+  return runs.map((run) => ({ params: { run: run.runId }, props: { run } }));
+};
+
+const { run } = Astro.props as Props;
+const base = import.meta.env.BASE_URL;
+
+const runFormat = new Intl.DateTimeFormat("en-GB", {
+  dateStyle: "long",
+  timeStyle: "short",
+  timeZone: "UTC",
+});
+const heading = `${runFormat.format(run.runAt)} UTC`;
+
+const notable = run.items.filter((item) => !item.minor).length;
+const counted = `${notable.toString()} notable change${notable === 1 ? "" : "s"}`;
+---
+
+<StarlightPage
+  frontmatter={{
+    title: `Update — ${heading}`,
+    description:
+      run.narrative ??
+      `${counted} recorded in the ingestion run of ${heading}.`,
+    tableOfContents: false,
+  }}
+>
+  <p class="lead">
+    <a href={withBase("/whats-new/", base)}>&larr; All updates</a>
+  </p>
+
+  {run.narrative && <p class="narrative">{run.narrative}</p>}
+
+  <ChangeList items={run.items} />
+</StarlightPage>
+
+<style>
+  .lead {
+    font-size: var(--sl-text-sm);
+    margin-bottom: 2rem;
+  }
+  .narrative {
+    margin: 0 0 2rem;
+    font-size: var(--sl-text-lg);
+    line-height: 1.6;
+    color: var(--sl-color-gray-2);
+  }
+</style>

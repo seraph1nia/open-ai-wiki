@@ -1,0 +1,90 @@
+---
+import type { ChangelogItem } from "../lib/changelog";
+import { withBase } from "../okf";
+
+interface Props {
+  item: ChangelogItem;
+}
+
+const { item } = Astro.props;
+const base = import.meta.env.BASE_URL;
+
+const kindLabels = { new: "New", updated: "Updated", removed: "Removed" };
+---
+
+<div class="entry">
+  <p class="entry-head">
+    <span class={`badge badge-${item.kind}`}>{kindLabels[item.kind]}</span>
+    {
+      item.href ? (
+        <a class="entry-title" href={withBase(item.href, base)}>
+          {item.title}
+        </a>
+      ) : (
+        <span class="entry-title removed">{item.title}</span>
+      )
+    }
+  </p>
+  {item.summary && <p class="entry-summary">{item.summary}</p>}
+  <p class="entry-meta">
+    {item.type && <span>{item.type}</span>}
+    <span>+{item.added} / &minus;{item.removed} lines</span>
+    {
+      item.resource && (
+        <a href={item.resource} target="_blank" rel="noopener noreferrer">
+          Source &nearr;
+        </a>
+      )
+    }
+  </p>
+</div>
+
+<style>
+  .entry {
+    margin-bottom: 2rem;
+  }
+  .entry-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+    margin: 0 0 0.3rem;
+  }
+  .badge {
+    flex: none;
+    border-radius: 999px;
+    border: 1px solid currentcolor;
+    padding: 0.1rem 0.6rem;
+    font-size: var(--sl-text-xs);
+    font-weight: 700;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+  .badge-new {
+    color: var(--sl-color-green-high);
+  }
+  .badge-updated {
+    color: var(--sl-color-orange-high);
+  }
+  .badge-removed {
+    color: var(--sl-color-gray-3);
+  }
+  .entry-title {
+    font-size: var(--sl-text-lg);
+    font-weight: 600;
+  }
+  .entry-title.removed {
+    color: var(--sl-color-gray-3);
+    text-decoration: line-through;
+  }
+  .entry-summary {
+    margin: 0.2rem 0 0.4rem;
+  }
+  .entry-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 0;
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-gray-3);
+  }
+</style>

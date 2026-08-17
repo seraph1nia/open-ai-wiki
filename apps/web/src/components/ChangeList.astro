@@ -1,0 +1,56 @@
+---
+import type { ChangelogItem } from "../lib/changelog";
+import { withBase } from "../okf";
+import ChangeEntry from "./ChangeEntry.astro";
+
+interface Props {
+  items: ChangelogItem[];
+}
+
+const { items } = Astro.props;
+const base = import.meta.env.BASE_URL;
+
+// Rewordings are recorded but not announced: they would bury the handful of
+// changes a reader actually came for, so they collapse into a footnote.
+const notable = items.filter((item) => !item.minor);
+const minor = items.filter((item) => item.minor);
+---
+
+{notable.map((item) => <ChangeEntry item={item} />)}
+
+{
+  minor.length > 0 && (
+    <details class="minor">
+      <summary>
+        {minor.length} smaller edit{minor.length === 1 ? "" : "s"}
+      </summary>
+      <ul>
+        {minor.map((item) => (
+          <li>
+            {item.href ? (
+              <a href={withBase(item.href, base)}>{item.title}</a>
+            ) : (
+              item.title
+            )}
+            <span class="entry-meta">
+              {" "}
+              +{item.added} / &minus;{item.removed}
+            </span>
+          </li>
+        ))}
+      </ul>
+    </details>
+  )
+}
+
+<style>
+  .minor summary {
+    cursor: pointer;
+    color: var(--sl-color-gray-3);
+    font-size: var(--sl-text-sm);
+  }
+  .entry-meta {
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-gray-3);
+  }
+</style>

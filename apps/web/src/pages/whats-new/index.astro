@@ -1,0 +1,89 @@
+---
+import StarlightPage from "@astrojs/starlight/components/StarlightPage.astro";
+import { getCollection } from "astro:content";
+import ChangeList from "../../components/ChangeList.astro";
+import { runPath, toRuns } from "../../lib/changelog";
+import { withBase } from "../../okf";
+
+const base = import.meta.env.BASE_URL;
+const runs = toRuns(
+  (await getCollection("changelog")).map((fragment) => ({
+    ...fragment.data,
+    runId: fragment.id,
+  })),
+);
+
+// Ingestion runs on a UTC cron, so the run headings are read in UTC too.
+const runFormat = new Intl.DateTimeFormat("en-GB", {
+  dateStyle: "long",
+  timeStyle: "short",
+  timeZone: "UTC",
+});
+---
+
+<StarlightPage
+  frontmatter={{
+    title: "What's new",
+    description:
+      "Every change to the AI Knowledge wiki, newest first: new pages, substantive updates, and what each one means.",
+    tableOfContents: false,
+  }}
+>
+  <p>
+    Scheduled ingestion reconciles this wiki against its configured sources
+    twice a week. Each run that changes a page is recorded here, newest first.
+    <a href={withBase("/whats-new.xml", base)}>Subscribe via RSS</a>.
+  </p>
+
+  {
+    runs.length === 0 && (
+      <p>
+        No runs recorded yet. The next scheduled update will start this log.
+      </p>
+    )
+  }
+
+  {
+    runs.map((run) => (
+      <section class="run">
+        <h2>
+          <a href={withBase(runPath(run.runId), base)}>
+            <time datetime={run.runAt.toISOString()}>
+              {runFormat.format(run.runAt)} UTC
+            </time>
+          </a>
+        </h2>
+
+        {run.narrative && <p class="narrative">{run.narrative}</p>}
+
+        <ChangeList items={run.items} />
+      </section>
+    ))
+  }
+</StarlightPage>
+
+<style>
+  .run {
+    border-top: 1px solid var(--sl-color-hairline);
+    padding-top: 1.5rem;
+    margin-top: 2.5rem;
+  }
+  .run h2 {
+    margin: 0 0 1.4rem;
+    font-size: var(--sl-text-base);
+  }
+  .run h2 a {
+    color: var(--sl-color-gray-3);
+    text-decoration: none;
+  }
+  .run h2 a:hover {
+    color: var(--sl-color-white);
+    text-decoration: underline;
+  }
+  .narrative {
+    margin: 0 0 1.6rem;
+    font-size: var(--sl-text-lg);
+    line-height: 1.6;
+    color: var(--sl-color-gray-2);
+  }
+</style>

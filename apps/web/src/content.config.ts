@@ -25,6 +25,9 @@ const changelog = defineCollection({
   schema: z.object({
     runAt: z.coerce.date(),
     commit: z.string().optional(),
+    // Optional because a run without a model key, and every backfilled
+    // fragment, records the facts but no prose.
+    narrative: z.string().optional(),
     entries: z
       .array(
         z.object({
