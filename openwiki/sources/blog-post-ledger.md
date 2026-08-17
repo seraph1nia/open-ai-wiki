@@ -1,7 +1,7 @@
 ---
 type: Source Evidence
 title: Blog post ingestion ledger
-description: Cumulative, append-only record of blog posts already ingested into this wiki (Zed, Solo.io, Mastra), used to keep blog ingestion idempotent — posts listed here are never fetched, summarized, or adopted again.
+description: Cumulative, append-only record of blog posts already ingested into this wiki (Zed, Solo.io, Mastra, gh-aw), used to keep blog ingestion idempotent — posts listed here are never fetched, summarized, or adopted again.
 resource: https://zed.dev/blog
 tags: [source, evidence, ledger, blog, deduplication, factory-tools]
 timestamp: 2026-08-17
@@ -20,6 +20,11 @@ It carries no synthesis. Durable ideas taken from these posts live on the concep
 | Zed | https://zed.dev/blog | `web-search-factory-tools` | Editor and agent-harness design, the ACP side of the factory, performance and collaboration architecture. |
 | Solo.io | https://www.solo.io/blog | `web-search-factory-tools` | Gateway, mesh, and agent-infrastructure layer — how agent traffic, tools, and MCP endpoints are routed and governed. |
 | Mastra | https://mastra.ai/blog | `web-search-factory-tools` | Agent runtime, workflows, memory, and evaluation; also the agentic-UI overlap with the [generative-UI ecosystem](/concepts/generative-ui-ecosystem.md). |
+| GitHub Agentic Workflows (gh-aw) | https://github.github.com/gh-aw/blog | `web-search-factory-tools` | CI-native agentic workflows — running agents as GitHub Actions, their trigger, permission, and safe-output model. |
+
+### Living index pages (not ledgered)
+
+The [gh-aw workflow gallery](https://github.github.com/gh-aw/index.html#gallery) is a **catalogue, not a post feed**: its entries have no publication date or stable per-post identity, so it is exempt from the ledger and is re-read on every run. Handle it by diffing against what the wiki already documents — adopt only entries that are new or materially changed, and leave the wiki unchanged when the catalogue has not moved. Do not add gallery entries as ledger rows; a row here always means one dated blog post.
 
 ## How to use this ledger
 
@@ -43,4 +48,5 @@ Append-only. Newest first.
 
 - **Confirmed:** the feed list and the ledger protocol, both configured in the `web-search-factory-tools` source instance.
 - Gap: no blog run has happened yet, so no post has been evaluated. The first run should populate the table for every post it sees, including the ones it discards.
+- Note: the gh-aw gallery is deliberately outside the ledger (see *Living index pages* above); if it later gains dated, individually addressable entries, ledger those entries like posts.
 - Note: the Mastra domain is also configured on the `web-search-generative-ui` instance for its integration docs. Blog posts from `mastra.ai/blog` are ledgered here regardless of which instance retrieved them, so the two instances cannot ingest the same post twice.

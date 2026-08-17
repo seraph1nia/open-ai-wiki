@@ -1,6 +1,6 @@
 # Files
 
-- [Blog post ingestion ledger](blog-post-ledger.md) - Cumulative, append-only record of blog posts already ingested (Zed, Solo.io, Mastra) so scheduled runs never re-ingest a post they have already seen.
+- [Blog post ingestion ledger](blog-post-ledger.md) - Cumulative, append-only record of blog posts already ingested (Zed, Solo.io, Mastra, gh-aw) so scheduled runs never re-ingest a post they have already seen, plus the handling rule for living index pages like the gh-aw gallery.
 - [GitHub ACP TypeScript SDK source evidence](github-acp-typescript-sdk.md) - Ingestion and coverage notes for the agentclientprotocol/typescript-sdk GitHub releases resource used as evidence for the Agent Client Protocol wiki pages.
 - [GitHub agent-host-protocol source evidence](github-agent-host-protocol.md) - Ingestion and coverage notes for the Microsoft agent-host-protocol GitHub releases resource and repository used as evidence for the Agent Host Protocol wiki pages.
 - [Web-search Factory tools source evidence](web-search-factory-tools.md) - Ingestion and coverage notes for the 2026-08-16 web-search-factory-tools run over the agentic SDLC factory toolchain (ACP TypeScript SDK, AHP, Pierre, t3code, Effect v4, OpenCode SDK, Pi SDK), including reliability warnings for synthesized answers and the Effect durable-execution gap.
