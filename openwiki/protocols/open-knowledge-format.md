@@ -268,18 +268,17 @@ erDiagram
 
 ## Attestation flow
 
-<!-- openwiki: mermaid parse failed and this diagram was converted to a text fence so it does not break rendering. Fix the diagram source and restore the mermaid fence. Parser error: Parse error on line 10: ...f stale_after passed Expecting '()', 'SOLID_OPEN_ARROW', 'DOTTED_OPEN_ARROW', 'SOLID_ARROW', 'SOLID_ARROW_TOP', 'SOLID_ARROW_BOTTOM', 'STICK_ARROW_TOP', 'STICK_ARROW_BOTTOM', 'SOLID_ARROW_TOP_DOTTED', 'SOLID_ARROW_BOTTOM_DOTTED', 'STICK_ARROW_TOP_DOTTED', 'STICK_ARROW_BOTTOM_DOTTED', 'SOLID_ARROW_TOP_REVERSE', 'SOLID_ARROW_BOTTOM_REVERSE', 'STICK_ARROW_TOP_REVERSE', 'STI -->
-```text
+```mermaid
 sequenceDiagram
     participant A as Agent consumer
     participant E as Executor
     participant R as Receipt
     participant AT as Attester
-    A->>E: run (computation + parameters)
-    E-->>A: receipt (job_id, executed_sql, result)
+    A->>E: run computation with parameters
+    E-->>A: receipt with job_id and result
     A->>AT: verify receipt
-    AT-->>A: verdict (pass / fail)
-    A->>A: gate display; warn if stale_after passed
+    AT-->>A: verdict pass or fail
+    A->>A: gate display and warn if stale
 ```
 *Attestation flow: the consumer executes the sanctioned computation via the executor, then runs the deterministic attester over the receipt before gating display.*
 

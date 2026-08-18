@@ -51,8 +51,7 @@ What changed in 2026-07-28 (from the official [blog announcement](https://blog.m
 - **Multi Round-Trip Requests (MRTR)** — a single client request can trigger multiple server round-trips, decoupling request/response pairing from a single message exchange.
 - **Header-based routing** — requests carry routing headers instead of relying on per-session state, so intermediaries and gateways can route MCP traffic without session affinity.
 - **List results are cacheable** — `*_list` results (tools, resources, prompts) can be cached under standard HTTP caching semantics, cutting repeated round-trips.
-<!-- openwiki: broken internal link [#authorization] heading anchor "authorization" does not exist in /protocols/model-context-protocol.md. Fix the href or restore the target, then delete this comment. -->
-- **Authorization hardening** — the OAuth 2.1-based authorization framework was hardened; MCP 2026-07-28 is the OAuth 2.1 direction the [client registration evolution post](https://blog.modelcontextprotocol.io/posts/client_registration) prepared (see [Authorization](#authorization)).
+- **Authorization hardening** — the OAuth 2.1-based authorization framework was hardened; MCP 2026-07-28 is the OAuth 2.1 direction the [client registration evolution post](https://blog.modelcontextprotocol.io/posts/client_registration) prepared (see [Authorization](#authorization-oauth-21)).
 - **Tasks** — the experimental **Tasks** primitive (SEP-1686) ships in the revision; the [2026 roadmap](https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap) documents production-learned lifecycle gaps to close (retry semantics for transient failures, expiry policies for retained results).
 - **Deprecations** — the revision came with a **formal deprecation policy** and a set of deprecations (details in the release notes).
 - **Formal extensions framework** — a first-class mechanism for extending MCP beyond the core primitives; MCP Apps is the first extension shipped under it.

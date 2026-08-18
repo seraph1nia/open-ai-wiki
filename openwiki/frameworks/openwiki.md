@@ -92,22 +92,22 @@ Durability notes: the content-snapshot check prevents metadata churn when an upd
 
 OpenWiki emits **Open Knowledge Format (OKF v0.1)** documents and validates Mermaid diagrams. The [OKF spec](/protocols/open-knowledge-format.md) in `GoogleCloudPlatform/knowledge-catalog` is at **v0.2**; the README declares v0.1 output, and the in-repo docs mention `okf_version`-aware index handling. The version relationship is tracked as an [open question](/open-questions.md). Personal-mode wikis (like this one) are structurally an OKF bundle: reserved `index.md`/`log.md` filenames, required `type` frontmatter, markdown-link relationships, and `references/` conventions.
 
-<!-- openwiki: mermaid parse failed and this diagram was converted to a text fence so it does not break rendering. Fix the diagram source and restore the mermaid fence. Parser error: Parse error on line 13: ...a churn if no change C->>U: prints Expecting '()', 'SOLID_OPEN_ARROW', 'DOTTED_OPEN_ARROW', 'SOLID_ARROW', 'SOLID_ARROW_TOP', 'SOLID_ARROW_BOTTOM', 'STICK_ARROW_TOP', 'STICK_ARROW_BOTTOM', 'SOLID_ARROW_TOP_DOTTED', 'SOLID_ARROW_BOTTOM_DOTTED', 'STICK_ARROW_TOP_DOTTED', 'STICK_ARROW_BOTTOM_DOTTED', 'SOLID_ARROW_TOP_REVERSE', 'SOLID_ARROW_BOTTOM_REVERSE', 'STICK_ARROW_TOP_ -->
-```text
+```mermaid
 sequenceDiagram
-    participant U as User / scheduler
+    participant U as User or scheduler
     participant C as OpenWiki CLI
     participant D as Deterministic connectors
-    participant A as Docs agent (LLM)
-    participant W as Wiki directory (OKF bundle)
-    U->>C: openwiki --update (or personal)
+    participant A as Docs agent LLM
+    participant W as Wiki directory OKF bundle
+    U->>C: openwiki --update or personal
     C->>D: ingest raw evidence per connector
-    D-->>C: raw data + manifests under raw/
-    C->>A: synthesize / repair pages
+    D-->>C: raw data and manifests under raw
+    C->>A: synthesize and repair pages
     A-->>C: proposed doc changes
-    C->>W: write frontmatter-validated, Mermaid-validated pages
-    C->>C: content-snapshot check; skip metadata churn if no change
-    C-->>U: prints final output; updates .last-update.json
+    C->>W: write frontmatter and Mermaid validated pages
+    C->>C: content snapshot check
+    C->>C: skip metadata churn if no change
+    C-->>U: print output then update last-update.json
 ```
 *OpenWiki run flow: deterministic connectors write raw evidence, the docs agent synthesizes pages, and the CLI validates frontmatter/Mermaid, skips churn when nothing changed, and records update metadata.*
 
