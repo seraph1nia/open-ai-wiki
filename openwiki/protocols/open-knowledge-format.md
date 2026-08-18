@@ -4,7 +4,7 @@ title: Open Knowledge Format (OKF)
 description: OKF is a minimal, vendor-neutral format for representing knowledge as markdown files with YAML frontmatter in a self-describing bundle — standardizing the small set of structural conventions (required type, provenance, trust, lifecycle, attestation) that make an agent-maintained knowledge corpus trustable.
 resource: https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md
 tags: [okf, knowledge-format, spec, bundle, provenance, trust, attestation, frontmatter, knowledge-representation]
-timestamp: 2026-08-17
+timestamp: 2026-08-18
 ---
 
 # Open Knowledge Format (OKF)
@@ -287,8 +287,18 @@ sequenceDiagram
 The spec is produced by **GoogleCloudPlatform/knowledge-catalog** (MIT-style, Apache-2.0 spec material); its README frames OKF as the format, with a bundled **reference agent** and **visualizer** as proofs of concept on both ends — production and consumption:
 
 - **Reference agent**: two-pass producer — a BQ pass writes one OKF doc per concept from BigQuery metadata; a web pass runs the LLM as a crawler over seed URLs (`--web-seed`), choosing for each fetched page to enrich an existing concept, mint a `references/` doc, or skip, with a `--web-max-pages` cap and a same-domain allowed-hosts filter. Run with `python -m reference_agent enrich ...`.
-- **Visualizer**: `python -m reference_agent visualize --bundle ...` emits a self-contained interactive HTML file (force-directed graph via Cytoscape.js, markdown via marked), a proof-of-concept consumer. Example bundles ship in `bundles/` (GA4, Stack Overflow, Bitcoin, Acme Retail).
-- **Ecosystem implementations** witnessed: **AKB (Agent Knowledge Base)** issue #86 — an independent OKF producer + conformance validator with typed-link and field aliasing feedback; and the **openknowledge** CLI (`openknowledge-sh/openknowledge`, Apache-2.0, ~40 stars) for managing OKF bundles. Both shown only as ecosystem signals (watchlist for adoption claims).
+- **Visualizer**: `python -m reference_agent visualize --bundle ...` emits a self-contained interactive HTML file (force-directed graph via Cytoscape.js, markdown via marked), a proof-of-concept consumer. Example bundles ship in `bundles/` (GA4, Stack Overflow, Bitcoin, Acme Retail — each with a `viz.html`).
+- **Ecosystem implementations witnessed**:
+  - **AKB (Agent Knowledge Base)** issue #86 — an independent OKF producer + conformance validator with typed-link and field aliasing feedback.
+  - **openknowledge** CLI (`openknowledge-sh/openknowledge`, Apache-2.0, ~40 stars) for managing OKF bundles.
+  - **`okc`** (PyPI) — reads a database schema (SQLite, PostgreSQL) and produces a deterministic, cross-linked OKF bundle: FK relationships become markdown links, `index.md` files are auto-generated per directory, output is reproducible ("same database, same schema, identical bundle"). Implements **OKF v0.1** (surfaced via knowledge-catalog [discussion #84](https://github.com/GoogleCloudPlatform/knowledge-catalog/discussions/84)).
+  - **`erd2okf`** (thorsti, discussion #84 comments) — Postgres → one OKF concept per table; frontmatter is regenerated from the live schema while the markdown body stays hand-written, and a `erd2okf check` drift check exits non-zero on structural schema drift (table/column add, drop, rename, type-class change) so freshness is a verifiable CI check rather than a maintenance promise.
+  - **`okf-gem`** (serradura) — "Open Knowledge Format for coding agents", speaking **OKF v0.2**: an Agent Skill (authors, curates, and consumes bundles) plus CLI (`okf validate`/`lint`), a Ruby library, interactive/static graph, and **`okf-mcp`** (an MCP server exposing 14 read-only tools for any MCP host); shipped via RubyGems, a Docker image, and a Claude Code plugin; 100% local.
+  These all appeared as single GitHub/PyPI/discussion hits and remain **source-backed** (watchlist for adoption claims) until release resources or multiple independent confirmations accumulate.
+
+### Open spec-side question (discussion #84)
+
+In [discussion #84](https://github.com/GoogleCloudPlatform/knowledge-catalog/discussions/84) an ecosystem implementer (thorsti, `erd2okf`) asks **whether OKF should define a bundle-level freshness convention** — a standard way for a producer to say "verified against the source, and here is what 'verified' covers" — so consumers/agents do not have to trust each producer's private definition of up-to-date. The same thread debates schema-to-OKF duplication vs MCP-pulled schema and the synchronization-drift cost of generated bundles (a design center for both `okc` and `erd2okf`). This is a source-document question, not a corpus-coverage gap.
 
 ## Related concepts
 
@@ -304,6 +314,6 @@ Primary source: the [OKF SPEC.md](https://github.com/GoogleCloudPlatform/knowled
 ## Confidence and gaps
 
 - **Confirmed:** OKF v0.2 spec content (retrieved primary source this run), bundle/reserved-filename rules, required `type`, trust/lifecycle/provenance families, Attested Computation contract, conformance, v0.1→v0.2 breaking changes.
-- **Source-backed:** the knowledge-catalog reference-agent/visualizer description (README), AKB and openknowledge ecosystem mentions (single GitHub file each).
+- **Source-backed:** the knowledge-catalog reference-agent/visualizer description (README), and the OKF ecosystem implementations — AKB and openknowledge (single GitHub file each, run 1), `okc`, `erd2okf`, and `okf-gem` (single GitHub/PyPI/discussion hits each, run 2).
 - **Contested / unresolved:** none within OKF itself. OpenWiki declares OKF v0.1 output while this run retrieved the v0.2 spec as primary — an ecosystem consistency question tracked in [open questions](/open-questions.md).
-- Gap: no formal OKF registry of implementations was retrieved (AKB asks whether one should exist).
+- Gap: no formal OKF registry of implementations was retrieved (AKB asks whether one should exist); the ecosystem entries (okc, erd2okf, okf-gem, openknowledge, AKB) are single-hit source-backed signals awaiting release resources or multi-source confirmation.

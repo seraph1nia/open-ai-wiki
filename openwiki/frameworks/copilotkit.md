@@ -1,10 +1,10 @@
 ---
 type: Framework
 title: CopilotKit (generative-UI frontend stack)
-description: CopilotKit is a 1st-party client/agent framework for building agent-powered apps with generative UI, consolidated into a monorepo and built on the AG-UI protocol; it renders static generative UI, A2UI declarative JSON, and MCP Apps UIs.
+description: CopilotKit is a 1st-party client/agent framework for building agent-powered apps with generative UI, consolidated into a monorepo and built on the AG-UI protocol; it renders static generative UI, A2UI declarative JSON, and MCP Apps UIs, and extends agents to chat platforms via its Channels SDK.
 resource: https://github.com/CopilotKit/CopilotKit
 tags: [copilotkit, generative-ui, framework, agent-ui, ag-ui]
-timestamp: 2026-08-16
+timestamp: 2026-08-18
 ---
 
 # CopilotKit (generative-UI frontend stack)
@@ -42,11 +42,20 @@ Also relevant:
 - **v2 API surface** — CopilotKit skills and docs target the v2 API (`@copilotkit/react-core`, `@copilotkit/runtime`, `@copilotkit/react-ui`, etc.). Setup packages: frontend `@copilotkit/react` + `@copilotkit/core`; runtime `@copilotkit/runtime` + `@copilotkit/agent` (with Express/single-route endpoint factories such as `createCopilotEndpoint`, `createCopilotEndpointExpress`).
 - **Dependency coupling to AG-UI** — `@copilotkit/runtime` declares a peer dependency on `@ag-ui/client` (≥0.0.39), and the AG-UI LangGraph adapter pins `@ag-ui/langgraph`; the open issue [CopilotKit/CopilotKit#2840](https://github.com/CopilotKit/CopilotKit/issues/2840) documents an `ERESOLVE` peer-dependency conflict between `@ag-ui/client@0.0.41` and `@ag-ui/langgraph`'s pinned `@ag-ui/client@0.0.40-alpha.7`. **Confidence: watchlist** — a single bug report, not a stable fact, but it evidences the tight CopilotKit↔AG-UI coupling.
 
+## Channels SDK
+
+[`CopilotKit/channels-sdk`](https://github.com/CopilotKit/channels-sdk) is CopilotKit's **SDK for bringing any agent into any chat platform** — Slack, Microsoft Teams, Discord, Telegram — with native, interactive UI. It positions CopilotKit across chat channels in addition to the web playground, and is confirmed as the "Channels SDK / OpenTag example" 1st-party client listed in the [AG-UI](/protocols/ag-ui.md) README integrations table.
+
+- A `CopilotRuntime` configured with a `channels` block and a `createCopilotNodeListener` exposes `channels` (e.g. `channels.stop()`) on a Node listener; `CopilotKitIntelligence` (via `INTELLIGENCE_API_KEY`) is optional, and messages carry structured `contentParts` plus the originating platform (`message.platform`) as context.
+- Install via `@copilotkit/channels` on npm; setup without code via `npx copilotkit@latest channels setup`; the SDK's reference application is **OpenTag** (a full OpenTag example ships in the repo).
+- **Confidence: source-backed** (repo README; retrieved 2026-08-18). This extends CopilotKit's multi-frontend footprint — chat platforms via Channels SDK, in addition to the web generative-UI playground (see the [Generative-UI ecosystem](/concepts/generative-ui-ecosystem.md)).
+
 ## Relationship to other frameworks/protocols
 
 - **1st-party client of [AG-UI](/protocols/ag-ui.md)** (built-in agent support; AG-UI was born from CopilotKit's partnership with LangGraph and CrewAI). AG-UI complements the [Model Context Protocol](/protocols/model-context-protocol.md): CopilotKit's `MCPAppsMiddleware` renders [MCP Apps](/protocols/mcp-apps.md) UIs served over MCP.
 - **Renders [A2UI](/protocols/a2ui.md) and [MCP Apps](/protocols/mcp-apps.md)** UIs alongside its own static generative UI, demonstrating multi-standard consumption; MCP Apps itself extends the [Model Context Protocol](/protocols/model-context-protocol.md) base.
-- Alternative to [OpenUI](/frameworks/openui.md) (which lists CopilotKit as one of the agent interfaces it integrates with) and to Mastra's agentic-UI layer (whose UI dojo includes CopilotKit as one of the frontends it drives).
+- Alternative to [OpenUI](/frameworks/openui.md) (which lists CopilotKit as one of the agent interfaces it integrates with) and to Mastra's agentic-UI layer (whose UI dojo includes CopilotKit as one of the frontends it drives). Mastra's own "[Building agentic copilots with CopilotKit and Mastra](https://mastra.ai/blog/copilotkitmastra)" guide scaffolds a **Mastra backend + CopilotKit/AG-UI frontend** via `npx create-ag-ui-app@latest --mastra` — see [Mastra agentic-UI](/frameworks/mastra-agentic-ui.md).
+- Its **Channels SDK** extends the same agent stack to chat platforms (Slack, Teams, Discord, Telegram), the platform dimension the AG-UI README lists as the "Channels SDK / OpenTag" 1st-party integration.
 
 ## Status
 

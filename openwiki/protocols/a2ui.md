@@ -4,7 +4,7 @@ title: A2UI (Agent to UI) Protocol
 description: A2UI is a declarative, Apache-2.0 UI protocol for agent-driven interfaces, in which agents generate a JSON payload describing UI components that render natively across web, mobile, and desktop without executing arbitrary code.
 resource: https://a2ui.org
 tags: [a2ui, protocol, agent-ui, generative-ui, declarative, ai-agents]
-timestamp: 2026-08-16
+timestamp: 2026-08-18
 ---
 
 # A2UI (Agent to UI) Protocol
@@ -21,6 +21,7 @@ A2UI is built on a small set of concepts:
 - **Component** — a UI element (Button, TextField, Card, Row, Column, …) expressed as a *typed abstract node*.
 - **Data Model** — application state that components bind to (data binding). Bindings are defined with **JSON Pointers (RFC 6901)** whose resolution depends on the current **Evaluation Scope** (path resolution + variable scope during iteration).
 - **Catalog** — the available component types, defined in a **Catalog Definition Document** (a JSON Schema document) so clients and servers can negotiate which catalog to use. `catalogId` is an arbitrary string ID used by A2UI SDKs and catalog negotiation (not a resolvable URI); per the v1.0 spec, catalogs should set both JSON Schema `$id` and `catalogId` to the same URI so renderer and agent developers can agree on shared catalogs with well-known IDs.
+- **Accessibility** (v1.0 candidate) — the spec standardizes **`AccessibilityAttributes`** attached via `ComponentCommon` to any component, supporting `label` (`DynamicString`), `description` (`DynamicString`), `live` (`"off"` | `"polite"` | `"assertive"`), and `hidden` (`DynamicBoolean`), so generated UIs carry accessibility metadata natively. **Confidence: source-backed** (v1.0 candidate spec, retrieved 2026-08-18).
 - **Message** — a JSON object such as `surfaceUpdate`, `dataModelUpdate`, or `beginRendering`. On the wire, streamed messages are usually formatted as **JSON Lines (JSONL)**, one complete JSON object per line.
 
 ## How an A2UI response is generated and rendered

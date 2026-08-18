@@ -1,10 +1,10 @@
 ---
 type: Reference
 title: Model Context Protocol releases
-description: Versioned revision history of the Model Context Protocol specification and Tier 1 SDK beta posture — revisions 2025-03-26, 2025-06-18, 2025-11-25 (RC 2025-11-15), and the current stateless 2026-07-28 revision, plus beta SDK versions for TypeScript, Go, and C#.
+description: Versioned revision history of the Model Context Protocol specification and Tier 1 SDK posture — revisions 2025-03-26, 2025-06-18, 2025-11-25 (RC 2025-11-15), and the current stateless 2026-07-28 revision, plus the TypeScript SDK v2.0.0 monorepo split, beta SDK versions for Go and C#, and companion-repo release trails (servers, swift-sdk, mcpb).
 resource: https://github.com/modelcontextprotocol/modelcontextprotocol/releases
 tags: [mcp, model-context-protocol, reference, releases, versions, sdk]
-timestamp: 2026-08-17
+timestamp: 2026-08-18
 ---
 
 # Model Context Protocol releases
@@ -18,8 +18,8 @@ Versioned information about the **Model Context Protocol** specification revisio
 | 2025-03-26 | 2026-03-26 (release) | Initial revision | First spec revision of the protocol. |
 | 2025-06-18 | 2025-06-18 | Revision | Second spec revision; changelog available in repo. |
 | 2025-11-25-RC | 2025-11-15 | Release candidate | RC of the next revision (`@localden`, pre-release). |
-| 2025-11-25 | 2025-11-25 | Stable revision | Stable release of the `2025-11-25` revision; was the current spec before 2026-07-28. Changelog in repo. |
-| **2026-07-28** | **2026-07-28** | **Current revision** | **Stateless protocol core** — no handshake or sessions; **Multi Round-Trip Requests (MRTR)**; header-based routing; cacheable list results; authorization hardening; formal **extensions framework**; Tasks (SEP-1686); formal deprecation policy. RC announced 2026-05-21. |
+| 2025-11-25 | 2025-11-25 | Stable revision | Stable release of the `2025-11-25` revision; was the current spec before 2026-07-28. Introduced experimental core Tasks (SEP-1686; states `working`/`input_required`/`completed`/`failed`/`cancelled`), CIMD URL-based client registration (SEP-991), the extensions concept (optional/additive/composable/independently versioned), security features (SEP-1024, SEP-835), and the enterprise-registry vision. Changelog in repo. |
+| **2026-07-28** | **2026-07-28** | **Current revision** | **Stateless protocol core** — no handshake or sessions (`initialize`/`initialized`, `Mcp-Session-Id` retired; optional `server/discover` RPC); **Multi Round-Trip Requests (MRTR)** (`input_required`/`inputResponses`, SEP-2322); header-based routing (`Mcp-Method`/`Mcp-Name`, SEP-2243); cacheable list results (`ttlMs`/`cacheScope`, SEP-2549); authorization hardening (RFC 9207 `iss`, `application_type`, issuer-bound credentials; **DCR formally deprecated in favor of CIMD**); formal **extensions framework** with Tasks moved to the `io.modelcontextprotocol/tasks` extension (SEP-2663); Roots/Sampling/Logging + HTTP+SSE transport deprecated with a 12-month minimum window (SEP-2577). RC announced 2026-05-21. |
 
 > **Note:** the GitHub releases fragment retrieved shows 2025-03-26 … 2025-11-25-stable; the "latest release" claim in the Tavily `answer` ("2026.7.10") is the **servers** repository's release, not the spec repo. The 2026-07-28 revision is confirmed by the official blog post (2026-07-28) and referenced by the SDK beta post. The 2026-07-28 release tag format is blog-backed; the spec-repo releases page itself was not fully retrieved.
 
@@ -27,18 +27,27 @@ Versioned information about the **Model Context Protocol** specification revisio
 
 From the 2025-06-18 release notes (and repeated in later revisions): *"SDKs will adopt this version at their own pace, and the prior version of the spec may remain in use for an undetermined amount of time. The spec describes how clients and servers perform version negotiation with one another, permitting backwards and forwards compatibility."* So MCP clients and servers negotiate a protocol version at connection time; a client that knows only 2025-11-25 can still talk to a server serving 2026-07-28 (negotiated down per request).
 
-## SDK beta posture for the 2026-07-28 revision
+## SDK posture for the 2026-07-28 revision
 
-Serving the new stateless revision is an **explicit opt-in**:
+Per the [2026-07-28 announcement](https://blog.modelcontextprotocol.io/posts/2026-07-28), **all four Tier 1 SDKs (TypeScript, Python, Go, C#) speak `2026-07-28` as of the release**, with migration notes for the breaking bits (notably for developers who depended on session identifiers); the **Rust SDK** supports the new spec in **beta**. The pre-GA beta trail observed earlier:
 
-- **TypeScript** — the streamable HTTP transport accepts revision `2026-07-28` **only when you set `StreamableHTTPOptions.Stateless = true`**; leave it unset and clients negotiate down to `2025-11-25`.
-- **Go** — beta `github.com/modelcontextprotocol/go-sdk@v1.7.0-pre.1` (`go get`).
-- **C#** — `ModelContextProtocol` packages released as **`2.0.0-preview.1`** (`dotnet add package ModelContextProtocol --prerelease`).
+- **TypeScript** — the streamable HTTP transport accepts revision `2026-07-28` **only when you set `StreamableHTTPOptions.Stateless = true`**; leave it unset and clients negotiate down to `2025-11-25`. The 2026-08-18 re-pull added the **v2.0.0 monorepo split**: `@modelcontextprotocol/core`, `client`, `server`, `node`, `hono`, `fastify`, `express`, `server-legacy`, and `codemod` all released at **2.0.0** (2026-07-27, following the 1.30.0 release) — the client-server split behind mcp-use's reported ~83% package-size cut.
+- **Go** — beta `github.com/modelcontextprotocol/go-sdk@v1.7.0-pre.1` (`go get`) observed pre-release; the announcement lists Go among the Tier 1 SDKs updated to match.
+- **C#** — `ModelContextProtocol` packages released as **`2.0.0-preview.1`** (`dotnet add package ModelContextProtocol --prerelease`) observed pre-release; listed among the Tier 1 SDKs updated.
 - **Swift** — release list observed through **0.12.1** (0.8.0 … 0.12.1; per-release dates not captured). The **0.11.0** changelog shows adoption of the 2025-11-25 spec plus: conformance tests (SEP-1730), icons and metadata support (SEP-973), elicitation updates (SEP-1034, SEP-1036, SEP-1330), a Server HTTP transport, and a fixed Network transport. **Not yet covered** by 0.11.0: experimental Task support (SEP-1686), sampling with tools (SEP-1577), auth updates (SEP-990, SEP-1046). It also added JSON-RPC batching, audio content in prompts/tool results, tool annotations, streamable-HTTP client transport, and client-sent `initialized` notifications (per the release notes fragment).
+
+## Companion repositories
+
+Release trails of MCP's companion repositories that surfaced in the Tavily page fetches (kept here so the "latest version" claims are attributed to the right repo):
+
+- **`modelcontextprotocol/servers`** — reference server packages (`server-filesystem`, `server-time`, `server-fetch`, `server-git`, `server-everything`, `server-memory`, `server-sequential-thinking`); latest observed **2026.7.10** (2026-07-10). This is the number the 2026-08-17 run's Tavily `answer` mislabeled as the "MCP spec release".
+- **`modelcontextprotocol/typescript-sdk`** — see [SDK posture](#sdk-posture-for-the-2026-07-28-revision): **v2.0.0** monorepo packages (2026-07-27) following **1.30.0**.
+- **`modelcontextprotocol/swift-sdk`** — see [SDK posture](#sdk-posture-for-the-2026-07-28-revision): 0.8.0 … **0.12.1**.
+- **`modelcontextprotocol/mcpb`** — MCP packaging/registry companion (2.1k stars, 207 forks): release list **v2.1.2** (latest observed), **v2.1.0** adds experimental UV runtime support in manifest v0.4 and removes `_meta` from manifest v0.1; CI JSON-schema validation added in v1.1.5. Watchlist: single release-page fragment, role within the MCP packaging story not yet fully mapped.
 
 ## Prior-revision feature stream (as tracked in the wiki)
 
-- **2025-11-25** — stable revision covering the pre-stateless protocol surface: transports (stdio, streamable HTTP), tools/resources/prompts, sampling, the OAuth 2.1 authorization direction, and the start of the extension/SEP flow.
+- **2025-11-25** — stable revision covering the pre-stateless protocol surface: transports (stdio, streamable HTTP), tools/resources/prompts, sampling, the OAuth 2.1 authorization direction (with CIMD URL-based client registration from SEP-991), experimental core Tasks, the extension concept, and the start of the extension/SEP flow. See the [MCP page's prior-revision section](/protocols/model-context-protocol.md#the-2025-11-25-revision-prior-stable-first-anniversary).
 - **2026 roadmap (2026-03-09 blog)** — the revision-to-Working-Groups shift; Tasks (SEP-1686) lifecycle gaps (retry semantics, expiry policies), transport evolution/scalability, governance maturation (contributor ladder + Working Group delegation), enterprise readiness. See the [MCP page](/protocols/model-context-protocol.md#2026-roadmap-and-governance).
 - **MCP Registry** (2025-09-08) — launched in preview as an open catalog/API for public MCP servers.
 
@@ -49,6 +58,6 @@ Serving the new stateless revision is an **explicit opt-in**:
 
 ## Source Map
 
-- [Web-search Agent integration protocols source evidence](/sources/web-search-agent-integration-protocols.md) — raw queries and reliability caveats.
+- [Web-search Agent integration protocols source evidence](/sources/web-search-agent-integration-protocols.md) — raw queries and reliability caveats (2026-08-17 and 2026-08-18 runs).
 - Canonical spec-repo releases: <https://github.com/modelcontextprotocol/modelcontextprotocol/releases>
-- Blog: [The 2026-07-28 Specification](https://blog.modelcontextprotocol.io/posts/2026-07-28), [RC](https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate), [SDK betas](https://blog.modelcontextprotocol.io/posts/sdk-betas-2026-07-28)
+- Blog: [The 2026-07-28 Specification](https://blog.modelcontextprotocol.io/posts/2026-07-28), [RC](https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate), [SDK betas](https://blog.modelcontextprotocol.io/posts/sdk-betas-2026-07-28), [One Year of MCP (2025-11-25)](https://blog.modelcontextprotocol.io/posts/2025-11-25-first-mcp-anniversary)

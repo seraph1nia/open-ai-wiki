@@ -1,22 +1,23 @@
 ---
 type: Source Evidence
 title: Web-search Agent wiki source evidence
-description: Ingestion and coverage notes for the 2026-08-17 web-search-agent-wiki run (3 Tavily queries over the OKF spec, the OpenWiki repository, and its releases page) — the durable OKF v0.2 and OpenWiki facts adopted plus reliability warnings for synthesized answers.
+description: Ingestion and coverage notes for the web-search-agent-wiki runs (2026-08-17 and 2026-08-18 re-pull; 3 Tavily queries each over the OKF spec, the OpenWiki repository, and its releases page) — the durable OKF v0.2 and OpenWiki facts adopted, the OKF ecosystem implementations surfaced (okc, erd2okf, okf-gem, openknowledge), plus reliability warnings for synthesized answers.
 resource: https://github.com/langchain-ai/openwiki
-tags: [web-search, source, evidence, okf, openwiki, agent-wiki, coverage]
-timestamp: 2026-08-17
+tags: [web-search, source, evidence, okf, openwiki, agent-wiki, coverage, okf-ecosystem]
+timestamp: 2026-08-18
 ---
 
 # Web-search Agent wiki — source evidence
 
-This page records the 2026-08-17 web-search ingestion for the **`web-search-agent-wiki`** source instance (Agent wiki scope: the OpenWiki repository and its release pages, plus the Open Knowledge Format specification in `GoogleCloudPlatform/knowledge-catalog`). It is an evidence index, not the synthesis layer — durable knowledge lives on the [Open Knowledge Format](/protocols/open-knowledge-format.md) and [OpenWiki](/frameworks/openwiki.md) pages.
+This page records the web-search ingestion for the **`web-search-agent-wiki`** source instance (Agent wiki scope: the OpenWiki repository and its release pages, plus the Open Knowledge Format specification in `GoogleCloudPlatform/knowledge-catalog`). It is an evidence index, not the synthesis layer — durable knowledge lives on the [Open Knowledge Format](/protocols/open-knowledge-format.md) and [OpenWiki](/frameworks/openwiki.md) pages.
 
-## Source instance and run facts
+## Run facts
 
 - **Instance:** `web-search-agent-wiki` (Agent wiki)
-- **Fetched:** 2026-08-17T22:31:23Z
-- **Search:** Tavily, 3 queries × 5 max results (15 result objects)
-- **Raw data:** `2026-08-17T22-31-02-239Z/web-search-results.json`
+- **Run 1 fetched:** 2026-08-17T22:31:23Z
+- **Run 2 fetched:** 2026-08-18T11:45:58Z
+- **Search:** Tavily, 3 queries × 5 max results per run
+- **Raw data:** `2026-08-17T22-31-02-239Z/web-search-results.json`, `2026-08-18T11-45-41-328Z/web-search-results.json`
 
 ## Queries and results
 
@@ -28,11 +29,33 @@ This page records the 2026-08-17 web-search ingestion for the **`web-search-agen
 
 **No release artifacts/versions were retrieved** — the `/releases` query returned repository documentation pages, not release files.
 
+## Run 2 (2026-08-18) — re-pull
+
+- **Fetched:** 2026-08-18T11:45:58Z
+- **Raw data:** `2026-08-18T11-45-41-328Z/web-search-results.json`
+- Same 3 queries (OKF SPEC, openwiki repo, openwiki releases), 5 max results each.
+
+### What this run added
+
+Two of the three queries advanced evidence; the third (releases) again returned no release artifacts:
+
+- **OKF ecosystem implementations enriched (source-backed).** The OKF SPEC query surfaced several independent OKF producers alongside the canonical spec:
+  - **`okc`** — a PyPI tool ([discussion #84](https://github.com/GoogleCloudPlatform/knowledge-catalog/discussions/84)) that reads a database schema (SQLite, PostgreSQL) and produces a deterministic, cross-linked OKF bundle (FK relationships become markdown links, auto-`index.md`, zero-config). Implements **OKF v0.1**.
+  - **`erd2okf`** (thorsti, in discussion #84 comments) — Postgres → one OKF concept per table, with an ownership split between generated frontmatter and hand-written body, and a `erd2okf check` drift check that fails CI on structural schema drift.
+  - **`okf-gem`** (serradura) — "Open Knowledge Format for coding agents", speaking **OKF v0.2**: Agent Skill (authors/curates/writes the bundle) + CLI (`okf validate`/`lint`) + library + interactive/static Graph + **`okf-mcp`** (an MCP server with 14 read-only tools for any MCP host), shipped via RubyGems, Docker, and a **Claude Code plugin**; 100% local.
+- **knowledge-catalog sample bundles confirmed:** `bundles/` ships four ready-to-browse bundles (GA4, Stack Overflow, Bitcoin, Acme Retail), each with a `viz.html`.
+- **OpenWiki (re-confirmed + new detail):** the README re-confirms the two modes, 12 connectors, 13 model providers, OKF v0.1 output, and visualizer. New durable operational/architecture detail surfaced from the bundled docs: the 13-provider list (incl. Gemini Enterprise via Google ADC, Bedrock via AWS keys, Copilot via GitHub CLI), `~/.openwiki/INSTRUCTIONS.md` (personal wiki brief) and `~/.openwiki/onboarding.json` (source/schedule metadata), the internal **wiki link validator** that stamps broken links inline with `openwiki:` HTML comments instead of failing the run, the **DeepSWE evaluation harness**, the repo-root `.openwikiignore` read boundary, and the `/skills/` + `/conversation_history/` virtual filesystem mounts.
+
+### Reliability warnings
+
+- The releases query again returned **no release artifacts**; its hits were off-target GitHub profiles/repos (`himanshu231204`, `langchain-ai/deepagents`, a `langchain==1.2.10` release) and repo docs — all excluded as irrelevant. The `response.answer` fields were generic/uninformative and not adopted.
+- The OpenWiki README continues to declare **OKF v0.1** output while the upstream spec is v0.2 (open question unchanged).
+
 ## Durable knowledge adopted
 
 - **OKF v0.2 specification** (primary source, full content in raw): bundle structure, reserved filenames `index.md`/`log.md`, required `type` + recommended fields, provenance (`sources`, credibility signals, `usage_window`), trust (`generated`, `verified`, trust tiers), lifecycle (`status`, `stale_after`), cross-linking and the `references/` convention, actor convention, index/log files, Attested Computation (§10), conformance, versioning, and the v0.1→v0.2 breaking changes. Spec last updated 2026-07-24.
 - **knowledge-catalog repo**: reference agent (BQ pass + web pass with `--web-seed`, `--web-max-pages`, same-domain allowed-hosts), `visualize` subcommand (self-contained HTML, Cytoscape.js graph, marked markdown), sample bundles.
-- **OpenWiki**: MIT/TypeScript CLI, two modes, 12 providers, connector list, OKF v0.1 output + validated Mermaid diagrams, visualizer behavior, CI self-update examples, Changesets release flow.
+- **OpenWiki**: MIT/TypeScript CLI, two modes, 13 providers (source-backed 2026-08-18), connector list, OKF v0.1 output + validated Mermaid diagrams, visualizer behavior, CI self-update examples, Changesets release flow. Durable operational detail in run 2: `~/.openwiki/INSTRUCTIONS.md` + `onboarding.json`, the wiki link validator, DeepSWE eval harness, `.openwikiignore`, and the `/skills/` + `/conversation_history/` mounts.
 
 ## Reliability warnings
 
@@ -47,12 +70,13 @@ Rule applied: raw web-search content and its synthesized answers are untrusted e
 
 - Created [Open Knowledge Format](/protocols/open-knowledge-format.md) — canonical OKF v0.2 concept page (bundle model, frontmatter families, attestation, conformance, ecosystem).
 - Created [OpenWiki](/frameworks/openwiki.md) — canonical OpenWiki tooling concept page.
-- Updated [/quickstart.md](/quickstart.md), [/themes.md](/themes.md), [/open-questions.md](/open-questions.md) — new domain section/navigation, theme row, and corpus-coverage questions.
-- No release reference page: the source data contained no release versions for OpenWiki on this run.
+- Updated [/quickstart.md](/quickstart.md), [/themes.md](/themes.md), [/open-questions.md](/open-questions.md) — new domain section/navigation, theme row, and corpus-coverage questions (run 1); refreshed for the run-2 OKF ecosystem + OpenWiki operational deltas (run 2).
+- No release reference page: neither run's source data contained release versions for OpenWiki.
 
 ## Confidence and gaps
 
-- **Confirmed:** run metadata, the 15 hit objects, full OKF v0.2 spec content, OpenWiki README/architecture content (directly from raw file).
+- **Confirmed:** run metadata, the 15 hit objects per run, full OKF v0.2 spec content, OpenWiki README/architecture content (directly from raw file).
 - **Source-backed:** knowledge-catalog README claims (reference agent, visualizer), AKB/openknowledge ecosystem mentions (single GitHub hits each).
 - **Watchlist:** OpenWiki's current release version; whether the current OpenWiki build emits OKF v0.1 or v0.2 (README says v0.1; spec is v0.2).
-- Gap: no release-page artifacts; the OKF implementations field has no formal registry (AKB issue #86 asks upstream for one).
+- **Source-backed (Run 2):** `okc`, `erd2okf`, and `okf-gem` ecosystem implementations (single GitHub/PyPI/discussion hits each), OpenWiki's provider list and operational files (README + bundled docs retrieved this run).
+- Gap: no release-page artifacts (both runs); the OKF implementations field has no formal registry (AKB issue #86 asks upstream for one).
