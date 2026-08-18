@@ -22,8 +22,9 @@ jobs:
     runs-on: ubuntu-latest
     # Ingestion and up to three repair passes are all model calls, so a hung
     # provider request would otherwise sit on a runner until GitHub's six-hour
-    # default. An hour is well clear of a normal run.
-    timeout-minutes: 60
+    # default. A clean scheduled run measured 55 minutes, nearly all of it
+    # ingestion, so leave room for a slower one plus three repair passes.
+    timeout-minutes: 120
     # OPENROUTER_API_KEY and TAVILY_API_KEY are environment secrets on `prd`,
     # so the job has to claim that environment or they resolve to empty strings.
     environment: prd
