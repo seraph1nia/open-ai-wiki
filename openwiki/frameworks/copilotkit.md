@@ -44,8 +44,8 @@ Also relevant:
 
 ## Relationship to other frameworks/protocols
 
-- **1st-party client of [AG-UI](/protocols/ag-ui.md)** (built-in agent support; AG-UI was born from CopilotKit's partnership with LangGraph and CrewAI).
-- **Renders [A2UI](/protocols/a2ui.md) and [MCP Apps](/protocols/mcp-apps.md)** UIs alongside its own static generative UI, demonstrating multi-standard consumption.
+- **1st-party client of [AG-UI](/protocols/ag-ui.md)** (built-in agent support; AG-UI was born from CopilotKit's partnership with LangGraph and CrewAI). AG-UI complements the [Model Context Protocol](/protocols/model-context-protocol.md): CopilotKit's `MCPAppsMiddleware` renders [MCP Apps](/protocols/mcp-apps.md) UIs served over MCP.
+- **Renders [A2UI](/protocols/a2ui.md) and [MCP Apps](/protocols/mcp-apps.md)** UIs alongside its own static generative UI, demonstrating multi-standard consumption; MCP Apps itself extends the [Model Context Protocol](/protocols/model-context-protocol.md) base.
 - Alternative to [OpenUI](/frameworks/openui.md) (which lists CopilotKit as one of the agent interfaces it integrates with) and to Mastra's agentic-UI layer (whose UI dojo includes CopilotKit as one of the frontends it drives).
 
 ## Status

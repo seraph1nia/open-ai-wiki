@@ -1,10 +1,10 @@
 ---
 type: Framework
 title: Mastra agentic-UI integration
-description: Mastra is a TypeScript AI framework whose agentic-UI layer integrates common generative-UI frontends (AI SDK UI, assistant-ui, CopilotKit, AG-UI) through @mastra/ai-sdk and a UI dojo of runnable examples.
+description: Mastra is a TypeScript AI framework whose agentic-UI layer integrates common generative-UI frontends (AI SDK UI, assistant-ui, CopilotKit, AG-UI) through @mastra/ai-sdk and a UI dojo of runnable examples; Mastra 1.0 stable adds A2A support and AI Tracing.
 resource: https://mastra.ai/integrations/agentic-ui
 tags: [mastra, agentic-ui, framework, generative-ui, ai-sdk]
-timestamp: 2026-08-16
+timestamp: 2026-08-17
 ---
 
 # Mastra agentic-UI integration
@@ -33,13 +33,24 @@ The **Mastra UI dojo** (live at `ui-dojo.mastra.ai`, source `mastra-ai/ui-dojo`)
 
 Announced in the Mastra blog post "Mastra UI Dojo: Choose your frontend" (2025-11-14, CEO Sam Bhagwat), the dojo is built around the recurring user question "How do I build a frontend for my Mastra project?", and Mastra states continued first-class support for **AI SDK, assistant-ui, and CopilotKit** — evidence of the multi-standard frontend market the [Generative-UI ecosystem](/concepts/generative-ui-ecosystem.md) compares.
 
-## Third-party adoption signal
+## Runtime maturity signals (2026-08-17 blog feed)
+
+The 2026-08-17 `web-search-factory-tools` blog pull added runtime-level signals from the [Mastra blog](https://mastra.ai/blog) (evidence on the [Factory tools source page](/sources/web-search-factory-tools.md), ledgered in the [blog post ledger](/sources/blog-post-ledger.md)):
+
+- **Mastra 1.0 stable** — the 1.0 release stabilized APIs, simplified deployment, improved observability, and addressed production issues (source-backed run facts).
+- **Agent-to-Agent (A2A) support** — Mastra agents and the Client SDK now support building cross-framework multi-agent systems with A2A-enabled agents (2026-05-19 post, source-backed). This connects Mastra to the A2A interop space alongside the [generative-UI ecosystem](/concepts/generative-ui-ecosystem.md).
+- **AI Tracing** — Mastra observability now filters noise across multiple observability platforms via a tracing layer over OpenTelemetry (2025-09-30, source-backed feature).
+- Watchlist: the 2026-03-23 changelog documents token-aware model routing for observational memory, MongoDB-backed versioned datasets/experiments, and Okta SSO with RBAC — single-source signals, not yet confirmed on primary docs.
+
+## Third-party adoption signals
 
 The open-source [DataFoundry](https://github.com/datagallery-lab/datafoundry) AI workbench (data analysis, governed workspace) acknowledges **CopilotKit / AG-UI event stream** for its agent runtime and web/TUI frontends, alongside Mastra agent-runtime patterns, Ink terminal foundations, and MCP for tool integration. It is one of several third-party projects adopting the [AG-UI](/protocols/ag-ui.md) event-stream design. **Confidence: watchlist** — single third-party project, not a framework-level agreement.
 
+[Cedar-OS](https://github.com/CedarCopilot/cedar-OS) (CedarCopilot) is an open-source framework for AI-native frontends that targets the same multi-frontend space: universal AI-provider support (OpenAI, Anthropic, Google, Mistral, Groq, XAI, **Vercel AI SDK integration**, **Mastra framework support**, custom backends), production-ready chat components (`FloatingCedarChat`, `SidePanelCedarChat`, `CedarCaptionChat`), agentic state management (`useCedarState` — the AI can read and modify React application state through a type-safe interface), real-time streaming, voice-first interaction, and component-first shadcn-style UI. It deliberately focuses on the human–AI interaction layer ("reading and writing text is effortful"). **Confidence: watchlist** — surfaced via the 2026-08-17 generative-UI pull's Mastra query; single third-party project, not a framework-level agreement. See the [Generative-UI ecosystem](/concepts/generative-ui-ecosystem.md) watchlist.
+
 ## Other integration notes from this run
 
-- The Mastra docs also reference integrating a **Cedar-OS** copilot component into a Mastra app (v0.x docs).
+- A **Cedar-OS** copilot component is also referenced in the Mastra docs themselves (v0.x docs) as an integration option — see the [third-party adoption signals](#third-party-adoption-signals) section above for the full Cedar-OS coverage.
 - The 2026-08-16 pull's canonical Mastra URLs (`…/agentic-ui/copilotkit` and `…/agentic-ui/openui`) did not resolve to their own pages in the Tavily results — the returned results again drifted to the AI SDK UI page and off-target star lists (see the reliability notes on the [source page](/sources/web-search-generative-ui.md)). Only directly matching content above is treated as source-backed.
 
 ## Relationship to other frameworks
@@ -50,8 +61,8 @@ The open-source [DataFoundry](https://github.com/datagallery-lab/datafoundry) AI
 
 ## Status
 
-- Actively documented; a dedicated agentic-UI + UI-dojo section demonstrates active investment in the generative-UI frontend space.
-- **Confidence:** source-backed for `@mastra/ai-sdk` ↔ AI SDK UI (`useChat`/`useCompletion`/`useObject`), the Custom UI (generative UI) concept, and the UI dojo (Mastra docs/blog + `mastra-ai/ui-dojo`).
+- Actively documented; a dedicated agentic-UI + UI-dojo section demonstrates active investment in the generative-UI frontend space; Mastra 1.0 stable (2026) adds runtime-maturity signals.
+- **Confidence:** source-backed for `@mastra/ai-sdk` ↔ AI SDK UI (`useChat`/`useCompletion`/`useObject`), the Custom UI (generative UI) concept, the UI dojo (Mastra docs/blog + `mastra-ai/ui-dojo`), and the 1.0/A2A/AI-Tracing run facts; watchlist for changelog single-source claims and third-party adoption signals (DataFoundry, Cedar-OS).
 
 ## Source Map
 

@@ -1,9 +1,9 @@
 ---
 type: Concept
 title: Agentic SDLC factory toolchain
-description: The composition of protocols and SDKs behind an agentic software development lifecycle (SDLC) factory — ACP and AHP for agent wiring and hosting, with Pierre, t3code, Effect (durable-execution surface source-backed), OpenCode, and the Pi SDK as the tooling layer, and how they compose into one pipeline.
-tags: [factory, toolchain, agentic-sdlc, ai-agents, sdks]
-timestamp: 2026-08-16
+description: The composition of protocols and SDKs behind an agentic software development lifecycle (SDLC) factory — ACP and AHP for agent wiring and hosting, Pierre, t3code, Effect (durable-execution surface source-backed), OpenCode, and the Pi SDK as the tooling layer, plus the CI-native gh-aw workflow layer and the followed engineering-blog feeds (Zed, Solo.io, Mastra) folded into one pipeline.
+tags: [factory, toolchain, agentic-sdlc, ai-agents, sdks, gh-aw, blogs]
+timestamp: 2026-08-17
 ---
 
 # Agentic SDLC factory toolchain
@@ -15,7 +15,7 @@ The factory idea: an agent orchestrates coding, hosting, diffs, durable tasks, a
 ## The wire-protocol layer
 
 - **[Agent Client Protocol (ACP)](/protocols/agent-client-protocol.md)** — the editor↔agent wire protocol ("connecting any editor to any agent"), officially implemented in TypeScript by `@agentclientprotocol/sdk`. It is what lets editor clients and coding agents speak a negotiated `protocolVersion`, independent of the harness. Concrete ACP server instances include [GitHub Copilot CLI](/protocols/agent-client-protocol.md#github-copilot-cli-acp-server-official-source-backed-2026-08-16) (`copilot --acp`), useful for CI/CD and multi-agent delivery paths in the factory.
-- **[Agent Host Protocol (AHP)](/protocols/agent-host-protocol.md)** — Microsoft's synchronized, multi-client sessions-server state protocol (JSON-RPC 2.0, channel-based routing). Its role in the factory is *hosting* agents and exposing their session state to multiple clients. AHP also speaks an `mcp://` side-channel, which links it into the [MCP Apps](/protocols/mcp-apps.md) generative-UI domain.
+- **[Agent Host Protocol (AHP)](/protocols/agent-host-protocol.md)** — Microsoft's synchronized, multi-client sessions-server state protocol (JSON-RPC 2.0, channel-based routing). Its role in the factory is *hosting* agents and exposing their session state to multiple clients. AHP also speaks an `mcp://` side-channel, which relays the [Model Context Protocol](/protocols/model-context-protocol.md) wire format and links AHP into the [MCP Apps](/protocols/mcp-apps.md) generative-UI domain.
 
 ## The tooling / control layer
 
@@ -47,7 +47,7 @@ The same ACP/AHP foundation that powers editors and agent hosts is reused by con
 
 - ACP and AHP are distinct, documented on their own canonical pages; this run confirms ACP's official library set includes TypeScript, Python, Rust, and Kotlin SDKs plus a `registry` (see [ACP source evidence](/sources/github-acp-typescript-sdk.md)).
 - The VS Code agent host is the first-party AHP reference server and uses AHP to power AI coding agents (confirmed by VS Code issue evidence in this run).
-- AHP's `mcp://` channel reuses the upstream MCP wire format for a capability-gated subset served to MCP Apps-style UIs (see [AHP page](/protocols/agent-host-protocol.md)).
+- AHP's `mcp://` channel reuses the upstream [MCP](/protocols/model-context-protocol.md) wire format for a capability-gated subset served to MCP Apps-style UIs (see [AHP page](/protocols/agent-host-protocol.md)).
 - Pierre's `@pierre/diffs` reached v1.3.0 ("the Edit release") — adopting in-place code editing for rendered diffs (see [Pierre page](/frameworks/pierre.md)).
 - t3code is early-stage, launched via `npx t3@latest`, and controls OpenCode among other agents (see [t3code page](/frameworks/t3code.md)).
 - **Effect's durable-execution surface is now source-backed**: the v4 beta launch (2026-02-18) and February–May recap confirm `DurableQueue` was ported from v3 to v4 with persistent queue semantics, and `@effect/workflow` delivers durable workflows in alpha (see [Effect page](/frameworks/effect.md)).
@@ -58,6 +58,39 @@ Since 2026-08-17 this hub is also fed by four engineering blogs, tracked by the 
 
 The [gh-aw workflow gallery](https://github.github.com/gh-aw/index.html#gallery) is followed alongside it as a catalogue of reusable agentic workflow patterns — the CI-side counterpart to the editor-side and control-surface tools above. Being a living index rather than a post feed, it sits outside the ledger and is re-read each run, contributing only when its entries actually change.
 
+The factory also depends on the knowledge-base layer that documents it: the [Open Knowledge Format](/protocols/open-knowledge-format.md) spec is the format standard this wiki (an [OpenWiki](/frameworks/openwiki.md) personal-mode wiki) uses to keep its concept corpus agent-maintainable, and the [web-search Agent wiki run](/sources/web-search-agent-wiki.md) documented that layer.
+
+### First blog-feed signals (2026-08-17 run)
+
+**GitHub Agentic Workflows (`gh-aw`)** is the first feed to yield durable, source-backed concept material:
+
+- `gh-aw` **compiles Markdown workflow files into GitHub Actions workflows** that run AI agents for complex, multi-step repository tasks; GitHub Actions supplies triggers, runners, logs, and job orchestration, while `gh-aw` adds the agent-specific model. This makes agent workflows **CI-native** — a complement to the local harnesses and session protocols above, and the "agent as workflow" counterpart to [ACP](/protocols/agent-client-protocol.md)/[AHP](/protocols/agent-host-protocol.md) agent sessions.
+- **Agent taxonomy** (Peli's Agent Factory post): workflows may be *read-only analysts*, *PR-proposing change agents*, or *meta-agents monitoring other workflows* — a durable vocabulary for cataloguing agent deployments.
+- **Continuous documentation workflows** (2026-01-13 post): a collections-of-agents approach where separate agents generate, maintain, and validate docs — a concrete pattern for the factory's documentation pipeline.
+- **Safety/permission model**: because gh-aw runs agents as Actions, its safety surface is the CI permission model (workflow permissions, tokens, runners) — the gateway/guardrail layer for factory agents.
+- Watchlist: **`gh-aw-mcpg`** — a Docker-based **MCP Gateway** for gh-aw (config `awmg-config.json`), connecting the CI-agent layer to the MCP ecosystem and aligning with the gateway theme below.
+- Watchlist: blog index "Weekly Update – July 13, 2026" reports **v0.82.8** and a fixed Docker-authentication bug affecting `sbx`-runtime workflows. The `v0.86.1` in the synthesized answer is **unverified** — treat as watchlist.
+
+**Zed blog signals (watchlist/saved-context):**
+
+- **DeltaDB** — Zed's synchronization engine tracking every operation at character-level granularity, designed to let humans and agents share a single, consistent view of the codebase as it evolves ("We're Not Building AI Features for the Money"). A durable design idea for the editor side of the factory: human-agent shared state on par with AHP's synchronized sessions.
+- Sequoia backing and the Student Plan ($10/month) are company/funding news — not durable technical knowledge; recorded only to close them in the [ledger](/sources/blog-post-ledger.md).
+
+**Solo.io blog signals (watchlist — teaser snippets only):**
+
+- **MCP Progressive Disclosure** — save tokens by retrieving schemas selectively at an AI gateway (Gloo AI Gateway / agentgateway); gateway-side cost optimization for MCP-heavy factories. The base [Model Context Protocol](/protocols/model-context-protocol.md) 2026-07-28 revision (cacheable list results, header-based routing) is the upstream surface this gateway layer optimizes.
+- **"On-Behalf-Of" (OBO)** demo for **Solo Enterprise for agentgateway** — delegation/identity for agent-to-service calls.
+- **AAIF (Agentic AI Foundation)** announcement — enterprise secure agentic infrastructure for MCP.
+
+**Mastra blog signals (source-backed where primary runtime facts, watchlist otherwise):**
+
+- **Mastra 1.0 stable** — stabilized APIs, simplified deployment, improved observability, production issues addressed. **A2A (Agent-to-Agent) support** for cross-framework multi-agent systems. **AI Tracing** — noise filtering across multiple observability platforms (OpenTelemetry-based).
+- Watchlist: Changelog 2026-03-23 (token-aware model routing, MongoDB-backed versioned datasets/experiments, Okta SSO with RBAC).
+
+All blog signals remain **watchlist** level unless confirmed from primary docs; the ledger records each post so a later run only re-examines them if content demonstrably changed.
+
 ## Backlog
 - **Activity semantics + full `@effect/workflow` API surface** — the DurableQueue port and workflow fixes are source-backed, but the exact Workflow/Activity primitive semantics and packaging were not fully retrieved; target the official v4 workflow docs directly.
 - **Direct ingestion of Pierre, t3code, Effect, OpenCode, and Pi repo/release resources** — each was only witnessed via web-search results this run; direct repo/release ingestion would confirm version history and cadence. (Pi's official release trail exists at `pi.dev/news` but is only partially covered this run.)
+- **Full-body re-reads of the followed blog feeds** — the first blog-feed run captured only teaser snippets; the [ledger](/sources/blog-post-ledger.md) now closes those posts, so budget direct fetches of *new* posts on future runs (revisiting a closed post requires demonstrably changed content).
+- **Solo.io progressive-disclosure / OBO gateway topics** — currently watchlist from teaser snippets; fetch the full posts to confirm durable gateway-architecture concepts.

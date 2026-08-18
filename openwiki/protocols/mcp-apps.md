@@ -11,7 +11,7 @@ timestamp: 2026-08-16
 
 **MCP Apps** is the **first official extension to the Model Context Protocol**, co-developed by **Anthropic and OpenAI** and released as an open standard. It extends MCP so that **servers can deliver interactive user interfaces to hosts** — charts, forms, dashboards, rich media, and real-time displays — rendered **securely in iframes** inside any compliant host. Predecessors/alternatives (MCP-UI, OpenAI's Apps SDK, and assorted custom implementations) each solved UI support differently; MCP Apps standardizes one mechanism.
 
-Source: [`modelcontextprotocol/ext-apps`](https://github.com/modelcontextprotocol/ext-apps). Evidence for this page lives on the [web-search generative-UI source page](/sources/web-search-generative-ui.md).
+Source: [`modelcontextprotocol/ext-apps`](https://github.com/modelcontextprotocol/ext-apps). Evidence for this page lives on the [web-search generative-UI source page](/sources/web-search-generative-ui.md) and the 2026-08-17 [Agent integration protocols source page](/sources/web-search-agent-integration-protocols.md). MCP Apps **extends the [Model Context Protocol](/protocols/model-context-protocol.md)** — the base JSON-RPC standard this extension builds on.
 
 ## Why it exists
 
@@ -43,6 +43,15 @@ sequenceDiagram
 
 The returned UI runs in a sandboxed iframe whose network and static-resource origins are controlled by the CSP in the resource metadata — the security boundary between third-party resource HTML and the host.
 
+### The UI lifecycle (4 phases)
+
+The ext-apps overview documents the end-to-end host↔View interaction as **four phases**:
+
+1. **Discovery** — the Host learns about tools and their UI resources when connecting to the server (via the extensions capability negotiation).
+2. **Initialization** — when a UI tool is called, the Host renders the iframe; the View sends `ui/initialize` and receives host context (theme, capabilities, container dimensions). This handshake ensures the View is ready before receiving data.
+3. **Data delivery** — the Host sends tool arguments and, once available, tool results to the View. Results include both `content` (text for the model's context) and optionally `structuredContent` (data optimized for UI rendering) — the `content`/`structuredContent` separation lets servers provide rich data to the UI without bloating the model's context.
+4. **Interactive phase** — the user interacts with the View; the View can call tools, send messages, or update context.
+
 ## Tooling and specs
 
 - The repository ships **four agent skills** (`agent-skills.md`): `create-mcp-app` (scaffolds a new MCP App with an interactive UI), `migrate-oai-app` (migrates an existing OpenAI App to the MCP Apps SDK), `add-app-to-server` (adds interactive UI to an existing MCP server's tools), and `convert-web-app` (converts an existing web application into an MCP App). Skills install via a Claude Code plugin (`/plugin marketplace add modelcontextprotocol/ext-apps`) or the Vercel Skills CLI (`npx skills add modelcontextprotocol/ext-apps`), and work across Claude Code, VS Code/GitHub Copilot, Codex, Gemini CLI, Cline, and Goose.
@@ -61,11 +70,13 @@ The dedicated package `@modelcontextprotocol/ext-apps` is the reference implemen
 
 - `extensions` fields on `ClientCapabilities` and `ServerCapabilities`; generic `_meta` on tool definitions.
 - `@modelcontextprotocol/ext-apps/server` module: `registerAppTool()` (tools with normalized UI metadata), `registerAppResource()` (resources with the default MCP Apps MIME type), `getUiCapability()`; typed interfaces `McpUiToolMeta`, `McpUiResourceMeta`, `McpUiResourceCsp`, `McpUiClientCapabilities`; constants `RESOURCE_MIME_TYPE`, `EXTENSION_ID`, `RESOURCE_URI_META_KEY`.
+- **Python SDK** — the `mcp` Python package carries MCP Apps support alongside the TypeScript SDK (per the csharp-sdk SEP-1865 issue's SDK survey).
+- **Java SDK gap (watchlist)** — as of Java SDK **v0.17.2** there is no MCP Apps support: feature request [modelcontextprotocol/java-sdk#780](https://github.com/modelcontextprotocol/java-sdk/issues/780) (2026-02-12, waiting for triage) asks for protocol-level support so Spring Boot clients (e.g. "MiniClaw") can render server-provided UIs; the TS implementation and AppBridge docs are cited as reference.
 
 ## Relationship to other generative-UI efforts
 
-- **Extends** the Model Context Protocol (see <https://modelcontextprotocol.io>) itself — it is the UI branch of the MCP family rather than a standalone agent-UI wire protocol like [AG-UI](/protocols/ag-ui.md).
-- Adoption requests are filed across official SDKs — `modelcontextprotocol/csharp-sdk` issue #1431 (SEP-1865, milestone "2026-07-28 Spec Compliance") and `modelcontextprotocol/java-sdk` issue #780 (2026-02-12, waiting for triage). **Confidence: watchlist** (open issues, not yet shipped), but the extension itself and its January 2026 open-standard release are source-backed from the repo overview and specification.
+- **Extends the [Model Context Protocol](/protocols/model-context-protocol.md)** itself — it is the UI branch of the MCP family rather than a standalone agent-UI wire protocol like [AG-UI](/protocols/ag-ui.md). MCP's 2026-07-28 revision made the protocol core **stateless** (no handshake/session) and formalized the **extensions framework** that MCP Apps ships under (see the [MCP page](/protocols/model-context-protocol.md#the-2026-07-28-revision-stateless-core)).
+- Adoption requests are filed across official SDKs — `modelcontextprotocol/csharp-sdk` issue #1431 (SEP-1865, milestone "2026-07-28 Spec Compliance") and `modelcontextprotocol/java-sdk` issue #780 (2026-02-12, waiting for triage). **Confidence: watchlist** (open issues, not yet shipped), but the extension itself and its January 2026 open-standard release are source-backed from the repo overview and specification. The 2026-07-28 extensions framework in the base [Model Context Protocol](/protocols/model-context-protocol.md) is the formal mechanism these adoption requests track against.
 - **Served over the Agent Host Protocol's `mcp://` side-channel** — AHP hosts run the MCP server whose `AhpMcpUiHostCapabilities` advertise the tools/resources an [AHP](/protocols/agent-host-protocol.md) client can address, letting host-served UIs render MCP Apps resources (see the [AHP page](/protocols/agent-host-protocol.md)).
 - **Complementary to, and explicitly interoperable with, [A2UI](/protocols/a2ui.md)** — the A2UI site documents *A2UI over MCP*, *MCP Apps in A2UI*, and *A2UI in MCP Apps*. Note one distinction: the [A2UI](/protocols/a2ui.md) "What A2UI is not" guidance routes non-integrated remote widgets to iframes "like MCP Apps", showing the two target different integration depths (declarative in-renderer components vs iframe-wrapped apps).
 - See the [Generative-UI ecosystem](/concepts/generative-ui-ecosystem.md) comparison for the fuller map.

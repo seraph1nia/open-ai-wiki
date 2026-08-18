@@ -4,7 +4,7 @@ title: Pierre (Pierre Computer Company)
 description: Pierre is the open-source TypeScript toolkit from the Pierre Computer Company for diffs, trees, and memes, including the @pierre/diffs library that renders and edits file diffs; maintained at github.com/pierrecomputer/pierre.
 resource: https://github.com/pierrecomputer/pierre
 tags: [pierre, diffs, sdlc, toolkit, typescript]
-timestamp: 2026-08-16
+timestamp: 2026-08-17
 ---
 
 # Pierre (Pierre Computer Company)
@@ -33,8 +33,10 @@ Project repo metadata (path listing) shows a pnpm/moon workspace with `packages/
 - **Watchlist:** the Tavily `answer` fields (e.g. "over 6,000 stars", focus claims) are synthesized and not independently verified; treat star counts as unconfirmed.
 - Gap: the repository and its releases resource were only witnessed via web-search results this run, not ingested directly. Direct repo/release ingestion would confirm version history and cadence.
 
-## Activity signals (2026-08-16 run, watchlist)
+## Activity signals (2026-08-16 and 2026-08-17 runs, watchlist)
 
 - Open issue #331 proposes a `collapsed` prop / collapse–expand control for individual file diffs — consistent with large-file diff performance concerns (issue #273: loading-state request for thousands-of-lines diffs).
 - Open bug issue #450: `FileContent.lang` override does not change syntax highlighting in `@pierre/diffs` — a concrete library bug report.
-- A companion `pierrecomputer/sdk` ("Code Storage SDKs") exists alongside the main repo and an `icons` repo, indicating a growing org surface.
+- A companion `pierrecomputer/sdk` ("Code Storage SDKs") exists alongside the main repo and an `icons` repo, indicating a growing org surface. The **`pierrecomputer/icons`** repo describes itself as built for **Diffs.com, Trees.software, and DiffsHub.com**, exporting source SVGs — the org's commercial surface around the open toolkit.
+- **Feature request [CLI] issue #728** (pierrecomputer/pierre) — users want a CLI surface for the toolkit (retrieved 2026-08-17).
+- Repo activity (2026-08-17 fetch): a `[diffs/edit]` refactor of the `onChange` editor option (PR merge, ~2 weeks before) and a `chore: update @pierre/diffs to 1.3.0` commit — ongoing work on the diff editor surface.

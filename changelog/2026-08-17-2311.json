@@ -1,0 +1,406 @@
+{
+  "runAt": "2026-08-17T23:11:01.741Z",
+  "narrative": "This batch tightens the corpus's protocol map: AG-UI, A2UI, MCP Apps, CopilotKit, and OpenUI now all cross-reference the Model Context Protocol as the base layer the generative-UI family extends, and AHP's mcp:// side-channel is explicitly documented as relaying MCP's wire format. The tooling layer expands in parallel — AG-UI gains a source-backed Kotlin SDK with stable Android/iOS/JVM targets, OpenCode gains its official Go SDK and ecosystem catalogue, Mastra's page adds 1.0-stable/A2A/AI-Tracing runtime signals, and the factory page folds in gh-aw's CI-native agent workflows. The batch also documents the wiki's own maintenance tooling: a new OpenWiki page, plus open questions about whether it emits OKF v0.1 or v0.2 and what its current release is.",
+  "entries": [
+    {
+      "kind": "updated",
+      "path": "concepts/factory-toolchain.md",
+      "title": "Agentic SDLC factory toolchain",
+      "summary": "The factory toolchain page now folds in the CI-native gh-aw workflow layer (Markdown workflow files compiled into GitHub Actions) and the followed engineering-blog feeds, and clarifies that AHP's mcp:// side-channel relays the Model Context Protocol wire format. Readers tracking the SDLC factory get the first source-backed blog-feed signals: gh-aw makes agent workflows CI-native, complementing the ACP/AHP session protocols.",
+      "minor": false,
+      "added": 39,
+      "removed": 6,
+      "type": "Concept",
+      "tags": [
+        "factory",
+        "toolchain",
+        "agentic-sdlc",
+        "ai-agents",
+        "sdks",
+        "gh-aw",
+        "blogs"
+      ]
+    },
+    {
+      "kind": "updated",
+      "path": "concepts/generative-ui-ecosystem.md",
+      "title": "Generative-UI ecosystem",
+      "summary": "The comparison table now reflects the AG-UI Kotlin SDK (stable Android/iOS/JVM targets, THINKING_ telemetry surfaced for UIs) and MCP Apps' JSON-RPC-over-postMessage handshake details, and adds Cedar-OS as a third-party watchlist entrant in the same provider/frontend space. The ecosystem map is updated with the new SDK evidence and one more multi-frontend framework.",
+      "minor": true,
+      "added": 6,
+      "removed": 6,
+      "type": "Concept",
+      "tags": [
+        "generative-ui",
+        "agent-ui",
+        "comparison",
+        "ecosystem",
+        "ai-agents"
+      ]
+    },
+    {
+      "kind": "updated",
+      "path": "frameworks/copilotkit.md",
+      "title": "CopilotKit (generative-UI frontend stack)",
+      "summary": "CopilotKit's relationship section now explicitly ties AG-UI and MCP Apps back to the Model Context Protocol base: MCPAppsMiddleware renders MCP Apps UIs served over MCP, and MCP Apps extends MCP. This clarifies the protocol stack CopilotKit consumes.",
+      "minor": true,
+      "added": 2,
+      "removed": 2,
+      "type": "Framework",
+      "tags": [
+        "copilotkit",
+        "generative-ui",
+        "framework",
+        "agent-ui",
+        "ag-ui"
+      ],
+      "resource": "https://github.com/CopilotKit/CopilotKit"
+    },
+    {
+      "kind": "updated",
+      "path": "frameworks/effect.md",
+      "title": "Effect",
+      "summary": "The durable-execution surface (DurableQueue ported to v4, @effect/workflow alpha) was reconfirmed by the 2026-08-17 pull, with Layer.suspend re-verified from the official recap. The v4 beta durable-execution claims now have two independent pulls behind them.",
+      "minor": true,
+      "added": 3,
+      "removed": 3,
+      "type": "Framework",
+      "tags": [
+        "effect",
+        "typescript",
+        "durable-execution",
+        "framework",
+        "v4"
+      ],
+      "resource": "https://www.effect.website/docs/v4/api/effect"
+    },
+    {
+      "kind": "updated",
+      "path": "frameworks/mastra-agentic-ui.md",
+      "title": "Mastra agentic-UI integration",
+      "summary": "The page gains a runtime-maturity section: Mastra 1.0 stable, A2A support for cross-framework multi-agent systems, and AI Tracing over OpenTelemetry, all source-backed from the Mastra blog feed. Cedar-OS is upgraded from a docs mention to a full third-party adoption signal with its own watchlist entry.",
+      "minor": false,
+      "added": 17,
+      "removed": 6,
+      "type": "Framework",
+      "tags": [
+        "mastra",
+        "agentic-ui",
+        "framework",
+        "generative-ui",
+        "ai-sdk"
+      ],
+      "resource": "https://mastra.ai/integrations/agentic-ui"
+    },
+    {
+      "kind": "updated",
+      "path": "frameworks/opencode-sdk.md",
+      "title": "OpenCode",
+      "summary": "The page now covers the official Go SDK (opencode.ai/docs/go) with its model/provider table (Grok 4.5, GPT 5.6 Luna, GLM-5.x, Kimi K3) and the ecosystem catalogue (opencode-background-agents, opencode-notify, opencode-workspace, octto browser UI), plus a community REST client (anomalyco/opencode-sdk-js) as traction evidence. The Claude OAuth removal note is now pinned to headroomlabs-ai/headroom issue #78.",
+      "minor": true,
+      "added": 4,
+      "removed": 3,
+      "type": "Reference",
+      "tags": [
+        "opencode",
+        "sdk",
+        "coding-agent",
+        "typescript",
+        "ai-agents"
+      ],
+      "resource": "https://opencode.ai/docs/sdk/"
+    },
+    {
+      "kind": "updated",
+      "path": "frameworks/openui.md",
+      "title": "OpenUI (Open Standard for Generative UI)",
+      "summary": "Cross-reference fix: the MCP Apps iframe/embedding thread now links to the Model Context Protocol base page. No substantive change.",
+      "minor": true,
+      "added": 1,
+      "removed": 1,
+      "type": "Framework",
+      "tags": [
+        "openui",
+        "generative-ui",
+        "framework",
+        "agent-ui",
+        "language",
+        "runtime"
+      ],
+      "resource": "https://www.openui.com/docs/overview"
+    },
+    {
+      "kind": "new",
+      "path": "frameworks/openwiki.md",
+      "title": "OpenWiki",
+      "summary": "New page: OpenWiki is the langchain-ai self-maintaining-wiki CLI (MIT, npm, TypeScript) that maintains this corpus — code and personal modes, connectors for local git/Notion/Slack/Gmail/X/Web Search/Hacker News/Custom MCP, OKF v0.1 output with validated Mermaid diagrams, an interactive visualizer, and CI self-update workflows for GitHub Actions, GitLab CI, and Bitbucket Pipelines. Readers get the tooling layer behind this wiki documented for the first time.",
+      "minor": false,
+      "added": 123,
+      "removed": 0,
+      "type": "Framework",
+      "tags": [
+        "openwiki",
+        "agent-docs",
+        "wiki",
+        "cli",
+        "connectors",
+        "okf",
+        "mermaid",
+        "self-updating"
+      ],
+      "resource": "https://github.com/langchain-ai/openwiki"
+    },
+    {
+      "kind": "updated",
+      "path": "frameworks/pi-sdk.md",
+      "title": "Pi SDK",
+      "summary": "The Pi SDK extension ecosystem list adds macos-dev-code, a SwiftUI-first macOS coding-guidance package that uses the platform SDK. One more embedding route into the Pi agent.",
+      "minor": true,
+      "added": 2,
+      "removed": 2,
+      "type": "SDK",
+      "tags": [
+        "pi",
+        "sdk",
+        "coding-agent",
+        "automation",
+        "workflows"
+      ],
+      "resource": "https://pi.dev/docs/latest/sdk"
+    },
+    {
+      "kind": "updated",
+      "path": "frameworks/pierre.md",
+      "title": "Pierre (Pierre Computer Company)",
+      "summary": "New activity signals: the pierrecomputer/icons repo is built for Diffs.com, Trees.software, and DiffsHub.com (the org's commercial surface), issue #728 requests a CLI surface for the toolkit, and recent commits show a [diffs/edit] refactor of the onChange editor option plus a bump to @pierre/diffs 1.3.0. The diff-editor surface is seeing ongoing work.",
+      "minor": true,
+      "added": 5,
+      "removed": 3,
+      "type": "Reference",
+      "tags": [
+        "pierre",
+        "diffs",
+        "sdlc",
+        "toolkit",
+        "typescript"
+      ],
+      "resource": "https://github.com/pierrecomputer/pierre"
+    },
+    {
+      "kind": "updated",
+      "path": "frameworks/t3code.md",
+      "title": "t3code",
+      "summary": "The page pins the earlier Codex friction repro to T3 Code v0.0.4 (2026-03-07) and codex-cli 0.94.0, and adds a current issue stream: Codex slash commands (/help, /status, /use, /review) are missing from the T3Code surface (issue #2637) and Codex image-generation results lack first-class chat output (issue #2398). Concrete harness-surface gaps of the same class as issue #386.",
+      "minor": true,
+      "added": 3,
+      "removed": 2,
+      "type": "Reference",
+      "tags": [
+        "t3code",
+        "agent-control",
+        "harness",
+        "ai-agents",
+        "desktop"
+      ],
+      "resource": "https://github.com/pingdotgg/t3code"
+    },
+    {
+      "kind": "updated",
+      "path": "open-questions.md",
+      "title": "Open Questions",
+      "summary": "Two new open questions: whether OpenWiki emits OKF v0.1 (as its README says) or v0.2 (the current spec revision), and what OpenWiki's current npm release is — both unresolved because the pull returned repo docs but no release artifacts. The generative-UI SDK versions question was updated to note the re-surfaced Kotlin SDK docs tree.",
+      "minor": false,
+      "added": 17,
+      "removed": 5,
+      "type": "Reference",
+      "tags": [
+        "open-questions",
+        "memory-graph",
+        "wiki-quality",
+        "okf",
+        "openwiki"
+      ]
+    },
+    {
+      "kind": "updated",
+      "path": "protocols/a2ui.md",
+      "title": "A2UI (Agent to UI) Protocol",
+      "summary": "Cross-reference fix: the A2UI-over-MCP, MCP-Apps-in-A2UI, and A2UI-in-MCP-Apps interop surfaces now link to the Model Context Protocol base page. No substantive change.",
+      "minor": true,
+      "added": 1,
+      "removed": 1,
+      "type": "Protocol",
+      "tags": [
+        "a2ui",
+        "protocol",
+        "agent-ui",
+        "generative-ui",
+        "declarative",
+        "ai-agents"
+      ],
+      "resource": "https://a2ui.org"
+    },
+    {
+      "kind": "updated",
+      "path": "protocols/ag-ui.md",
+      "title": "AG-UI (Agent-User Interaction Protocol)",
+      "summary": "The page gains a source-backed Kotlin SDK section: community-maintained com.agui.* Gradle coordinates, Android/iOS/JVM stable at API 26+/iOS 13+/Java 11+, AgUiAgent/StatefulAgUiAgent clients on kotlinx.coroutines.flow, a Tools module with circuit-breaker patterns, chunked protocol events rewritten into start/content/end sequences, and THINKING_ telemetry surfaced for UIs. MCP cross-references were also fixed to point at the canonical Model Context Protocol page.",
+      "minor": true,
+      "added": 6,
+      "removed": 5,
+      "type": "Protocol",
+      "tags": [
+        "ag-ui",
+        "protocol",
+        "agent-ui",
+        "ai-agents",
+        "streaming",
+        "generative-ui"
+      ],
+      "resource": "https://github.com/ag-ui-protocol/ag-ui"
+    },
+    {
+      "kind": "updated",
+      "path": "protocols/agent-host-protocol.md",
+      "title": "Agent Host Protocol (AHP)",
+      "summary": "The Agent Host Protocol (AHP) is Microsoft's synchronized, multi-client state protocol for AI agent sessions, framed on JSON-RPC 2.0 with channel-based routing, immutable state, pure reducers, and write-ahead reconciliation.",
+      "minor": true,
+      "added": 9,
+      "removed": 4,
+      "type": "Protocol",
+      "tags": [
+        "agent-host-protocol",
+        "protocol",
+        "ai-agents",
+        "json-rpc",
+        "sessions"
+      ],
+      "resource": "https://github.com/microsoft/agent-host-protocol"
+    },
+    {
+      "kind": "updated",
+      "path": "protocols/mcp-apps.md",
+      "title": "MCP Apps (Model Context Protocol Apps extension)",
+      "summary": "MCP Apps is the first official extension to the Model Context Protocol, co-developed by Anthropic and OpenAI, letting MCP servers deliver interactive UIs (charts, forms, dashboards) rendered securely in iframes inside any compliant host.",
+      "minor": false,
+      "added": 14,
+      "removed": 3,
+      "type": "Protocol",
+      "tags": [
+        "mcp",
+        "mcp-apps",
+        "protocol",
+        "extension",
+        "agent-ui",
+        "generative-ui"
+      ],
+      "resource": "https://github.com/modelcontextprotocol/ext-apps"
+    },
+    {
+      "kind": "new",
+      "path": "protocols/model-context-protocol.md",
+      "title": "Model Context Protocol (MCP)",
+      "summary": "The Model Context Protocol (MCP) is the open standard for how AI agents integrate with external tools, data sources, and other agents — JSON-RPC 2.0-based tools, resources, and prompts with capability negotiation, sampling, elicitation, authorization, and a 2026-07-28 revision that made the core stateless, added Multi Round-Trip Requests, header-based routing, cacheable list results, and a formal extensions framework.",
+      "minor": false,
+      "added": 118,
+      "removed": 0,
+      "type": "Protocol",
+      "tags": [
+        "mcp",
+        "model-context-protocol",
+        "protocol",
+        "agent-integration",
+        "tools",
+        "resources",
+        "prompts",
+        "authorization",
+        "extensions",
+        "registry"
+      ],
+      "resource": "https://modelcontextprotocol.io"
+    },
+    {
+      "kind": "new",
+      "path": "protocols/open-knowledge-format.md",
+      "title": "Open Knowledge Format (OKF)",
+      "summary": "OKF is a minimal, vendor-neutral format for representing knowledge as markdown files with YAML frontmatter in a self-describing bundle — standardizing the small set of structural conventions (required type, provenance, trust, lifecycle, attestation) that make an agent-maintained knowledge corpus trustable.",
+      "minor": false,
+      "added": 310,
+      "removed": 0,
+      "type": "Protocol",
+      "tags": [
+        "okf",
+        "knowledge-format",
+        "spec",
+        "bundle",
+        "provenance",
+        "trust",
+        "attestation",
+        "frontmatter",
+        "knowledge-representation"
+      ],
+      "resource": "https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md"
+    },
+    {
+      "kind": "updated",
+      "path": "quickstart.md",
+      "title": "AI Knowledge Wiki Quickstart",
+      "summary": "Navigation and current status for the AI knowledge corpus — the Model Context Protocol (MCP) core and its 2026-07-28 stateless revision (added 2026-08-17), the Agent Host Protocol (AHP), Agent Client Protocol (ACP), the generative-UI / agent-UI protocol ecosystem (with the AG-UI Kotlin SDK and Cedar-OS deltas), the agentic SDLC factory toolchain (Pierre, t3code, Effect, OpenCode, Pi SDK, gh-aw CI workflows, and the followed blog feeds), and the agent-maintained knowledge-base layer (the Open Knowledge Format v0.2 spec and the OpenWiki CLI that maintains this wiki).",
+      "minor": false,
+      "added": 81,
+      "removed": 18,
+      "type": "Guide",
+      "tags": [
+        "quickstart",
+        "index",
+        "navigation",
+        "ai-agents",
+        "generative-ui",
+        "factory-toolchain",
+        "okf",
+        "openwiki",
+        "knowledge-bases"
+      ]
+    },
+    {
+      "kind": "new",
+      "path": "references/model-context-protocol-releases.md",
+      "title": "Model Context Protocol releases",
+      "summary": "Versioned revision history of the Model Context Protocol specification and Tier 1 SDK beta posture — revisions 2025-03-26, 2025-06-18, 2025-11-25 (RC 2025-11-15), and the current stateless 2026-07-28 revision, plus beta SDK versions for TypeScript, Go, and C#.",
+      "minor": false,
+      "added": 54,
+      "removed": 0,
+      "type": "Reference",
+      "tags": [
+        "mcp",
+        "model-context-protocol",
+        "reference",
+        "releases",
+        "versions",
+        "sdk"
+      ],
+      "resource": "https://github.com/modelcontextprotocol/modelcontextprotocol/releases"
+    },
+    {
+      "kind": "updated",
+      "path": "themes.md",
+      "title": "Recurring themes and trends",
+      "summary": "Compact index of recurring signals across the AI knowledge corpus — standardization and convergence of generative-UI / agent-UI protocols in 2026, the emerging agentic SDLC factory toolchain (including its CI-native gh-aw layer), and the emergence of agent-maintained knowledge-base formats and tooling (OKF v0.2, OpenWiki).",
+      "minor": false,
+      "added": 10,
+      "removed": 7,
+      "type": "Reference",
+      "tags": [
+        "themes",
+        "index",
+        "generative-ui",
+        "agent-ui",
+        "trends",
+        "factory-toolchain",
+        "knowledge-bases",
+        "okf",
+        "openwiki"
+      ]
+    }
+  ]
+}

@@ -4,7 +4,7 @@ title: Agent Host Protocol (AHP)
 description: The Agent Host Protocol (AHP) is Microsoft's synchronized, multi-client state protocol for AI agent sessions, framed on JSON-RPC 2.0 with channel-based routing, immutable state, pure reducers, and write-ahead reconciliation.
 resource: https://github.com/microsoft/agent-host-protocol
 tags: [agent-host-protocol, protocol, ai-agents, json-rpc, sessions]
-timestamp: 2026-08-16
+timestamp: 2026-08-17
 ---
 
 # Agent Host Protocol (AHP)
@@ -92,10 +92,10 @@ State-bearing channels expose typed state and are subscribable; stateless channe
 
 ### The `mcp://` side-channel (links to MCP Apps)
 
-AHP also defines an optional **`mcp://` side-channel** (specified in `docs/specification/mcp-channel.md`): it lets an AHP client originate a **constrained subset of MCP traffic against an MCP server the agent host is already running**. It is the wire format AHP uses whenever a client needs to talk MCP — "but only as much MCP as the host has explicitly opted into exposing."
+AHP also defines an optional **`mcp://` side-channel** (specified in `docs/specification/mcp-channel.md`): it lets an AHP client originate a **constrained subset of MCP traffic against an MCP server the agent host is already running**. It is the wire format AHP uses whenever a client needs to talk MCP — "but only as much MCP as the host has explicitly opted into exposing." The relay carries the [Model Context Protocol](/protocols/model-context-protocol.md) wire format verbatim (JSON-RPC 2.0); the 2026-07-28 MCP stateless-core change is transparent to it, because AHP forwards MCP method URIs and notifications rather than the removed `initialize` session handshake.
 
 - The channel itself is **generic**; the methods/notifications it actually serves are determined by **capability advertisements** on the customization it hangs off. Today the only such advertisement is `AhpMcpUiHostCapabilities` (used by [MCP Apps](/protocols/mcp-apps.md)), but additional domain-specific capability sets MAY be added later without changing the channel. Capabilities map to served methods and forwarded notifications, e.g. `serverTools` (`tools/list`, `tools/call`), `serverResources` (`resources/list`, `templates`, `read`), `logging` (`logging/setLevel`, `notifications/message`), `sampling` (`sampling/createMessage`), with `listChanged` notifications when applicable.
-- **Wire format:** MCP verbatim — JSON-RPC 2.0 requests/responses/notifications exactly as defined by the upstream MCP specification. AHP does not redefine request/response shapes or notification payloads.
+- **Wire format:** MCP verbatim — JSON-RPC 2.0 requests/responses/notifications exactly as defined by the upstream [Model Context Protocol](/protocols/model-context-protocol.md) specification. AHP does not redefine request/response shapes or notification payloads.
 
 This connects the AHP session-server state protocol into the generative-UI ecosystem: its MCP Apps capability lets a host-served UI render MCP resources (see [MCP Apps](/protocols/mcp-apps.md)). Durable source: [web-search Factory tools evidence](/sources/web-search-factory-tools.md).
 
@@ -113,11 +113,16 @@ stateDiagram-v2
 
 ## Servers and clients
 
-- **Servers:** The first-party reference server is the [VS Code agent host](https://github.com/microsoft/vscode) (`src/vs/platform/agentHost/node/`). It is the subsystem that hosts AI coding agents (e.g. Copilot) and powers them through AHP, and the VS Code team is broadening *self-hosting* coverage across the configurations it runs in (issue microsoft/vscode#311105), with a related issue for agent-host terminal shell integration (#329538).
+- **Servers:** The first-party reference server is the [VS Code agent host](https://github.com/microsoft/vscode) (`src/vs/platform/agentHost/node/`). It is the subsystem that hosts AI coding agents (e.g. Copilot) and powers them through AHP, and the VS Code team is broadening *self-hosting* coverage across the configurations it runs in (issue microsoft/vscode#311105, milestone 1.117.0), with a related issue for agent-host terminal shell integration (#329538).
 - **Client libraries** (each on its own SemVer release track): Rust (`ahp`, `ahp-types`, `ahp-ws`), TypeScript (`@microsoft/agent-host-protocol`), Kotlin (`com.microsoft.agenthostprotocol`), Go (`clients/go`), and Swift (SwiftPM `microsoft/agent-host-protocol`).
 - **Other clients:** [AHPX](https://github.com/TylerLeonhardt/ahpx) (CLI + Node.js) and the VS Code built-in Agent Sessions client.
 - **Multi-host:** Rust, Swift, and Go SDKs ship a `MultiHostClient` for talking to two or more hosts at once; single-host consumers use the same API (`MultiHostClient::single` / `.single(...)` / `hosts.Single(...)`).
 - **Related ecosystem:** MCP servers surface in AHP as first-class session customizations with a lifecycle and OAuth challenge flow; the `mcp://` side-channel further links AHP to [MCP Apps](/protocols/mcp-apps.md) generative-UI hosting.
+
+### Agent-host issue stream (2026-08-17 pull, watchlist)
+
+- **Detached-shell lifecycle** (issue #331027): the host stops detached shells when idle sessions are released; the SDK exposes authoritative detached-task state through `session.rpc.tasks.refresh()` and `session.rpc.tasks.list()`, and a running detached shell is represented as a task (official agent-host issue, source-backed behavior note, single source).
+- **WSL connections** (issue #307568) and **GitHub Enterprise (GHE) Copilot auth** (issue #313396) are open agent-host feature areas alongside the self-hosting issue above.
 
 The Release-evidence and current-version headline features (including multiroot working directories, side chats, and MCP tool-call OAuth in v0.7.0) are synthesized on the [Agent Host Protocol releases](/references/agent-host-protocol-releases.md) page.
 

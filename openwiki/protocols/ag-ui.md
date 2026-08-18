@@ -4,12 +4,12 @@ title: AG-UI (Agent-User Interaction Protocol)
 description: AG-UI is an open, lightweight, event-based wire protocol for streaming AI agent output to user-facing applications, standardizing how agents describe and stream UI over SSE, WebSockets, HTTP, and custom transports.
 resource: https://github.com/ag-ui-protocol/ag-ui
 tags: [ag-ui, protocol, agent-ui, ai-agents, streaming, generative-ui]
-timestamp: 2026-08-16
+timestamp: 2026-08-17
 ---
 
 # AG-UI (Agent-User Interaction Protocol)
 
-**AG-UI** is an open, lightweight, **event-based protocol that standardizes how AI agents connect to user-facing applications**. During agent executions, agent backends emit events compatible with one of AG-UI's ~16 standard event types; agent backends accept one of a few simple AG-UI-compatible inputs as arguments. It is the agent-to-UI counterpart in the same way the [Model Context Protocol](/protocols/mcp-apps.md) family covers agent-to-tools.
+**AG-UI** is an open, lightweight, **event-based protocol that standardizes how AI agents connect to user-facing applications**. During agent executions, agent backends emit events compatible with one of AG-UI's ~16 standard event types; agent backends accept one of a few simple AG-UI-compatible inputs as arguments. It is the agent-to-UI counterpart in the same way the [Model Context Protocol](/protocols/model-context-protocol.md) family covers agent-to-tools.
 
 Source: [`ag-ui-protocol/ag-ui`](https://github.com/ag-ui-protocol/ag-ui), MIT-licensed (born from the CopilotKit org's partnership with LangGraph and CrewAI). Docs at <https://ag-ui.com/>; interactive building-blocks viewer at the [AG-UI Dojo](https://dojo.ag-ui.com/). Evidence and coverage for this page live on the [web-search generative-UI source page](/sources/web-search-generative-ui.md).
 
@@ -41,10 +41,11 @@ The TypeScript codebase shapes agent interaction around:
 
 Official and community SDKs cover TypeScript (`@ag-ui/core`, `@ag-ui/client`, `@ag-ui/langgraph`), Python, Kotlin Multiplatform (Android/iOS/JVM, community-maintained), Go (community), and Swift (community). See the AG-UI repo structure (`/sdks/typescript/`, `/python-sdk`, `/sdks/community/*`).
 
-### Java, Go, and Swift SDKs (source-backed from repo docs, 2026-08-16 pull)
+### Java, Go, Kotlin, and Swift SDKs (source-backed from repo docs)
 
 - **Java SDK** (`com.agui.core`, `com.agui.client`, `com.agui.http`, installed via Maven/Gradle) — `HttpAgent` streams events from a remote server using a pluggable HTTP client (e.g. OkHttp); `AgentSubscriber` callbacks receive typed events such as `TextMessageContentEvent` deltas; core events cover messages, state, tools, and context.
 - **Go SDK** (`sdks/community/go`, `go get github.com/ag-ui-protocol/ag-ui/sdks/community/go`) — `core/events` provides event types, interfaces, and an `EventDecoder`; `client/sse` provides an SSE client with automatic reconnection, timeouts, and auth support for streaming agent frames.
+- **Kotlin SDK** (`docs/sdk/kotlin/`, community-contributed and maintained, `com.agui.*` Gradle coordinates; Android/iOS/JVM listed **stable** at API 26+, iOS 13+, Java 11+) — a Kotlin Multiplatform library for real-time streaming agent-UI communication. It exposes `AgUiAgent` (stateless) and `StatefulAgUiAgent` (conversation context) clients built on `kotlinx.coroutines.flow`; a Tools module (`ToolExecutor`, `ToolRegistry`, `ToolExecutionManager`) with circuit-breaker patterns; **chunked protocol events** (`TEXT_MESSAGE_CHUNK`, `TOOL_CALL_CHUNK`) automatically rewritten into their start/content/end sequences so clients see the same structured events as non-chunked streams; and `THINKING_` telemetry surfaced alongside normal messages so UIs can indicate agent reasoning before responding. **Confidence: source-backed** (official repo docs tree; community-maintained, not independently cross-checked). Retrieved 2026-08-17 from `docs/sdk/kotlin/overview.mdx`.
 - **Swift SDK** ([paduh/ag-ui-swift](https://github.com/paduh/ag-ui-swift), community/third-party, SwiftPM + Cocoapods, ~198 commits) — `AGUIClient` (low-level `HttpAgent` HTTP transport, `SseParser`, `EventStreamManager`), `AGUICore` (protocol/event types, message/state types, domain + infrastructure layers), and `AGUITools` (tool execution with circuit-breaker patterns); stable targets not pinned in the retrieved docs. **Confidence: source-backed** (repo README/architecture, single contributor project not cross-checked).
 
 ### Runtime streaming flow
@@ -77,14 +78,14 @@ sequenceDiagram
 
 ## Relationship to other protocols
 
-- **Complement** to the [Model Context Protocol](/protocols/mcp-apps.md): where MCP covers agent-to-tools / agent-to-data, AG-UI covers agent-to-UI.
+- **Complement** to the [Model Context Protocol](/protocols/model-context-protocol.md): where MCP covers agent-to-tools / agent-to-data, AG-UI covers agent-to-UI.
 - **Rival/alternative** to the declarative-JSON [A2UI](/protocols/a2ui.md) protocol and the [OpenUI](/frameworks/openui.md) declarative language — all three target streaming agent-driven UI but differ on event-based vs declarative modelling.
 - Distinct from the session-synchronization [Agent Host Protocol](/protocols/agent-host-protocol.md); AG-UI is a wire protocol for a single agent-to-client UI stream, not a multi-client session store.
 
 ## Status
 
 - Actively developed; README features a quickstart (`npx create-ag-ui-app`), an AG-UI Dojo of 50–200 line building-block examples, and a contributed-integration process.
-- **Confidence:** source-backed (AG-UI README and `CLAUDE.md` protocol architecture from the official `ag-ui-protocol/ag-ui` repo; single primary source, not independently cross-checked).
+- **Confidence:** source-backed (AG-UI README and `CLAUDE.md` protocol architecture plus the `docs/sdk/*` overviews from the official `ag-ui-protocol/ag-ui` repo; single primary source, not independently cross-checked).
 
 ## Source Map
 

@@ -57,7 +57,7 @@ The `thesysdev/openui` monorepo organizes the stack into `packages/`:
 - **openui-cli** — CLI for scaffolding & prompt generation
 - Plus a `skills/openui` Claude Code skill for AI-assisted development.
 
-This confirms the official **React** support plus community runtime bindings (Vue, Svelte) and a no-build script-tag bundle (see the [MCP Apps](/protocols/mcp-apps.md) iframe/embedding thread in the ecosystem comparison). **Confidence: source-backed** (repo README structure from `thesysdev/openui`).
+This confirms the official **React** support plus community runtime bindings (Vue, Svelte) and a no-build script-tag bundle (see the [MCP Apps](/protocols/mcp-apps.md) iframe/embedding thread in the ecosystem comparison, which itself extends the [Model Context Protocol](/protocols/model-context-protocol.md)). **Confidence: source-backed** (repo README structure from `thesysdev/openui`).
 
 ## OpenUI Lang comparison
 
