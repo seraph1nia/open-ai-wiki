@@ -188,7 +188,9 @@ create-pull-request
 
 Each stage is a gate: the pull request only exists if the corpus validates and the whole repository still passes CI. Application, test and build failures from that CI run fail the update; they are not handed to the OpenWiki repair loop, which exists only for the deterministic wiki findings.
 
-`.github/workflows/ci.yml` runs the full `vp` validation sequence — format, lint, wiki validation, type check, tests, and build — on every pull request, so the generated OpenWiki pull requests are checked before merge.
+`.github/workflows/ci.yml` runs the full `vp` validation sequence — format, lint, wiki validation, type check, tests, and build — on every pull request.
+
+It does not cover the generated OpenWiki pull requests, which is why the update workflow runs that sequence itself. `create-pull-request` pushes with the default `GITHUB_TOKEN`, and GitHub suppresses `pull_request` events from that token so a workflow cannot trigger further workflows; a PR the update job opens or updates therefore arrives with no checks attached. Before this was gated in the job, an invalid corpus merged unchecked and only failed later, in the Pages deploy on `main`.
 
 `.github/workflows/pages.yml` runs that same sequence and then deploys the Astro site after changes reach `main`. Enable GitHub Pages with **GitHub Actions** as its source before the first deployment.
 
