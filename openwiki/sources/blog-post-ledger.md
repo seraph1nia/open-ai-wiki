@@ -4,7 +4,7 @@ title: Blog post ingestion ledger
 description: Cumulative, append-only record of blog posts already ingested into this wiki (Zed, Solo.io, Mastra, gh-aw), used to keep blog ingestion idempotent — posts listed here are never fetched, summarized, or adopted again.
 resource: https://zed.dev/blog
 tags: [source, evidence, ledger, blog, deduplication, factory-tools]
-timestamp: 2026-08-17
+timestamp: 2026-08-18
 ---
 
 # Blog post ingestion ledger
@@ -42,6 +42,11 @@ Append-only. Newest first.
 
 | Post URL | Feed | Published | Ingested | Wiki pages changed |
 |---|---|---|---|---|
+| https://mastra.ai/blog/copilotkitmastra | Mastra | 2025-09-18 | 2026-08-18 | [Mastra agentic-UI](/frameworks/mastra-agentic-ui.md) — `create-ag-ui-app --mastra` starter (Mastra backend + CopilotKit/AG-UI frontend); [CopilotKit](/frameworks/copilotkit.md) — Mastra guide cross-link |
+| https://mastra.ai/blog/introducing-mastra-improved-agent-orchestration-ai-sdk-v5-support | Mastra | 2026-08-26 | 2026-08-18 | [Mastra agentic-UI](/frameworks/mastra-agentic-ui.md) — AI SDK v5 agent-loop orchestration + nested streaming; [factory hub](/concepts/factory-toolchain.md) |
+| https://www.solo.io/blog/agentgateway-mcp-authentication-multi-provider-ai | Solo.io | 2026-03-12 | 2026-08-18 | [factory hub](/concepts/factory-toolchain.md) — Solo Enterprise for agentgateway 2.2 (hosted-MCP auth) |
+| https://www.solo.io/blog/kagent-enterprise | Solo.io | 2025-09-15 | 2026-08-18 | [factory hub](/concepts/factory-toolchain.md) — context-aware Kubernetes (kagent) |
+| https://github.com/githubnext/gh-aw-workshop | gh-aw | n/a (repo entry) | 2026-08-18 | none — workshop repo entry, part of the living gh-aw catalogue |
 | https://zed.dev/blog/sequoia-backs-zed | Zed | 2026-08-17 | 2026-08-17 | none (company/funding announcement; no new durable concept) |
 | https://zed.dev/blog/not-building-ai-for-the-money | Zed | 2026-08-17 | 2026-08-17 | none — DeltaDB (character-level sync engine) noted as watchlist/saved-context on the [factory hub](/concepts/factory-toolchain.md) |
 | https://zed.dev/blog/terms-update | Zed | 2026-03-02 | 2026-08-17 | none |
@@ -68,6 +73,6 @@ Append-only. Newest first.
 ## Confidence and gaps
 
 - **Confirmed:** the feed list and the ledger protocol, both configured in the `web-search-factory-tools` source instance.
-- This run (2026-08-17) is the first to populate the ledger; every post seen was recorded (20 rows: 7 produced wiki changes, 13 produced none).
-- Note: the gh-aw gallery is deliberately outside the ledger (see *Living index pages* above); if it later gains dated, individually addressable entries, ledger those entries like posts.
+- Ingested rows: 20 added 2026-08-17 (7 produced wiki changes, 13 none); 4 more added 2026-08-18 (3 produced wiki changes — Mastra AI-SDK-v5, Solo 2.2, Solo kagent — plus the gh-aw-workshop repo entry recorded with `none`); 1 more added by the 2026-08-18 generative-UI re-pull (Mastra `copilotkitmastra` → Mastra agentic-UI + CopilotKit). Rows: 25 in total.
+- Note: the gh-aw gallery and repo-style entries (e.g. `gh-aw-workshop`) are deliberately outside the ledger (see *Living index pages* above) or recorded only as repo entries; if the gallery later gains dated, individually addressable entries, ledger those entries like posts.
 - Note: the Mastra domain is also configured on the `web-search-generative-ui` instance for its integration docs. Blog posts from `mastra.ai/blog` are ledgered here regardless of which instance retrieved them, so the two instances cannot ingest the same post twice.

@@ -4,7 +4,7 @@ title: Agent Client Protocol (ACP)
 description: The Agent Client Protocol (ACP) is a standardized communication protocol between code editors and AI-powered coding agents, officially implemented in TypeScript by the @agentclientprotocol/sdk package; the spec repo also ships Rust/schema artifacts and GitHub Copilot CLI is an official ACP server.
 resource: https://github.com/agentclientprotocol/agent-client-protocol
 tags: [agent-client-protocol, acp, protocol, ai-agents, editors]
-timestamp: 2026-08-16
+timestamp: 2026-08-18
 ---
 
 # Agent Client Protocol (ACP)
@@ -15,7 +15,7 @@ Canonical materials:
 - Spec repository: [`agentclientprotocol/agent-client-protocol`](https://github.com/agentclientprotocol/agent-client-protocol) (Rust tooling, Apache-2.0)
 - Official documentation and protocol overview: <https://agentclientprotocol.com>
 - Official TypeScript implementation: [`@agentclientprotocol/sdk`](https://www.npmjs.com/package/@agentclientprotocol/sdk), release history on the [ACP TypeScript SDK releases](/references/agent-client-protocol-typescript-sdk-releases.md) page
-- Official SDK set (org listing + spec README, confirmed 2026-08-16): TypeScript (`@agentclientprotocol/sdk`), Python (`python-sdk`), Rust (`rust-sdk`), Kotlin (`acp-kotlin`), and Java (`java-sdk`), plus a `registry` of implementing agents. Evidence: [web-search Factory tools source page](/sources/web-search-factory-tools.md).
+- Official SDK set (org listing + spec README, confirmed 2026-08-16, re-listed 2026-08-18): TypeScript (`@agentclientprotocol/sdk`), Python (`python-sdk`), Rust (`rust-sdk`), Kotlin (`acp-kotlin`, JVM), and Java (`java-sdk`), plus a `registry` of implementing agents. The 2026-08-18 org listing adds two first-party ACP **server** implementations: `codex-acp` (exposes Codex CLI functionality for ACP clients/IDEs) and `claude-agent-acp` ("use Claude Agent SDK from any ACP client"), alongside a shared `meetings` repo. Evidence: [web-search Factory tools source page](/sources/web-search-factory-tools.md).
 
 ## What ACP standardizes
 
@@ -77,7 +77,9 @@ The SDK incurs a draft **ACP v2** behind an explicit experimental import:
 import * as acp from "@agentclientprotocol/sdk/experimental/v2";
 ```
 
-ACP v2 is still a draft: its wire protocol and the TypeScript API may change incompatibly in any SDK release. The stable package entry point remains ACP v1. Draft v2 type reference: <https://agentclientprotocol.github.io/typescript-sdk/v2/>.
+ACP v2 is still a draft: its wire protocol and the TypeScript API may change incompatibly in any SDK release. The stable package entry point remains ACP v1. Draft v2 type reference: <https://agentclientprotocol.github.io/typescript-sdk/v2/> and draft protocol docs at <https://agentclientprotocol.com/protocol/v2/draft/overview> (both re-confirmed 2026-08-18).
+
+**Reference implementation (2026-08-18):** the SDK README points to the **Gemini CLI Agent** integration (`google-gemini/gemini-cli/src/zed-integration/zedIntegration.ts`) as a complete, production implementation of an ACP client-side flow in Zed, valuable as a reference for the factory's editor-side glue.
 
 ```mermaid
 sequenceDiagram

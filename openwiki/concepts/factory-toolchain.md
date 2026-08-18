@@ -3,7 +3,7 @@ type: Concept
 title: Agentic SDLC factory toolchain
 description: The composition of protocols and SDKs behind an agentic software development lifecycle (SDLC) factory — ACP and AHP for agent wiring and hosting, Pierre, t3code, Effect (durable-execution surface source-backed), OpenCode, and the Pi SDK as the tooling layer, plus the CI-native gh-aw workflow layer and the followed engineering-blog feeds (Zed, Solo.io, Mastra) folded into one pipeline.
 tags: [factory, toolchain, agentic-sdlc, ai-agents, sdks, gh-aw, blogs]
-timestamp: 2026-08-17
+timestamp: 2026-08-18
 ---
 
 # Agentic SDLC factory toolchain
@@ -20,7 +20,7 @@ The factory idea: an agent orchestrates coding, hosting, diffs, durable tasks, a
 ## The tooling / control layer
 
 - **[Pierre](/frameworks/pierre.md)** — the Pierre Computer Company's open-source toolkit (diffs, trees, memes) plus its in-place file-diff editors, used to visualize and edit the outputs agents produce.
-- **[t3code](/frameworks/t3code.md)** — an "agent harness control surface" that controls the agents already on your machine (Claude Code, Codex, Cursor, Grok Build, OpenCode) from one mobile/web/desktop app.
+- **[t3code](/frameworks/t3code.md)** — an "agent harness control surface" that controls the agents already on your machine (Claude Code, Codex, Cursor, Grok Build, OpenCode) from one mobile/web/desktop app; distributed via a nightly `0.0.34-nightly.*` release stream plus `npx t3@latest`.
 - **[Effect](/frameworks/effect.md)** — the TypeScript library (v4 era) providing the typed, effectful orchestration foundation; its durable-execution surface is confirmed source-backed: `DurableQueue` ported from v3 with persistent semantics and `@effect/workflow` delivering durable workflows in alpha.
 - **[OpenCode SDK](/frameworks/opencode-sdk.md)** — the type-safe JS/TS client (`@opencode-ai/sdk`) for controlling the opencode server programmatically.
 - **[Pi SDK](/frameworks/pi-sdk.md)** — programmatic access (`pi.dev/docs/latest/sdk`) to the Pi coding agent's capabilities for embedding in applications and automated workflows.
@@ -76,21 +76,31 @@ The factory also depends on the knowledge-base layer that documents it: the [Ope
 - **DeltaDB** — Zed's synchronization engine tracking every operation at character-level granularity, designed to let humans and agents share a single, consistent view of the codebase as it evolves ("We're Not Building AI Features for the Money"). A durable design idea for the editor side of the factory: human-agent shared state on par with AHP's synchronized sessions.
 - Sequoia backing and the Student Plan ($10/month) are company/funding news — not durable technical knowledge; recorded only to close them in the [ledger](/sources/blog-post-ledger.md).
 
-**Solo.io blog signals (watchlist — teaser snippets only):**
+**Solo.io blog signals (2026-08-18, source-backed for the gateway/product facts, watchlist for broader claims):**
 
-- **MCP Progressive Disclosure** — save tokens by retrieving schemas selectively at an AI gateway (Gloo AI Gateway / agentgateway); gateway-side cost optimization for MCP-heavy factories. The base [Model Context Protocol](/protocols/model-context-protocol.md) 2026-07-28 revision (cacheable list results, header-based routing) is the upstream surface this gateway layer optimizes.
-- **"On-Behalf-Of" (OBO)** demo for **Solo Enterprise for agentgateway** — delegation/identity for agent-to-service calls.
+- **Progressive disclosure / token saving at the MCP gateway layer** — the `mcp-progressive-disclosure` post explains loading only the tools you need (the client sees a lightweight index upfront and retrieves tool schemas on demand), and the `keeping-context-and-tokens-low` post quantifies it at **"up to 91% token reduction"** for large MCP servers (SQL/GitHub/Slack can consume 100K tokens before the first prompt). This is the gateway-side cost-optimization surface over the base [Model Context Protocol](/protocols/model-context-protocol.md) (whose 2026-07-28 cacheable list results / header-based routing is the upstream surface this optimizes).
+- **Solo Enterprise for agentgateway 2.2** (2026-03-12, source-backed): GA on agentgateway OSS 1.0; **MCP authentication for desktop AI coding agents** (authenticates users up-front on connect so hosted/shared MCP tool calls don't OAuth-popup mid-task), plus **Anthropic protocol translation**, cloud-native **prompt guards**, richer **LLM cost visibility**, and MCP security hardening — for coding agents in Cursor/Claude Code against hosted MCP (Atlassian, GitHub, platform services).
+- **"On-Behalf-Of" (OBO)** demo for **Solo Enterprise for agentgateway** — delegation/identity for agent-to-service calls across MCP and A2A.
+- **kagent (context-aware Kubernetes)** — Solo Enterprise for kagent extends Kubernetes so agents, tools, and LLMs are first-class workloads ("context-aware"), tied to the donation of **agentgateway to the Linux Foundation** as an open project.
 - **AAIF (Agentic AI Foundation)** announcement — enterprise secure agentic infrastructure for MCP.
 
 **Mastra blog signals (source-backed where primary runtime facts, watchlist otherwise):**
 
 - **Mastra 1.0 stable** — stabilized APIs, simplified deployment, improved observability, production issues addressed. **A2A (Agent-to-Agent) support** for cross-framework multi-agent systems. **AI Tracing** — noise filtering across multiple observability platforms (OpenTelemetry-based).
+- **Agent orchestration on AI SDK v5** (2026-08-26, adopted 2026-08-18): Mastra now controls the agent loop and tool calling itself (from v0.14.0) while remaining backward-compatible with AI SDK v4 and v5, and added **nested streaming** so agent-in-tool / agent-in-workflow streams compose — a durable runtime capability for the factory's orchestration layer (see [Mastra agentic-UI](/frameworks/mastra-agentic-ui.md)).
 - Watchlist: Changelog 2026-03-23 (token-aware model routing, MongoDB-backed versioned datasets/experiments, Okta SSO with RBAC).
 
-All blog signals remain **watchlist** level unless confirmed from primary docs; the ledger records each post so a later run only re-examines them if content demonstrably changed.
+**Solo.io blog signals (2026-08-18, source-backed for the gateway/product facts, watchlist for broader claims):**
+
+- **Progressive disclosure / token saving at the MCP gateway layer** — the `mcp-progressive-disclosure` post explains loading only the tools you need (the client sees a lightweight index upfront and retrieves tool schemas on demand), and the `keeping-context-and-tokens-low` post quantifies it at **"up to 91% token reduction"** for large MCP servers (SQL/GitHub/Slack can consume 100K tokens before the first prompt). This is the gateway-side cost-optimization surface over the base [Model Context Protocol](/protocols/model-context-protocol.md).
+- **Solo Enterprise for agentgateway 2.2** (2026-03-12, source-backed): GA on agentgateway OSS 1.0; **MCP authentication for desktop AI coding agents** (authenticates users up-front on connect so hosted/shared MCP tool calls don't OAuth-popup mid-task), plus **Anthropic protocol translation**, cloud-native **prompt guards**, richer **LLM cost visibility**, and MCP security hardening — for coding agents in Cursor/Claude Code against hosted MCP (Atlassian, GitHub, platform services).
+- **"On-Behalf-Of" (OBO)** demo for **Solo Enterprise for agentgateway** — delegation/identity for agent-to-service calls across MCP and A2A.
+- **kagent (context-aware Kubernetes)** — Solo Enterprise for kagent extends Kubernetes so agents, tools, and LLMs are first-class workloads ("context-aware"), tied to the donation of **agentgateway to the Linux Foundation** as an open project.
+- **AAIF (Agentic AI Foundation)** announcement — enterprise secure agentic infrastructure for MCP.
+
+All blog signals remain **watchlist** level unless confirmed from primary docs (Solo 2.2 and kagent product facts above are source-backed from the post bodies); the ledger records each post so a later run only re-examines them if content demonstrably changed.
 
 ## Backlog
 - **Activity semantics + full `@effect/workflow` API surface** — the DurableQueue port and workflow fixes are source-backed, but the exact Workflow/Activity primitive semantics and packaging were not fully retrieved; target the official v4 workflow docs directly.
-- **Direct ingestion of Pierre, t3code, Effect, OpenCode, and Pi repo/release resources** — each was only witnessed via web-search results this run; direct repo/release ingestion would confirm version history and cadence. (Pi's official release trail exists at `pi.dev/news` but is only partially covered this run.)
-- **Full-body re-reads of the followed blog feeds** — the first blog-feed run captured only teaser snippets; the [ledger](/sources/blog-post-ledger.md) now closes those posts, so budget direct fetches of *new* posts on future runs (revisiting a closed post requires demonstrably changed content).
-- **Solo.io progressive-disclosure / OBO gateway topics** — currently watchlist from teaser snippets; fetch the full posts to confirm durable gateway-architecture concepts.
+- **Direct ingestion of Pierre, t3code, Effect, OpenCode, and Pi repo/release resources** — each was only witnessed via web-search results this run; direct repo/release ingestion would confirm version history and cadence. (Pi's official release trail exists at `pi.dev/news` but is only partially covered; t3code's nightly stream was captured 2026-08-18.)
+- **Full-body re-reads of the followed blog feeds** — prior runs captured teaser snippets; the [ledger](/sources/blog-post-ledger.md) now closes those posts, so budget direct fetches of *new* posts on future runs (revisiting a closed post requires demonstrably changed content). The 2026-08-18 run began moving several Solo.io gateway topics from teaser-only to source-backed post bodies.

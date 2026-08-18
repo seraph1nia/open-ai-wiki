@@ -4,7 +4,7 @@ title: AG-UI (Agent-User Interaction Protocol)
 description: AG-UI is an open, lightweight, event-based wire protocol for streaming AI agent output to user-facing applications, standardizing how agents describe and stream UI over SSE, WebSockets, HTTP, and custom transports.
 resource: https://github.com/ag-ui-protocol/ag-ui
 tags: [ag-ui, protocol, agent-ui, ai-agents, streaming, generative-ui]
-timestamp: 2026-08-17
+timestamp: 2026-08-18
 ---
 
 # AG-UI (Agent-User Interaction Protocol)
@@ -19,6 +19,7 @@ Source: [`ag-ui-protocol/ag-ui`](https://github.com/ag-ui-protocol/ag-ui), MIT-l
 - **One request shape** — agents accept a single `RunAgentInput` argument; a fixed set of event types covers the output.
 - **Transport-agnostic with a middleware layer** — works with any event transport (SSE, WebSockets, webhooks, HTTP binary) and allows **loose event-format matching** for broad agent and app interoperability. A reference HTTP implementation and a default connector ship with the repo.
 - **Observable streaming** — the TypeScript core uses RxJS Observables for streaming agent responses.
+- **Multiple sequential runs in one stream** — the monorepo's `CLAUDE.md` documents that a single event stream can carry **multiple sequential runs**: each run must complete (`RUN_FINISHED`) before a new run begins (`RUN_STARTED`); **messages accumulate across runs** (run1 + run2), and state continues to evolve unless explicitly reset. Run-specific tracking (active messages, tool calls, steps) resets between runs. State is managed via `STATE_SNAPSHOT` (complete representation) and `STATE_DELTA` (**JSON Patch, RFC 6902** for incremental updates), with `MESSAGES_SNAPSHOT` providing conversation history. **Confidence: source-backed** (AG-UI `CLAUDE.md`, retrieved 2026-08-18).
 
 ## The Agent Protocol Stack
 
@@ -69,8 +70,8 @@ sequenceDiagram
 ## Ecosystem adoption
 
 - **CopilotKit** is the 1st-party client/agent framework with AG-UI built in (see the [CopilotKit page](/frameworks/copilotkit.md)).
-- Other supported clients per the AG-UI README: Terminal+Agent (community), chat platforms via the Channels SDK (Slack, Microsoft Teams), and React Native (help-wanted, community).
-- The [Effect-TS/effect issue #6341](https://github.com/Effect-TS/effect/issues/6341) proposes native AG-UI support in `effect/unstable/ai` so an Effect HTTP server can run LLM calls and be driven by any AG-UI client (e.g. a React frontend using `@tanstack/ai-react`). **Confidence: watchlist** — a single issue, not shipped support.
+- Other supported clients per the AG-UI README: Terminal+Agent (community), **chat platforms (Slack, Microsoft Teams) via the [CopilotKit Channels SDK](/frameworks/copilotkit.md#channels-sdk)** (1st party, with the OpenTag example), and React Native (help-wanted, community).
+- The [Effect-TS/effect issue #6341](https://github.com/Effect-TS/effect/issues/6341) proposes native AG-UI support in `effect/unstable/ai` so an Effect HTTP server can run LLM calls and be driven by any AG-UI client; it names **TanStack AI (`@tanstack/ai-react`, `useChat` + `fetchServerSentEvents`)** as a client that is "fully AG-UI compliant" and frames AG-UI as covering "agent-to-UI the way MCP, already supported here, covers agent-to-tools." **Confidence: watchlist** — a single issue, not shipped support.
 - [Oracle's Open Agent Spec integration, issue #828](https://github.com/ag-ui-protocol/ag-ui/issues/828), proposes a server-side adapter tracing Agent Spec events (LLM messages, tool calls, tool executions) into AG-UI events for LangGraph and Oracle's WayFlow runtimes, with a FastAPI endpoint per AG-UI Dojo demo (agentic_chat, backend_tool_rendering, human_in_the_loop, tool_based_generative_ui). **Confidence: watchlist** — an open proposal, not shipped.
 - [microsoft/agent-governance-toolkit issue #1443](https://github.com/ag-ui-protocol/ag-ui/issues/1443) proposes replacing a custom WebSocket+REST dashboard transport with AG-UI event streams for standardized agent-frontend interaction in governance UIs. **Confidence: watchlist** — an open proposal.
 - A third-party curated list claims AG-UI is "adopted by Google, LangChain, AWS, Microsoft, Mastra, and PydanticAI". **Confidence: watchlist** — promotional list, not a primary-source claim (see the [source page](/sources/web-search-generative-ui.md)).

@@ -1,0 +1,369 @@
+{
+  "runAt": "2026-08-18T12:20:21.051Z",
+  "entries": [
+    {
+      "kind": "updated",
+      "path": "concepts/factory-toolchain.md",
+      "title": "Agentic SDLC factory toolchain",
+      "summary": "The composition of protocols and SDKs behind an agentic software development lifecycle (SDLC) factory — ACP and AHP for agent wiring and hosting, Pierre, t3code, Effect (durable-execution surface source-backed), OpenCode, and the Pi SDK as the tooling layer, plus the CI-native gh-aw workflow layer and the followed engineering-blog feeds (Zed, Solo.io, Mastra) folded into one pipeline.",
+      "minor": false,
+      "added": 19,
+      "removed": 9,
+      "type": "Concept",
+      "tags": [
+        "factory",
+        "toolchain",
+        "agentic-sdlc",
+        "ai-agents",
+        "sdks",
+        "gh-aw",
+        "blogs"
+      ]
+    },
+    {
+      "kind": "updated",
+      "path": "concepts/generative-ui-ecosystem.md",
+      "title": "Generative-UI ecosystem",
+      "summary": "Cross-source comparison of the competing approaches to streaming agent-driven UI — AG-UI (event wire protocol), A2UI (declarative JSON), OpenUI (declarative language + runtime), MCP Apps (iframe apps on MCP), and the frameworks that consume them.",
+      "minor": true,
+      "added": 2,
+      "removed": 2,
+      "type": "Concept",
+      "tags": [
+        "generative-ui",
+        "agent-ui",
+        "comparison",
+        "ecosystem",
+        "ai-agents"
+      ]
+    },
+    {
+      "kind": "updated",
+      "path": "frameworks/copilotkit.md",
+      "title": "CopilotKit (generative-UI frontend stack)",
+      "summary": "CopilotKit is a 1st-party client/agent framework for building agent-powered apps with generative UI, consolidated into a monorepo and built on the AG-UI protocol; it renders static generative UI, A2UI declarative JSON, and MCP Apps UIs, and extends agents to chat platforms via its Channels SDK.",
+      "minor": false,
+      "added": 12,
+      "removed": 3,
+      "type": "Framework",
+      "tags": [
+        "copilotkit",
+        "generative-ui",
+        "framework",
+        "agent-ui",
+        "ag-ui"
+      ],
+      "resource": "https://github.com/CopilotKit/CopilotKit"
+    },
+    {
+      "kind": "updated",
+      "path": "frameworks/effect.md",
+      "title": "Effect",
+      "summary": "Effect is a powerful TypeScript library for building complex synchronous and asynchronous programs with typed, composable effects; v4 is the current era. Its durable-execution surface (DurableQueue ported to v4, @effect/workflow in alpha) is confirmed source-backed from the official Effect v4 beta documentation.",
+      "minor": true,
+      "added": 4,
+      "removed": 2,
+      "type": "Framework",
+      "tags": [
+        "effect",
+        "typescript",
+        "durable-execution",
+        "framework",
+        "v4"
+      ],
+      "resource": "https://www.effect.website/docs/v4/api/effect"
+    },
+    {
+      "kind": "updated",
+      "path": "frameworks/mastra-agentic-ui.md",
+      "title": "Mastra agentic-UI integration",
+      "summary": "Mastra is a TypeScript AI framework whose agentic-UI layer integrates common generative-UI frontends (AI SDK UI, assistant-ui, CopilotKit, AG-UI) through @mastra/ai-sdk and a UI dojo of runnable examples; Mastra 1.0 stable adds A2A support, AI Tracing, and (as of 2026-08-18) agent-loop + nested-streaming orchestration built on AI SDK v5.",
+      "minor": false,
+      "added": 16,
+      "removed": 3,
+      "type": "Framework",
+      "tags": [
+        "mastra",
+        "agentic-ui",
+        "framework",
+        "generative-ui",
+        "ai-sdk"
+      ],
+      "resource": "https://mastra.ai/integrations/agentic-ui"
+    },
+    {
+      "kind": "updated",
+      "path": "frameworks/opencode-sdk.md",
+      "title": "OpenCode",
+      "summary": "OpenCode is an open-source AI coding agent available as a terminal UI, desktop app, or IDE extension, with a type-safe JavaScript/TypeScript SDK (@opencode-ai/sdk) for building integrations and controlling the opencode server programmatically.",
+      "minor": true,
+      "added": 3,
+      "removed": 3,
+      "type": "Reference",
+      "tags": [
+        "opencode",
+        "sdk",
+        "coding-agent",
+        "typescript",
+        "ai-agents"
+      ],
+      "resource": "https://opencode.ai/docs/sdk/"
+    },
+    {
+      "kind": "updated",
+      "path": "frameworks/openwiki.md",
+      "title": "OpenWiki",
+      "summary": "OpenWiki is a self-maintaining-wiki CLI (MIT, npm) that an agent uses to read sources, synthesize a linked Markdown wiki, and keep it current — with code and personal modes, built-in connectors (local git, Notion, Slack, Gmail, X, Web Search, Hacker News, Custom MCP), 13 model providers, OKF v0.1 output with validated Mermaid diagrams, an interactive visualizer, and CI self-update workflows.",
+      "minor": false,
+      "added": 16,
+      "removed": 14,
+      "type": "Framework",
+      "tags": [
+        "openwiki",
+        "agent-docs",
+        "wiki",
+        "cli",
+        "connectors",
+        "okf",
+        "mermaid",
+        "self-updating"
+      ],
+      "resource": "https://github.com/langchain-ai/openwiki"
+    },
+    {
+      "kind": "updated",
+      "path": "frameworks/pi-sdk.md",
+      "title": "Pi SDK",
+      "summary": "The Pi SDK provides programmatic access to the Pi coding agent's capabilities for embedding Pi in other applications, building custom interfaces, and integrating with automated workflows; documented at pi.dev/docs/latest/sdk, with an official release trail through v0.84.2 on pi.dev/news.",
+      "minor": true,
+      "added": 3,
+      "removed": 2,
+      "type": "SDK",
+      "tags": [
+        "pi",
+        "sdk",
+        "coding-agent",
+        "automation",
+        "workflows"
+      ],
+      "resource": "https://pi.dev/docs/latest/sdk"
+    },
+    {
+      "kind": "updated",
+      "path": "frameworks/t3code.md",
+      "title": "t3code",
+      "summary": "T3 Code is an \"agent harness control surface\" for managing the coding agents on your machine (Claude Code, Codex, Cursor, Grok Build, OpenCode) from a mobile, web, or Electron desktop app; launched with npx t3@latest.",
+      "minor": true,
+      "added": 6,
+      "removed": 5,
+      "type": "Reference",
+      "tags": [
+        "t3code",
+        "agent-control",
+        "harness",
+        "ai-agents",
+        "desktop"
+      ],
+      "resource": "https://github.com/pingdotgg/t3code"
+    },
+    {
+      "kind": "updated",
+      "path": "open-questions.md",
+      "title": "Open Questions",
+      "summary": "Active, answered, and stale questions about the AI knowledge wiki's coverage and memory graph, including gaps in evidence about projects tracked in this corpus (e.g. Effect's deep Workflow/Activity API semantics, version alignment between OKF v0.2 and the OpenWiki README, and OpenWiki's current release).",
+      "minor": false,
+      "added": 10,
+      "removed": 10,
+      "type": "Reference",
+      "tags": [
+        "open-questions",
+        "memory-graph",
+        "wiki-quality",
+        "okf",
+        "openwiki"
+      ]
+    },
+    {
+      "kind": "updated",
+      "path": "protocols/a2ui.md",
+      "title": "A2UI (Agent to UI) Protocol",
+      "summary": "A2UI is a declarative, Apache-2.0 UI protocol for agent-driven interfaces, in which agents generate a JSON payload describing UI components that render natively across web, mobile, and desktop without executing arbitrary code.",
+      "minor": true,
+      "added": 2,
+      "removed": 1,
+      "type": "Protocol",
+      "tags": [
+        "a2ui",
+        "protocol",
+        "agent-ui",
+        "generative-ui",
+        "declarative",
+        "ai-agents"
+      ],
+      "resource": "https://a2ui.org"
+    },
+    {
+      "kind": "updated",
+      "path": "protocols/ag-ui.md",
+      "title": "AG-UI (Agent-User Interaction Protocol)",
+      "summary": "AG-UI is an open, lightweight, event-based wire protocol for streaming AI agent output to user-facing applications, standardizing how agents describe and stream UI over SSE, WebSockets, HTTP, and custom transports.",
+      "minor": true,
+      "added": 4,
+      "removed": 3,
+      "type": "Protocol",
+      "tags": [
+        "ag-ui",
+        "protocol",
+        "agent-ui",
+        "ai-agents",
+        "streaming",
+        "generative-ui"
+      ],
+      "resource": "https://github.com/ag-ui-protocol/ag-ui"
+    },
+    {
+      "kind": "updated",
+      "path": "protocols/agent-client-protocol.md",
+      "title": "Agent Client Protocol (ACP)",
+      "summary": "The Agent Client Protocol (ACP) is a standardized communication protocol between code editors and AI-powered coding agents, officially implemented in TypeScript by the @agentclientprotocol/sdk package; the spec repo also ships Rust/schema artifacts and GitHub Copilot CLI is an official ACP server.",
+      "minor": true,
+      "added": 5,
+      "removed": 3,
+      "type": "Protocol",
+      "tags": [
+        "agent-client-protocol",
+        "acp",
+        "protocol",
+        "ai-agents",
+        "editors"
+      ],
+      "resource": "https://github.com/agentclientprotocol/agent-client-protocol"
+    },
+    {
+      "kind": "updated",
+      "path": "protocols/mcp-apps.md",
+      "title": "MCP Apps (Model Context Protocol Apps extension)",
+      "summary": "MCP Apps is the first official extension to the Model Context Protocol, co-developed by Anthropic and OpenAI, letting MCP servers deliver interactive UIs (charts, forms, dashboards) rendered securely in iframes inside any compliant host.",
+      "minor": true,
+      "added": 4,
+      "removed": 4,
+      "type": "Protocol",
+      "tags": [
+        "mcp",
+        "mcp-apps",
+        "protocol",
+        "extension",
+        "agent-ui",
+        "generative-ui"
+      ],
+      "resource": "https://github.com/modelcontextprotocol/ext-apps"
+    },
+    {
+      "kind": "updated",
+      "path": "protocols/model-context-protocol.md",
+      "title": "Model Context Protocol (MCP)",
+      "summary": "The Model Context Protocol (MCP) is the open standard for how AI agents integrate with external tools, data sources, and other agents — JSON-RPC 2.0-based tools, resources, and prompts with capability negotiation, sampling, elicitation, authorization, and a 2026-07-28 revision that made the core stateless, added Multi Round-Trip Requests, header-based routing, cacheable list results, and a formal extensions framework.",
+      "minor": false,
+      "added": 36,
+      "removed": 19,
+      "type": "Protocol",
+      "tags": [
+        "mcp",
+        "model-context-protocol",
+        "protocol",
+        "agent-integration",
+        "tools",
+        "resources",
+        "prompts",
+        "authorization",
+        "extensions",
+        "registry"
+      ],
+      "resource": "https://modelcontextprotocol.io"
+    },
+    {
+      "kind": "updated",
+      "path": "protocols/open-knowledge-format.md",
+      "title": "Open Knowledge Format (OKF)",
+      "summary": "OKF is a minimal, vendor-neutral format for representing knowledge as markdown files with YAML frontmatter in a self-describing bundle — standardizing the small set of structural conventions (required type, provenance, trust, lifecycle, attestation) that make an agent-maintained knowledge corpus trustable.",
+      "minor": false,
+      "added": 15,
+      "removed": 5,
+      "type": "Protocol",
+      "tags": [
+        "okf",
+        "knowledge-format",
+        "spec",
+        "bundle",
+        "provenance",
+        "trust",
+        "attestation",
+        "frontmatter",
+        "knowledge-representation"
+      ],
+      "resource": "https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md"
+    },
+    {
+      "kind": "updated",
+      "path": "quickstart.md",
+      "title": "AI Knowledge Wiki Quickstart",
+      "summary": "Navigation and current status for the AI knowledge corpus — the Model Context Protocol (MCP) core and its 2026-07-28 stateless revision (added 2026-08-17), the Agent Host Protocol (AHP), Agent Client Protocol (ACP), the generative-UI / agent-UI protocol ecosystem (with the AG-UI Kotlin SDK and Cedar-OS deltas), the agentic SDLC factory toolchain (Pierre, t3code, Effect, OpenCode, Pi SDK, gh-aw CI workflows, and the followed blog feeds), and the agent-maintained knowledge-base layer (the Open Knowledge Format v0.2 spec and its growing producer ecosystem — okc, erd2okf, okf-gem/okf-mcp, AKB, openknowledge — plus the OpenWiki CLI with 13 model providers that maintains this wiki).",
+      "minor": false,
+      "added": 62,
+      "removed": 21,
+      "type": "Guide",
+      "tags": [
+        "quickstart",
+        "index",
+        "navigation",
+        "ai-agents",
+        "generative-ui",
+        "factory-toolchain",
+        "okf",
+        "openwiki",
+        "knowledge-bases"
+      ]
+    },
+    {
+      "kind": "updated",
+      "path": "references/model-context-protocol-releases.md",
+      "title": "Model Context Protocol releases",
+      "summary": "Versioned revision history of the Model Context Protocol specification and Tier 1 SDK posture — revisions 2025-03-26, 2025-06-18, 2025-11-25 (RC 2025-11-15), and the current stateless 2026-07-28 revision, plus the TypeScript SDK v2.0.0 monorepo split, beta SDK versions for Go and C#, and companion-repo release trails (servers, swift-sdk, mcpb).",
+      "minor": false,
+      "added": 21,
+      "removed": 12,
+      "type": "Reference",
+      "tags": [
+        "mcp",
+        "model-context-protocol",
+        "reference",
+        "releases",
+        "versions",
+        "sdk"
+      ],
+      "resource": "https://github.com/modelcontextprotocol/modelcontextprotocol/releases"
+    },
+    {
+      "kind": "updated",
+      "path": "themes.md",
+      "title": "Recurring themes and trends",
+      "summary": "Compact index of recurring signals across the AI knowledge corpus — standardization and convergence of generative-UI / agent-UI protocols in 2026, MCP core standardization toward production infrastructure (stateless 2026-07-28 core, extensions framework, DCR→CIMD), the emerging agentic SDLC factory toolchain (including its CI-native gh-aw layer), and the emergence of agent-maintained knowledge-base formats and tooling (OKF v0.2, OpenWiki).",
+      "minor": false,
+      "added": 10,
+      "removed": 10,
+      "type": "Reference",
+      "tags": [
+        "themes",
+        "index",
+        "generative-ui",
+        "agent-ui",
+        "trends",
+        "factory-toolchain",
+        "knowledge-bases",
+        "okf",
+        "openwiki",
+        "mcp"
+      ]
+    }
+  ]
+}

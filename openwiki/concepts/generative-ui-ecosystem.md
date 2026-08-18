@@ -3,7 +3,7 @@ type: Concept
 title: Generative-UI ecosystem
 description: Cross-source comparison of the competing approaches to streaming agent-driven UI — AG-UI (event wire protocol), A2UI (declarative JSON), OpenUI (declarative language + runtime), MCP Apps (iframe apps on MCP), and the frameworks that consume them.
 tags: [generative-ui, agent-ui, comparison, ecosystem, ai-agents]
-timestamp: 2026-08-17
+timestamp: 2026-08-18
 ---
 
 # Generative-UI ecosystem
@@ -72,7 +72,7 @@ Key relationships, with the page where each is explained:
 
 ## Status and confidence
 
-- The ecosystem is actively consolidating: CopilotKit monorepo (generative-UI playground, ADK demo, and `with-langgraph-python` moved in; `with-adk` archived 2026-03-12), A2UI v1.0 candidate with v0.8/v0.9 renderer stability, MCP Apps spec 2026-01-26 with SDK adoption requests (csharp-sdk #1431, java-sdk #780), and AG-UI growing integrations (official Java/Go plus community Kotlin and Swift SDKs, Oracle/gov-toolkit proposals). A2UI's roadmap targets full-app UIs and multi-agent coordination through 2026–2027. A 2026-08-17 re-pull of the same sources confirms the durable material held and added the AG-UI Kotlin SDK overview plus a second third-party multi-frontend stack (Cedar-OS) on the Mastra axis.
+- The ecosystem is actively consolidating: CopilotKit monorepo (generative-UI playground, ADK demo, and `with-langgraph-python` moved in; `with-adk` archived 2026-03-12), A2UI v1.0 candidate with v0.8/v0.9 renderer stability, MCP Apps spec 2026-01-26 with SDK adoption requests (csharp-sdk #1431, java-sdk #780), and AG-UI growing integrations (official Java/Go plus community Kotlin and Swift SDKs, multi-sequential-run stream semantics, Oracle/gov-toolkit proposals). A2UI's roadmap targets full-app UIs and multi-agent coordination through 2026–2027. The 2026-08-17 re-pull confirmed the durable material held and added the AG-UI Kotlin SDK overview plus a second third-party multi-frontend stack (Cedar-OS) on the Mastra axis. A 2026-08-18 re-pull added the [CopilotKit Channels SDK](/frameworks/copilotkit.md#channels-sdk) (chat-platform) surface — extending CopilotKit from web-only playground UIs to Slack/Teams/Discord/Telegram — and the Mastra `create-ag-ui-app --mastra` starter (Mastra backend + CopilotKit/AG-UI frontend).
 - **Confidence:** the protocol/framework characteristics are **source-backed** from each project's primary docs. Explicit interop claims (AG-UI↔A2UI, A2UI↔MCP Apps, CopilotKit's three-type playground) are **confirmed** in the sense of being directly claimed in the sources, but not independently cross-checked. Adoption/open-issue items are **watchlist**.
 
 ## Source Map
