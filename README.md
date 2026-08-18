@@ -151,6 +151,22 @@ source-page provenance, internal links and heading anchors, mermaid fences, and
 leftover OpenWiki degradation markers. It needs no model or API key, so it gates
 pull requests including the ones the scheduled workflow opens.
 
+Generated content that fails those rules is repaired by regenerating it, never
+by relaxing them:
+
+```bash
+pnpm wiki:validate-repair
+```
+
+`scripts/wiki-validate-repair.ts` runs `lint:wiki`, and while the corpus is
+invalid it hands the validator's exact findings back to OpenWiki through
+`pnpm wiki:update`, as a repair-only brief: fix these findings, do not ingest new
+sources, do not make unrelated edits, and fix the underlying problem rather than
+deleting the marker that reports it. It revalidates after each pass and gives up
+after three, so a corpus OpenWiki cannot fix — or a repair command that fails —
+fails the run instead of reaching a pull request. OpenWiki generates and repairs,
+the validator decides, this orchestrator retries or aborts.
+
 Run `pnpm exec vp config` once if you want the pre-commit hook that applies the
 `staged` rules from `vite.config.ts`.
 
@@ -160,7 +176,17 @@ A second `changelog` collection reads `changelog/*.json` for the `/whats-new` pa
 
 ## Automation
 
-`.github/workflows/openwiki-update.yml` runs scheduled personal-mode Web Search ingestion twice a week—Thursday and Saturday nights UTC—and on manual dispatch. It ingests with `--scheduled`, records the run's changelog fragment, and opens a review pull request containing only `openwiki/` and `changelog/`, using the generated summary as its body; it never auto-merges.
+`.github/workflows/openwiki-update.yml` runs scheduled personal-mode Web Search ingestion twice a week—Thursday and Saturday nights UTC—and on manual dispatch. It ingests with `--scheduled`, validates and repairs the bundle, records the run's changelog fragment, runs the full `vp run ci` sequence, and only then opens a review pull request containing only `openwiki/` and `changelog/`, using the generated summary as its body; it never auto-merges.
+
+```text
+pnpm wiki:ingest -- --scheduled
+pnpm wiki:validate-repair     # lint:wiki, repaired by OpenWiki, up to three times
+pnpm wiki:changelog -- --markdown …
+pnpm exec vp run ci
+create-pull-request
+```
+
+Each stage is a gate: the pull request only exists if the corpus validates and the whole repository still passes CI. Application, test and build failures from that CI run fail the update; they are not handed to the OpenWiki repair loop, which exists only for the deterministic wiki findings.
 
 `.github/workflows/ci.yml` runs the full `vp` validation sequence — format, lint, wiki validation, type check, tests, and build — on every pull request, so the generated OpenWiki pull requests are checked before merge.
 
@@ -184,6 +210,7 @@ Scheduled OpenWiki updates read `OPENROUTER_API_KEY` and `TAVILY_API_KEY` as sec
 - `scripts/wiki-update.sh` — guarded personal-workspace staging and publication wrapper
 - `scripts/wiki-changelog.ts` — records what a run changed, for `/whats-new`
 - `scripts/wiki-lint.ts` — offline OKF validation of the bundle (`vp run lint:wiki`)
+- `scripts/wiki-validate-repair.ts` — validates, and has OpenWiki repair its own findings (`pnpm wiki:validate-repair`)
 - `vite.config.ts` — Vite+ tasks, including the `ci` sequence and the staged-file hooks
 - `mise.toml` — Node and pnpm versions, `PATH`, and the OpenWiki provider variables
 - `.github/workflows/` — scheduled knowledge updates, pull-request CI, and Pages deployment

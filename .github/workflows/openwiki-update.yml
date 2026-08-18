@@ -54,6 +54,19 @@ jobs:
           OPENWIKI_MODEL_ID: deepseek/deepseek-v4-flash-0731
           OPENWIKI_TELEMETRY_DISABLED: "1"
 
+      # Deterministic validation decides whether the ingested corpus is
+      # publishable. On failure the exact findings go back to OpenWiki as a
+      # bounded repair request; if the corpus is still invalid after the last
+      # attempt, the run fails here rather than opening a broken pull request.
+      - name: Validate and repair the OpenWiki bundle
+        run: pnpm wiki:validate-repair
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          TAVILY_API_KEY: ${{ secrets.TAVILY_API_KEY }}
+          OPENWIKI_PROVIDER: openrouter
+          OPENWIKI_MODEL_ID: deepseek/deepseek-v4-flash-0731
+          OPENWIKI_TELEMETRY_DISABLED: "1"
+
       # Records the run's diff as an immutable changelog fragment for the site's
       # /whats-new feed, and reuses the same summary as this PR's description.
       - name: Record what changed
@@ -68,6 +81,18 @@ jobs:
         env:
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           OPENWIKI_MODEL_ID: deepseek/deepseek-v4-flash-0731
+
+      # Generates apps/web/.astro/types.d.ts, which is gitignored but required
+      # for `astro:content` and `import.meta.env` to type check.
+      - name: Generate Astro types
+        run: pnpm --filter @ai-knowledge/web exec astro sync
+
+      # The same sequence the pull request would face, run before it exists, so
+      # a broken update never reaches review. A failure here fails the update:
+      # application, test and build failures are not OpenWiki's to repair and
+      # are never handed to the repair loop.
+      - name: Run full CI
+        run: pnpm exec vp run ci
 
       - name: Create OpenWiki update pull request
         uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1

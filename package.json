@@ -8,6 +8,7 @@
     "wiki": "bash scripts/wiki-update.sh chat",
     "wiki:update": "bash scripts/wiki-update.sh update",
     "wiki:ingest": "bash scripts/wiki-update.sh ingest",
+    "wiki:validate-repair": "node scripts/wiki-validate-repair.ts",
     "wiki:changelog": "node scripts/wiki-changelog.ts",
     "wiki:visualize": "openwiki visualize openwiki",
     "wiki:help": "openwiki --help"
