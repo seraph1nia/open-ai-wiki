@@ -4,7 +4,7 @@ title: OpenCode
 description: OpenCode is an open-source AI coding agent available as a terminal UI, desktop app, or IDE extension, with a type-safe JavaScript/TypeScript SDK (@opencode-ai/sdk) for building integrations and controlling the opencode server programmatically.
 resource: https://opencode.ai/docs/sdk/
 tags: [opencode, sdk, coding-agent, typescript, ai-agents]
-timestamp: 2026-08-18
+timestamp: 2026-08-22
 ---
 
 # OpenCode
@@ -31,6 +31,7 @@ OpenCode is one of the coding agents the [t3code](/frameworks/t3code.md) harness
 - Docs list common model/provider wiring through the AI SDK (`@ai-sdk/openai`, `@ai-sdk/openai-compatible`) for many providers (OpenAI-compatible endpoints). The 2026-08-18 pull corrected the prior run's inference: `opencode.ai/docs/go` is **OpenCode Go**, a low-cost **paid subscription** ($5 first month, then $10/month) giving global access to popular open coding models — **not** a Go language SDK. Its provider table maps models (Grok 4.5, GPT 5.6 Luna, GLM-5.x, Kimi K3, DeepSeek V4, MiMo-V2.5) to AI-SDK packages (`@ai-sdk/openai`, `@ai-sdk/openai-compatible`). The 2026-08-17 pull also captured an **ecosystem catalogue** (`opencode.ai/docs/ecosystem`: `opencode-background-agents`, `opencode-notify`, `opencode-workspace` multi-agent orchestration harness, browser UI `octto`).
 - A community integration note flags that Claude OAuth was removed from OpenCode in March 2026 (Anthropic legal action) and that the reliable path is the `@ai-sdk/openai-compatible` provider config — **watchlist**, single third-party source (headroomlabs-ai/headroom issue #78); note `ANTHROPIC_BASE_URL` env-var path construction differs across the Vercel AI SDK.
 - A community REST API client (`anomalyco/opencode-sdk-js`) mirrors the OpenCode REST API for server-side TS/JS — evidence of ecosystem traction, watchlist.
+- **Ecosystem signal (watchlist, 2026-08-22):** the `anomalyco/opencode-sdk-js` repo documents that it is **generated with Stainless**, with the full generated API surface in `api.md` and streaming response support — a concrete third-party client maintained against the OpenCode REST API (re-confirmed usable as an alternative when a non-`createOpencode` client style is preferred; still third-party, not official).
 
 ## Confidence
 - **Source-backed:** SDK identity, purpose, and `createOpencode`/`@opencode-ai/sdk` usage from the official docs.

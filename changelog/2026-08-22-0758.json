@@ -1,0 +1,350 @@
+{
+  "runAt": "2026-08-22T07:58:39.160Z",
+  "narrative": "This batch is a re-pull pass over the agentic SDLC factory toolchain and the generative-UI ecosystem, tightening source-backed facts and surfacing new integration surfaces. The factory pages gain concrete protocol and tooling details — Pi SDK's RPC mode for non-JS integrations, Pierre's v1.3.5 edit-performance fix, gh-aw's technical-preview status with Microsoft Research/Azure Core Upstream, and OpenWiki's v0.3.3 release with OKF v0.2 output — while the generative-UI pages record open demand signals (CopilotKit issues #2186 and #1993) that show where the AG-UI/CopilotKit/Mastra coupling is still maturing. Across both clusters, the theme is the same: the ecosystem is converging on a few wire protocols (ACP, AG-UI, A2UI) and the wiki is tracking the community and issue-tracker evidence that reveals where those protocols are still incomplete or contested.",
+  "entries": [
+    {
+      "kind": "updated",
+      "path": "concepts/factory-toolchain.md",
+      "title": "Agentic SDLC factory toolchain",
+      "summary": "Updated the factory toolchain concept with new source-backed details: Pi SDK now documents an RPC mode (`pi --mode rpc`, LF-delimited JSONL) for non-JS integrations, and gh-aw is confirmed in technical preview as a GitHub/Microsoft Research/Azure Core Upstream collaboration. Also added watchlist signals from Zed's sandboxing post and re-surfaced DeltaDB, plus the gh-aw-mcpg MCP gateway.",
+      "minor": false,
+      "added": 7,
+      "removed": 12,
+      "type": "Concept",
+      "tags": [
+        "factory",
+        "toolchain",
+        "agentic-sdlc",
+        "ai-agents",
+        "sdks",
+        "gh-aw",
+        "blogs"
+      ]
+    },
+    {
+      "kind": "updated",
+      "path": "concepts/generative-ui-ecosystem.md",
+      "title": "Generative-UI ecosystem",
+      "summary": "Added two open CopilotKit issues (#2186 for direct AG-UI-to-CopilotKit integration without the Runtime, #1993 for agentic generative UI + shared state through Mastra) as watchlist evidence of demand for tighter AG-UI/CopilotKit/Mastra coupling.",
+      "minor": true,
+      "added": 2,
+      "removed": 2,
+      "type": "Concept",
+      "tags": [
+        "generative-ui",
+        "agent-ui",
+        "comparison",
+        "ecosystem",
+        "ai-agents"
+      ]
+    },
+    {
+      "kind": "updated",
+      "path": "frameworks/copilotkit.md",
+      "title": "CopilotKit (generative-UI frontend stack)",
+      "summary": "Recorded the archival of `CopilotKit/canvas-with-langgraph-python` into the monorepo (source-backed, 2026-03-12) and added two open feature requests (#2186, #1993) as watchlist signals for unresolved integration demand around AG-UI and Mastra.",
+      "minor": true,
+      "added": 6,
+      "removed": 1,
+      "type": "Framework",
+      "tags": [
+        "copilotkit",
+        "generative-ui",
+        "framework",
+        "agent-ui",
+        "ag-ui"
+      ],
+      "resource": "https://github.com/CopilotKit/CopilotKit"
+    },
+    {
+      "kind": "updated",
+      "path": "frameworks/effect.md",
+      "title": "Effect",
+      "summary": "Re-confirmed the community gist's STM transactional collections (TxHashMap, TxHashSet, TxQueue, TxChunk, TxSemaphore) via the 2026-08-22 pull, still watchlist until confirmed against official v4 docs; no new v4 API surface beyond what was already documented.",
+      "minor": true,
+      "added": 10,
+      "removed": 2,
+      "type": "Framework",
+      "tags": [
+        "effect",
+        "typescript",
+        "durable-execution",
+        "framework",
+        "v4"
+      ],
+      "resource": "https://www.effect.website/docs/v4/api/effect"
+    },
+    {
+      "kind": "updated",
+      "path": "frameworks/mastra-agentic-ui.md",
+      "title": "Mastra agentic-UI integration",
+      "summary": "Added the open CopilotKit issue #1993 as a watchlist demand signal: it requests agentic generative UI + shared state through Mastra, indicating Mastra's CopilotKit-integrated generative-UI surface is still maturing.",
+      "minor": true,
+      "added": 3,
+      "removed": 1,
+      "type": "Framework",
+      "tags": [
+        "mastra",
+        "agentic-ui",
+        "framework",
+        "generative-ui",
+        "ai-sdk"
+      ],
+      "resource": "https://mastra.ai/integrations/agentic-ui"
+    },
+    {
+      "kind": "updated",
+      "path": "frameworks/opencode-sdk.md",
+      "title": "OpenCode",
+      "summary": "Noted that the third-party `anomalyco/opencode-sdk-js` client is generated with Stainless and documents its full API surface in `api.md` with streaming support — a concrete ecosystem signal, still watchlist as third-party.",
+      "minor": true,
+      "added": 2,
+      "removed": 1,
+      "type": "Reference",
+      "tags": [
+        "opencode",
+        "sdk",
+        "coding-agent",
+        "typescript",
+        "ai-agents"
+      ],
+      "resource": "https://opencode.ai/docs/sdk/"
+    },
+    {
+      "kind": "updated",
+      "path": "frameworks/openwiki.md",
+      "title": "OpenWiki",
+      "summary": "Major update: OpenWiki's README now declares OKF v0.2 output (superseding v0.1), the model-provider count is corrected to 12 README-listed (13 incl. GitHub Copilot on v0.3.3+), and the release trail is source-backed with v0.3.3 as latest, including its notable changes (GitHub Copilot provider, multilingual output, retry/connector fixes).",
+      "minor": false,
+      "added": 23,
+      "removed": 11,
+      "type": "Framework",
+      "tags": [
+        "openwiki",
+        "agent-docs",
+        "wiki",
+        "cli",
+        "connectors",
+        "okf",
+        "mermaid",
+        "self-updating"
+      ],
+      "resource": "https://github.com/langchain-ai/openwiki"
+    },
+    {
+      "kind": "updated",
+      "path": "frameworks/pi-sdk.md",
+      "title": "Pi SDK",
+      "summary": "Added source-backed details on Pi SDK's RPC mode (`pi --mode rpc`, strict LF-delimited JSONL framing) and startup env flags (PI_SKIP_VERSION_CHECK, PI_TELEMETRY, PI_CACHE_RETENTION), plus a watchlist CI integration pattern from a third-party GitHub Action that highlights the v0.79.0+ project-trust system as a supply-chain consideration.",
+      "minor": true,
+      "added": 5,
+      "removed": 3,
+      "type": "SDK",
+      "tags": [
+        "pi",
+        "sdk",
+        "coding-agent",
+        "automation",
+        "workflows"
+      ],
+      "resource": "https://pi.dev/docs/latest/sdk"
+    },
+    {
+      "kind": "updated",
+      "path": "frameworks/pierre.md",
+      "title": "Pierre (Pierre Computer Company)",
+      "summary": "Extended the diff library coverage to the v1.3.x family, with v1.3.5 (latest, 2026-08-07) source-backed: it avoids full retokenization on newline inserts and fixes empty-new FileDiff edit handling. Also updated repo snapshot stats (6.0k stars / 201 forks, watchlist).",
+      "minor": false,
+      "added": 12,
+      "removed": 7,
+      "type": "Reference",
+      "tags": [
+        "pierre",
+        "diffs",
+        "sdlc",
+        "toolkit",
+        "typescript"
+      ],
+      "resource": "https://github.com/pierrecomputer/pierre"
+    },
+    {
+      "kind": "updated",
+      "path": "frameworks/t3code.md",
+      "title": "t3code",
+      "summary": "Added two new harness-surface issues from the 2026-08-22 fetch: #2847 (Cursor ACP verification gap) and #227 (first-class remote access flow), alongside the existing Codex slash-command and image-generation gaps.",
+      "minor": true,
+      "added": 2,
+      "removed": 3,
+      "type": "Reference",
+      "tags": [
+        "t3code",
+        "agent-control",
+        "harness",
+        "ai-agents",
+        "desktop"
+      ],
+      "resource": "https://github.com/pingdotgg/t3code"
+    },
+    {
+      "kind": "updated",
+      "path": "open-questions.md",
+      "title": "Open Questions",
+      "summary": "Closed the OpenWiki OKF-version and current-release questions (answered: OKF v0.2 output, v0.3.3 latest) and updated the Effect durable-execution question to note the 2026-08-22 pull again returned no official v4 workflow docs, keeping it watchlist.",
+      "minor": false,
+      "added": 15,
+      "removed": 19,
+      "type": "Reference",
+      "tags": [
+        "open-questions",
+        "memory-graph",
+        "wiki-quality",
+        "okf",
+        "openwiki"
+      ]
+    },
+    {
+      "kind": "updated",
+      "path": "protocols/agent-client-protocol.md",
+      "title": "Agent Client Protocol (ACP)",
+      "summary": "Added a watchlist section on the community ecosystem around ACP: `acp-components` (React UI library), `acpx` (headless CLI client), and the Qwen Code ACP streamable-HTTP issue chain tracking SDK version gaps and conformance unlocks. Also re-confirmed first-party servers codex-acp and claude-agent-acp.",
+      "minor": false,
+      "added": 13,
+      "removed": 2,
+      "type": "Protocol",
+      "tags": [
+        "agent-client-protocol",
+        "acp",
+        "protocol",
+        "ai-agents",
+        "editors"
+      ],
+      "resource": "https://github.com/agentclientprotocol/agent-client-protocol"
+    },
+    {
+      "kind": "updated",
+      "path": "protocols/mcp-apps.md",
+      "title": "MCP Apps (Model Context Protocol Apps extension)",
+      "summary": "MCP Apps is the first official extension to the Model Context Protocol, co-developed by Anthropic and OpenAI, letting MCP servers deliver interactive UIs (charts, forms, dashboards) rendered securely in sandboxed iframes inside any compliant host — with a 5-phase UI lifecycle, ui:// tool-linked resources, JSON-RPC-over-postMessage communication, tool visibility, host theming/context, and display modes.",
+      "minor": false,
+      "added": 44,
+      "removed": 14,
+      "type": "Protocol",
+      "tags": [
+        "mcp",
+        "mcp-apps",
+        "protocol",
+        "extension",
+        "agent-ui",
+        "generative-ui"
+      ],
+      "resource": "https://github.com/modelcontextprotocol/ext-apps"
+    },
+    {
+      "kind": "updated",
+      "path": "protocols/model-context-protocol.md",
+      "title": "Model Context Protocol (MCP)",
+      "summary": "The Model Context Protocol (MCP) is the open standard for how AI agents integrate with external tools, data sources, and other agents — JSON-RPC 2.0-based tools, resources, and prompts with capability negotiation, sampling, elicitation, authorization, and a 2026-07-28 revision that made the core stateless, added Multi Round-Trip Requests, header-based routing, cacheable list results, full JSON Schema 2020-12 for tool schemas, and a formal extensions framework and lifecycle policy.",
+      "minor": false,
+      "added": 12,
+      "removed": 9,
+      "type": "Protocol",
+      "tags": [
+        "mcp",
+        "model-context-protocol",
+        "protocol",
+        "agent-integration",
+        "tools",
+        "resources",
+        "prompts",
+        "authorization",
+        "extensions",
+        "registry"
+      ],
+      "resource": "https://modelcontextprotocol.io"
+    },
+    {
+      "kind": "updated",
+      "path": "protocols/open-knowledge-format.md",
+      "title": "Open Knowledge Format (OKF)",
+      "summary": "OKF is a minimal, vendor-neutral format for representing knowledge as markdown files with YAML frontmatter in a self-describing bundle — standardizing the small set of structural conventions (required type, provenance, trust, lifecycle, attestation) that make an agent-maintained knowledge corpus trustable.",
+      "minor": true,
+      "added": 7,
+      "removed": 5,
+      "type": "Protocol",
+      "tags": [
+        "okf",
+        "knowledge-format",
+        "spec",
+        "bundle",
+        "provenance",
+        "trust",
+        "attestation",
+        "frontmatter",
+        "knowledge-representation"
+      ],
+      "resource": "https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md"
+    },
+    {
+      "kind": "updated",
+      "path": "quickstart.md",
+      "title": "AI Knowledge Wiki Quickstart",
+      "summary": "Navigation and current status for the AI knowledge corpus — the Model Context Protocol (MCP) core and its 2026-07-28 stateless revision (revision, SDK posture, registry, extensions, and MCP Apps interface surface refreshed 2026-08-22), the Agent Host Protocol (AHP), Agent Client Protocol (ACP), the generative-UI / agent-UI protocol ecosystem (with the AG-UI Kotlin SDK and Cedar-OS deltas), the agentic SDLC factory toolchain (Pierre, t3code, Effect, OpenCode, Pi SDK, gh-aw CI workflows, and the followed blog feeds), and the agent-maintained knowledge-base layer (the Open Knowledge Format v0.2 spec and its growing producer/consumer ecosystem — okc, erd2okf, okf-gem/okf-mcp, AKB, openknowledge, okf-ingest — plus the OpenWiki CLI, 12+ model providers, OKF v0.2 output, v0.3.3 latest, that maintains this wiki).",
+      "minor": false,
+      "added": 74,
+      "removed": 30,
+      "type": "Guide",
+      "tags": [
+        "quickstart",
+        "index",
+        "navigation",
+        "ai-agents",
+        "generative-ui",
+        "factory-toolchain",
+        "okf",
+        "openwiki",
+        "knowledge-bases"
+      ]
+    },
+    {
+      "kind": "updated",
+      "path": "references/model-context-protocol-releases.md",
+      "title": "Model Context Protocol releases",
+      "summary": "Versioned revision history of the Model Context Protocol specification and Tier 1 SDK posture — revisions 2025-03-26, 2025-06-18, 2025-11-25 (RC 2025-11-15), and the current stateless 2026-07-28 revision, plus the Java SDK v2.0.0 GA (tracking 2025-11-25), the TypeScript SDK v2.0.0 monorepo split, beta SDK versions for Go and C#, and companion-repo release trails (servers, swift-sdk, mcpb, registry).",
+      "minor": true,
+      "added": 7,
+      "removed": 5,
+      "type": "Reference",
+      "tags": [
+        "mcp",
+        "model-context-protocol",
+        "reference",
+        "releases",
+        "versions",
+        "sdk"
+      ],
+      "resource": "https://github.com/modelcontextprotocol/modelcontextprotocol/releases"
+    },
+    {
+      "kind": "updated",
+      "path": "themes.md",
+      "title": "Recurring themes and trends",
+      "summary": "Compact index of recurring signals across the AI knowledge corpus — standardization and convergence of generative-UI / agent-UI protocols in 2026, MCP core standardization toward production infrastructure (stateless 2026-07-28 core, extensions framework, DCR→CIMD), the emerging agentic SDLC factory toolchain (including its CI-native gh-aw layer), and the emergence of agent-maintained knowledge-base formats and tooling (OKF v0.2, OpenWiki v0.3.3).",
+      "minor": false,
+      "added": 10,
+      "removed": 9,
+      "type": "Reference",
+      "tags": [
+        "themes",
+        "index",
+        "generative-ui",
+        "agent-ui",
+        "trends",
+        "factory-toolchain",
+        "knowledge-bases",
+        "okf",
+        "openwiki",
+        "mcp"
+      ]
+    }
+  ]
+}

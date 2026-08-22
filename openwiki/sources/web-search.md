@@ -9,7 +9,7 @@ timestamp: 2026-08-16
 
 # Web-search agent protocols — source evidence
 
-This page records the 2026-08-16 web-search ingestion for the agent-protocols source instance and why it added **no durable protocol or release knowledge**. It is an evidence index, not the synthesis layer.
+This page records the 2026-08-16 web-search ingestion for the agent-protocols source instance and why it added **no durable protocol or release knowledge**. It is an evidence index, not the synthesis layer. For the MCP/Agent-integration sources see the [Agent integration protocols source page](/sources/web-search-agent-integration-protocols.md) (runs 2026-08-17, 2026-08-18, 2026-08-22).
 
 ## Source instance and run facts
 
