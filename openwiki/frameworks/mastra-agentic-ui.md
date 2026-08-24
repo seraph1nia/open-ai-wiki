@@ -4,7 +4,7 @@ title: Mastra agentic-UI integration
 description: Mastra is a TypeScript AI framework whose agentic-UI layer integrates common generative-UI frontends (AI SDK UI, assistant-ui, CopilotKit, AG-UI) through @mastra/ai-sdk and a UI dojo of runnable examples; Mastra 1.0 stable adds A2A support, AI Tracing, and (as of 2026-08-18) agent-loop + nested-streaming orchestration built on AI SDK v5.
 resource: https://mastra.ai/integrations/agentic-ui
 tags: [mastra, agentic-ui, framework, generative-ui, ai-sdk]
-timestamp: 2026-08-18
+timestamp: 2026-08-22
 ---
 
 # Mastra agentic-UI integration
@@ -65,6 +65,8 @@ npx create-ag-ui-app@latest --mastra
 ```
 
 which "builds out a full app, with Mastra agents on the backend, CopilotKit + AG-UI on the frontend" and is accompanied by an AG-UI Canvas with CopilotKit + Mastra example. **Confidence: source-backed** (official Mastra blog; ledgered in the [blog post ledger](/sources/blog-post-ledger.md)). It re-confirms Mastra's CopilotKit frontend integration (vs AI SDK UI / assistant-ui) and ties Mastra to the [AG-UI](/protocols/ag-ui.md) axis via CopilotKit.
+
+A community demand signal (watchlist): the open request [CopilotKit/CopilotKit#1993](https://github.com/CopilotKit/CopilotKit/issues/1993) (2025-06-16) asks for **agentic generative UI + shared state** through Mastra (with CopilotKit-driven human-in-the-loop), arguing Mastra currently lacks those major features — evidence that Mastra's generative-UI surface, while broad (AI SDK UI Custom UI, UI dojo, CopilotKit frontend), is still maturing on the CopilotKit-integrated axis. **Confidence: watchlist** (open feature request, retrieved 2026-08-22).
 
 ## Relationship to other frameworks
 

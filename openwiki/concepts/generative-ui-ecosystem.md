@@ -3,7 +3,7 @@ type: Concept
 title: Generative-UI ecosystem
 description: Cross-source comparison of the competing approaches to streaming agent-driven UI — AG-UI (event wire protocol), A2UI (declarative JSON), OpenUI (declarative language + runtime), MCP Apps (iframe apps on MCP), and the frameworks that consume them.
 tags: [generative-ui, agent-ui, comparison, ecosystem, ai-agents]
-timestamp: 2026-08-18
+timestamp: 2026-08-22
 ---
 
 # Generative-UI ecosystem
@@ -54,7 +54,7 @@ Key relationships, with the page where each is explained:
 - **CopilotKit *consumes* all three generative-UI types** — its generative-UI playground renders static generative UI (`useRenderToolCall`), A2UI (`A2UIRenderer` + `HttpAgent` to an A2A backend), and MCP Apps (`MCPAppsMiddleware`) in one app (plus `useHumanInTheLoop` approval flows), and it is **built on AG-UI** as its 1st-party client — see [CopilotKit](/frameworks/copilotkit.md).
 - **Mastra drives multiple frontends** — the same agent framework runs under Vercel AI SDK, assistant-ui, CopilotKit, and HITL via its UI dojo and `@mastra/ai-sdk` — see [Mastra agentic-UI](/frameworks/mastra-agentic-ui.md).
 - **OpenUI targets the same agent frameworks** — it lists CopilotKit, LangGraph, Mastra, and Vercel AI SDK as integration surfaces, but as a language-and-runtime stack rather than a pure wire protocol — see [OpenUI](/frameworks/openui.md).
-- **AG-UI / CopilotKit adoption signals** — open proposals exist to bridge Oracle's Open Agent Spec agents into AG-UI (issue #828) and to align Microsoft's agent-governance toolkit dashboard with AG-UI event streams (issue #1443); DataFoundry cites AG-UI event-stream design and CopilotKit UX patterns, and [Cedar-OS](/frameworks/mastra-agentic-ui.md#third-party-adoption-signals) builds a separate AI-native frontend stack over the same provider/frontend space (Vercel AI SDK, Mastra, CopilotKit-style agentic state). **Confidence: watchlist** for all (open issues / single projects).
+- **AG-UI / CopilotKit adoption signals** — open proposals exist to bridge Oracle's Open Agent Spec agents into AG-UI (issue #828) and to align Microsoft's agent-governance toolkit dashboard with AG-UI event streams (issue #1443); DataFoundry cites AG-UI event-stream design and CopilotKit UX patterns, and [Cedar-OS](/frameworks/mastra-agentic-ui.md#third-party-adoption-signals) builds a separate AI-native frontend stack over the same provider/frontend space (Vercel AI SDK, Mastra, CopilotKit-style agentic state). Within CopilotKit itself, open issues [CopilotKit #2186](/frameworks/copilotkit.md) (direct AG-UI ↔ CopilotKit integration without the Runtime) and [CopilotKit #1993](/frameworks/copilotkit.md) (agentic generative UI + shared state through Mastra) show sustained demand for both a tighter AG-UI binding and a deeper CopilotKit↔Mastra generative-UI surface. **Confidence: watchlist** for all (open issues / single projects).
 
 ## Design-space tradeoffs
 

@@ -4,7 +4,7 @@ title: Open Knowledge Format (OKF)
 description: OKF is a minimal, vendor-neutral format for representing knowledge as markdown files with YAML frontmatter in a self-describing bundle — standardizing the small set of structural conventions (required type, provenance, trust, lifecycle, attestation) that make an agent-maintained knowledge corpus trustable.
 resource: https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md
 tags: [okf, knowledge-format, spec, bundle, provenance, trust, attestation, frontmatter, knowledge-representation]
-timestamp: 2026-08-18
+timestamp: 2026-08-22
 ---
 
 # Open Knowledge Format (OKF)
@@ -294,6 +294,8 @@ The spec is produced by **GoogleCloudPlatform/knowledge-catalog** (MIT-style, Ap
   - **`okc`** (PyPI) — reads a database schema (SQLite, PostgreSQL) and produces a deterministic, cross-linked OKF bundle: FK relationships become markdown links, `index.md` files are auto-generated per directory, output is reproducible ("same database, same schema, identical bundle"). Implements **OKF v0.1** (surfaced via knowledge-catalog [discussion #84](https://github.com/GoogleCloudPlatform/knowledge-catalog/discussions/84)).
   - **`erd2okf`** (thorsti, discussion #84 comments) — Postgres → one OKF concept per table; frontmatter is regenerated from the live schema while the markdown body stays hand-written, and a `erd2okf check` drift check exits non-zero on structural schema drift (table/column add, drop, rename, type-class change) so freshness is a verifiable CI check rather than a maintenance promise.
   - **`okf-gem`** (serradura) — "Open Knowledge Format for coding agents", speaking **OKF v0.2**: an Agent Skill (authors, curates, and consumes bundles) plus CLI (`okf validate`/`lint`), a Ruby library, interactive/static graph, and **`okf-mcp`** (an MCP server exposing 14 read-only tools for any MCP host); shipped via RubyGems, a Docker image, and a Claude Code plugin; 100% local.
+  - **`okf-ingest`** (travisjakel, 2026-08-22 watchlist, ~4 stars) — a **consumer-side conformance harness** whose `SPEC_NOTES.md` independently corroborates the v0.2 conformance model: the §11 "hard rules" (parseable frontmatter, non-empty `type`, reserved-file structure), the §13 `generated.at`↔legacy `timestamp` fallback ("locked by the `v02` conformance fixture"), permissive consumption (records soft findings — missing recommended fields, broken cross-links, missing `index.md` — and never rejects), untyped-link cross-link resolution (bundle-absolute and relative; URL-scheme targets and anchors excluded; `[[wikilinks]]` are its own extension), and `okf_version` read from a bundle-root `index.md` (`"0.1"`, `"0.2"`, unknown loaded best-effort).
+  - **`okf-skill`** (seanrobertwright, 2026-08-22 watchlist) — a working condensation of the **OKF v0.1** specification as an agent-skill file (v0.1 target, dated 2026-05-22).
   These all appeared as single GitHub/PyPI/discussion hits and remain **source-backed** (watchlist for adoption claims) until release resources or multiple independent confirmations accumulate.
 
 ### Open spec-side question (discussion #84)
@@ -302,7 +304,7 @@ In [discussion #84](https://github.com/GoogleCloudPlatform/knowledge-catalog/dis
 
 ## Related concepts
 
-- **[OpenWiki](/frameworks/openwiki.md)** is the agent-driven CLI that maintains an OKF v0.1-output wiki, including this corpus in personal mode (`~/.openwiki/wiki`); its code mode writes `openwiki/` in a repository.
+- **[OpenWiki](/frameworks/openwiki.md)** is the agent-driven CLI that maintains an OKF v0.2-output wiki (README, 2026-08-22), including this corpus in personal mode (`~/.openwiki/wiki`); its code mode writes `openwiki/` in a repository.
 - The OKF `references/` convention shapes the `/references/` releases resources in this wiki (e.g. [AHP releases](/references/agent-host-protocol-releases.md)).
 - The [agent-host-protocol](/protocols/agent-host-protocol.md) and [agent-client-protocol](/protocols/agent-client-protocol.md) pages are such concept pages in this bundle.
 - The corpus itself is organized around topic hubs such as the [Agentic SDLC factory toolchain](/concepts/factory-toolchain.md) — OKF is the shared format those concept pages are written in.
@@ -314,6 +316,6 @@ Primary source: the [OKF SPEC.md](https://github.com/GoogleCloudPlatform/knowled
 ## Confidence and gaps
 
 - **Confirmed:** OKF v0.2 spec content (retrieved primary source this run), bundle/reserved-filename rules, required `type`, trust/lifecycle/provenance families, Attested Computation contract, conformance, v0.1→v0.2 breaking changes.
-- **Source-backed:** the knowledge-catalog reference-agent/visualizer description (README), and the OKF ecosystem implementations — AKB and openknowledge (single GitHub file each, run 1), `okc`, `erd2okf`, and `okf-gem` (single GitHub/PyPI/discussion hits each, run 2).
-- **Contested / unresolved:** none within OKF itself. OpenWiki declares OKF v0.1 output while this run retrieved the v0.2 spec as primary — an ecosystem consistency question tracked in [open questions](/open-questions.md).
-- Gap: no formal OKF registry of implementations was retrieved (AKB asks whether one should exist); the ecosystem entries (okc, erd2okf, okf-gem, openknowledge, AKB) are single-hit source-backed signals awaiting release resources or multi-source confirmation.
+- **Source-backed:** the knowledge-catalog reference-agent/visualizer description (README), and the OKF ecosystem implementations — AKB and openknowledge (single GitHub file each, run 1), `okc`, `erd2okf`, and `okf-gem` (single GitHub/PyPI/discussion hits each, run 2), plus `okf-ingest` and `okf-skill` (single GitHub hits each, run 3).
+- **Contested / unresolved:** none within OKF itself. OpenWiki's README moved from a v0.1 output claim to OKF v0.2 output in the 2026-08-22 run, resolving the earlier ecosystem-consistency question (tracked in [open questions](/open-questions.md)).
+- Gap: no formal OKF registry of implementations was retrieved (AKB asks whether one should exist); the ecosystem entries (okc, erd2okf, okf-gem, openknowledge, okf-ingest, okf-skill, AKB) are single-hit source-backed signals awaiting release resources or multi-source confirmation.

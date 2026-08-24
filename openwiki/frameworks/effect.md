@@ -4,7 +4,7 @@ title: Effect
 description: Effect is a powerful TypeScript library for building complex synchronous and asynchronous programs with typed, composable effects; v4 is the current era. Its durable-execution surface (DurableQueue ported to v4, @effect/workflow in alpha) is confirmed source-backed from the official Effect v4 beta documentation.
 resource: https://www.effect.website/docs/v4/api/effect
 tags: [effect, typescript, durable-execution, framework, v4]
-timestamp: 2026-08-18
+timestamp: 2026-08-22
 ---
 
 # Effect
@@ -42,3 +42,11 @@ The 2026-08-16T12:51Z web-search pull **closed the durable-execution gap** with 
 - **Watchlist (added 2026-08-18 from the community "What's New in Effect v4" gist)** — v4 adds **enhanced STM transactional collections** for lock-free concurrent state management that compose atomically with `Effect.atomic()`: `TxHashMap`, `TxHashSet`, `TxQueue`, `TxChunk`, `TxSemaphore` (positioned for lock-free rate limiters, caches, and job queues), plus a `getOrThrow` behavior change (throws the error directly instead of wrapping) and `zipWith`/`ap`/`all()` API notes. This is a *community* summary gist, not an official doc — keep watchlist until confirmed on the official v4 docs.
 
 Still unverified from retrieved evidence: the *Activity* primitive's exact semantics and the full v4 workflow packaging/API surface — target the official `@effect/workflow` docs for a future run.
+
+## STM transactional collections — watchlist (updated 2026-08-22)
+
+The community "What's New in Effect v4" gist was **re-confirmed by the 2026-08-22 pull** — the official v4 Beta recap and the v4-beta release post also re-surfaced (reconfirmation only; no new v4 API surface beyond what is documented). The gist's `Enhanced STM Collections` section contains the durable content; "This Week in Effect 116" remains official. Summary, **watchlist** until confirmed against the official v4 docs:
+
+- All operations compose atomically with `Effect.atomic()`; collections: **`TxHashMap`, `TxHashSet`, `TxQueue`, `TxChunk`, `TxSemaphore`**.
+- Positioned for lock-free rate limiters, caches, and job queues; automatic rollback on errors.
+- Additional gist claims (watchlist, community summary): `getOrThrow` now throws the error directly instead of wrapping; `zipWith`/`ap` removed in favor of `all()` for parallel composition; first-class, composable transformations and filters (with `errors: "all"` multi-issue reporting) replacing v3's schema-embedded equivalents; core `Effect<A, E, R>` unchanged across v3→v4.

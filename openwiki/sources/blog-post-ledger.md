@@ -4,7 +4,7 @@ title: Blog post ingestion ledger
 description: Cumulative, append-only record of blog posts already ingested into this wiki (Zed, Solo.io, Mastra, gh-aw), used to keep blog ingestion idempotent — posts listed here are never fetched, summarized, or adopted again.
 resource: https://zed.dev/blog
 tags: [source, evidence, ledger, blog, deduplication, factory-tools]
-timestamp: 2026-08-18
+timestamp: 2026-08-22
 ---
 
 # Blog post ingestion ledger
@@ -42,6 +42,8 @@ Append-only. Newest first.
 
 | Post URL | Feed | Published | Ingested | Wiki pages changed |
 |---|---|---|---|---|
+| https://www.solo.io/blog/solo-contributes-agentgateway-linux-foundation | Solo.io | 2026-08-22* | 2026-08-22 | [factory hub](/concepts/factory-toolchain.md) — official agentgateway Linux Foundation donation post (donation anchor), kmcp teaser (watchlist) |
+| https://zed.dev/blog/sandboxing | Zed | 2026-08-22* | 2026-08-22 | none — body not retrieved; sandboxing noted conceptually on the [factory hub](/concepts/factory-toolchain.md) |
 | https://mastra.ai/blog/copilotkitmastra | Mastra | 2025-09-18 | 2026-08-18 | [Mastra agentic-UI](/frameworks/mastra-agentic-ui.md) — `create-ag-ui-app --mastra` starter (Mastra backend + CopilotKit/AG-UI frontend); [CopilotKit](/frameworks/copilotkit.md) — Mastra guide cross-link |
 | https://mastra.ai/blog/introducing-mastra-improved-agent-orchestration-ai-sdk-v5-support | Mastra | 2026-08-26 | 2026-08-18 | [Mastra agentic-UI](/frameworks/mastra-agentic-ui.md) — AI SDK v5 agent-loop orchestration + nested streaming; [factory hub](/concepts/factory-toolchain.md) |
 | https://www.solo.io/blog/agentgateway-mcp-authentication-multi-provider-ai | Solo.io | 2026-03-12 | 2026-08-18 | [factory hub](/concepts/factory-toolchain.md) — Solo Enterprise for agentgateway 2.2 (hosted-MCP auth) |
@@ -68,11 +70,11 @@ Append-only. Newest first.
 | https://github.github.com/gh-aw/introduction/how-they-work | gh-aw | 2026-08-17 | 2026-08-17 | [factory hub](/concepts/factory-toolchain.md) — Markdown-compiled-to-Actions model |
 | https://github.com/github/gh-aw-mcpg | gh-aw | 2026-08-17 | 2026-08-17 | none — repo entry, MCP gateway (watchlist) |
 
-> **Publication-date provenance:** rows whose *Published* equals the run date (2026-08-17) for a post that is older than the feeds' first run carry the run date as an *upper bound* when the retrieved snippet did not show a real date (Zed corporate posts, all Solo.io posts, `announcing-mastra-1`, `how-they-work`, `gh-aw-mcpg`). The ledger's dedup identity is always the canonical URL, so the exact date does not affect future runs.
+> **Publication-date provenance:** rows whose *Published* equals the run date (2026-08-17 or 2026-08-22) for a post that is older than the feeds' first run carry the run date as an *upper bound* when the retrieved snippet did not show a real date (Zed corporate posts, all Solo.io posts, `announcing-mastra-1`, `how-they-work`, `gh-aw-mcpg`, the 2026-08-22 Solo.io Linux Foundation post, and the Zed sandboxing post). The ledger's dedup identity is always the canonical URL, so the exact date does not affect future runs.
 
 ## Confidence and gaps
 
 - **Confirmed:** the feed list and the ledger protocol, both configured in the `web-search-factory-tools` source instance.
-- Ingested rows: 20 added 2026-08-17 (7 produced wiki changes, 13 none); 4 more added 2026-08-18 (3 produced wiki changes — Mastra AI-SDK-v5, Solo 2.2, Solo kagent — plus the gh-aw-workshop repo entry recorded with `none`); 1 more added by the 2026-08-18 generative-UI re-pull (Mastra `copilotkitmastra` → Mastra agentic-UI + CopilotKit). Rows: 25 in total.
+- Ingested rows: 20 added 2026-08-17 (7 produced wiki changes, 13 none); 4 more added 2026-08-18 (3 produced wiki changes — Mastra AI-SDK-v5, Solo 2.2, Solo kagent — plus the gh-aw-workshop repo entry recorded with `none`); 1 more added by the 2026-08-18 generative-UI re-pull (Mastra `copilotkitmastra` → Mastra agentic-UI + CopilotKit); 2 more added by the 2026-08-22 re-pull (Solo Linux Foundation → factory hub; Zed sandboxing → `none`). Rows: 27 in total.
 - Note: the gh-aw gallery and repo-style entries (e.g. `gh-aw-workshop`) are deliberately outside the ledger (see *Living index pages* above) or recorded only as repo entries; if the gallery later gains dated, individually addressable entries, ledger those entries like posts.
 - Note: the Mastra domain is also configured on the `web-search-generative-ui` instance for its integration docs. Blog posts from `mastra.ai/blog` are ledgered here regardless of which instance retrieved them, so the two instances cannot ingest the same post twice.

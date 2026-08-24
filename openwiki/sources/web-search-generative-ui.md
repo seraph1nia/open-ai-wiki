@@ -1,15 +1,15 @@
 ---
 type: Source Evidence
 title: Web-search generative-UI source evidence
-description: Ingestion and coverage notes for the web-search-generative-ui runs (2026-08-16 three pulls, a 2026-08-17 re-pull, and a 2026-08-18 re-pull) over the AG-UI, CopilotKit, OpenUI, Mastra agentic-UI, A2UI, and MCP Apps sources, with reliability warnings for off-target synthesized answers.
+description: Ingestion and coverage notes for the web-search-generative-ui runs (2026-08-16 three pulls, a 2026-08-17 re-pull, a 2026-08-18 re-pull, and a 2026-08-22 re-pull) over the AG-UI, CopilotKit, OpenUI, Mastra agentic-UI, A2UI, and MCP Apps sources, with reliability warnings for off-target synthesized answers.
 resource: https://github.com/ag-ui-protocol/ag-ui
 tags: [web-search, source, evidence, generative-ui, agent-ui, coverage]
-timestamp: 2026-08-18
+timestamp: 2026-08-22
 ---
 
 # Web-search generative UI — source evidence
 
-This page records the web-search ingestion for the `web-search-generative-ui` source instance (three pulls on 2026-08-16, a 2026-08-17 re-pull, and a 2026-08-18 re-pull) and grounds the wiki's generative-UI protocol and framework pages. It is an evidence index, not the synthesis layer (see [Generative-UI ecosystem](/concepts/generative-ui-ecosystem.md)).
+This page records the web-search ingestion for the `web-search-generative-ui` source instance (three pulls on 2026-08-16, a 2026-08-17 re-pull, a 2026-08-18 re-pull, and a 2026-08-22 re-pull) and grounds the wiki's generative-UI protocol and framework pages. It is an evidence index, not the synthesis layer (see [Generative-UI ecosystem](/concepts/generative-ui-ecosystem.md)).
 
 ## Run facts
 
@@ -19,6 +19,7 @@ This page records the web-search ingestion for the `web-search-generative-ui` so
 - **Run 3 — fetched:** 2026-08-16T20:10:05Z (Tavily, `advanced` depth, 8 queries × 5 max results; windowHours 24). Raw data: `2026-08-16T20-09-39-911Z/web-search-results.json` (8 result objects, up to 5 hits per query).
 - **Run 4 — fetched:** 2026-08-17T22:12:07Z (Tavily, `advanced` depth, 7 queries × 5 max results; windowHours 24). Raw data: `2026-08-17T22-11-42-498Z/web-search-results.json` (7 result objects, up to 5 hits per query).
 - **Run 5 — fetched:** 2026-08-18T11:39:07Z (Tavily, `advanced` depth, 7 queries × 5 max results; windowHours 24; `timeRange year`). Raw data: `2026-08-18T11-39-03-009Z/web-search-results.json` (7 result objects, 5 hits per query). The MCP Apps `ext-apps` query was not in this run's set.
+- **Run 6 — fetched:** 2026-08-22T07:03:30Z (Tavily, 7 queries × 5 max results, windowHours 24). Raw data: `2026-08-22T07-03-00-503Z/web-search-results.json` (7 result objects, up to 5 hits per query). Same canonical-URL query set as Run 4/5 (AG-UI repo, CopilotKit repo, OpenUI overview, Mastra agentic-UI copilotkit/openui, A2UI glossary/roadmap).
 
 ## Queries and outcomes (Run 2 deltas in bold)
 
@@ -61,7 +62,17 @@ Run 5 re-pulled 7 of the same canonical sources (all except the MCP Apps `ext-ap
 - **Mastra repo/docs re-confirmations** — the `mastra-ai/mastra` README and `what-is-mastra` docs confirm HITL ("suspend an agent or workflow and await user input or approval before resuming"; state persisted via storage so execution can pause indefinitely) and position Mastra for "long-running agents that run entire processes... such as a **software factory** that plans, builds, reviews, and releases code" — a durable cross-link from the [generative-UI corpus](/concepts/generative-ui-ecosystem.md) to the [factory-toolchain hub](/concepts/factory-toolchain.md). Folded into the [Mastra page](/frameworks/mastra-agentic-ui.md).
 - **A2UI v1.0 candidate `AccessibilityAttributes`** — the v1.0 spec adds standardized accessibility properties attached via `ComponentCommon` to any component: `label`, `description` (both `DynamicString`), `live` (`"off"` | `"polite"` | `"assertive"`), and `hidden` (`DynamicBoolean`). Added to the [A2UI](/protocols/a2ui.md) page's v1.0/interop surface.
 
-### Reliability warnings
+### Run 6 deltas (2026-08-22T07:03Z)
+
+Run 6 re-pulled the same 7 canonical sources. Almost all hits **re-confirmed already-synthesized material** (AG-UI README Agent Protocol Stack / Kotlin / Effect #6341, CopilotKit skills consolidation and generative-UI showcase, OpenUI v0.1 spec / comparison / Cloud, A2UI introduction / v1.0 / v0.8-A2A / data-flow / roadmap / renderers, Mastra AI SDK UI, `awesome-*` star lists). New durable deltas:
+
+- **CopilotKit `canvas-with-langgraph-python` archive** — `CopilotKit/canvas-with-langgraph-python` ("Start for building AG-UI canvas copilots using CopilotKit and LangGraph with Python") was **archived by the owner on 2026-03-12** ("This project has been consolidated into the CopilotKit monorepo"), joining the previously-archived `with-langgraph-python` and `with-adk`. Folded into the [CopilotKit](/frameworks/copilotkit.md) monorepo-consolidation list.
+- **CopilotKit issue #1993 (Mastra agentic generative-UI support)** — `CopilotKit/CopilotKit#1993` (2025-06-16) requests **agentic generative UI and shared state** in the Mastra feature set via CopilotKit-driven HITL, arguing only LangGraph has a viable alternative today; assigned to `tylerslaton`, label `feature request`. Folds into the [CopilotKit](/frameworks/copilotkit.md) ↔ [Mastra agentic-UI](/frameworks/mastra-agentic-ui.md) coupling. **Confidence: watchlist** (open feature request).
+- **CopilotKit issue #2186 (direct AG-UI ↔ CopilotKit integration)** — `CopilotKit/CopilotKit#2186` (2025-07-18) requests sending AG-UI events **directly to CopilotKit from custom agent backends** without the CopilotKit Runtime / Node.js intermediary (`CopilotKit <== AG-UI ==> My Agent Backend`). Evidences sustained demand to decouple CopilotKit from its runtime and deepen the CopilotKit ↔ [AG-UI](/protocols/ag-ui.md) binding. **Confidence: watchlist** (open feature request).
+- **AG-UI `CLAUDE.md` architecture and PR #1150** — the AG-UI monorepo `CLAUDE.md` confirms the event-driven, transport-agnostic (SSE/WebSockets/HTTP-binary/custom) core with RxJS Observables, the repo layout (`/sdks/typescript/`, `/integrations/`, `/apps/`, `/sdks/python/`), and that every framework integration implements an `AbstractAgent` translating framework events to AG-UI events. PR #1150 (`feat nx releases`) describes the release automation (RELEASE_PAT / NPM_ACCESS_TOKEN / PYPI_API_TOKEN) — **internal CI plumbing, not durable domain knowledge**; `< 3%` of the repo now stars 15.4k / forks 1.4k (vs prior ~15.4k-star signal, re-confirmed).
+- **Mastra AI SDK UI re-confirmation** — the `mastra.ai/integrations/agentic-ui/ai-sdk-ui` page re-confirms `@mastra/ai-sdk` ↔ AI SDK UI `useChat()`/`useCompletion()`/`useObject()` and the Custom UI (generative UI) concept; already covered on [Mastra agentic-UI](/frameworks/mastra-agentic-ui.md).
+
+### Reliability warnings (Run 6)
 
 The Tavily synthesized `answer` fields were **not adopted verbatim**:
 
@@ -71,6 +82,7 @@ The Tavily synthesized `answer` fields were **not adopted verbatim**:
 - Low-relevance results were **excluded**: star/awesome lists and DataFoundry (which only acknowledges AG-UI design influence).
 - **Run 4 (2026-08-17):** the `mastra.ai/integrations/agentic-ui/openui` query again produced **no page for that canonical URL** — results drifted to the AI SDK UI integration page, an off-target Mastra Vite/React guide, and unrelated star lists; the Tavily `answer` for that query was a **false/garbled attribution** ("an AI system built by a team of inventors at Amazon") and was not adopted. The `mastra.ai/integrations/agentic-ui/copilotkit` query did surface the Mastra UI dojo blog, the AG-UI README, and the AI SDK UI page plus the new Cedar-OS hit. Only directly matching content is treated as source-backed.
 - **Run 5 (2026-08-18):** the `mastra.ai/integrations/agentic-ui/openui` query **again produced no page for that canonical URL** — results stayed on the AI SDK UI page, the Mastra repo/docs, the UI dojo blog, and the new "Building agentic copilots with CopilotKit and Mastra" post, plus star lists. The Tavily `answer` for that query was **not adopted** (a generic summary of Mastra/AI SDK UI/CopilotKit, not a source-backed openui claim). The `mastra.ai/integrations/agentic-ui/copilotkit` query again returned the Mastra UI dojo blog (closed in the [ledger](/sources/blog-post-ledger.md)), the AG-UI README, the AI SDK UI page, and the awesome-ai-agents list (watchlist). Only directly matching content is treated as source-backed.
+- **Run 6 (2026-08-22):** the `mastra.ai/integrations/agentic-ui/openui` query **again produced no page for that canonical URL** — results drifted to the AI SDK UI page and off-target star/awesome lists; its Tavily `answer` (a generic AI SDK UI `@mastra/ai-sdk` install summary) was **not adopted** as an OpenUI claim. The `mastra.ai/integrations/agentic-ui/copilotkit` query surfaced two CopilotKit feature issues (#1993, #2186) plus the AG-UI README and the `examples/showcases/generative-ui` guide. The `openui.com` query again returned the v0.1 spec / comparison / Cloud pages and the unrelated `isaccanedo/openui` and `Fallomai/openui` repos (disambiguated on the [OpenUI](/frameworks/openui.md) page) — no new OpenUI deltas. Only directly matching content is treated as source-backed.
 
 ## Inferred signals
 
@@ -82,12 +94,12 @@ The Tavily synthesized `answer` fields were **not adopted verbatim**:
 
 ## Mapping to wiki pages
 
-- New: [AG-UI](/protocols/ag-ui.md) (Java/Go SDKs, community Swift SDK by Run 3, Kotlin SDK by Run 4, multi-sequential-run semantics by Run 5, Effect #6341/TanStack AI enriched by Run 5), [A2UI](/protocols/a2ui.md) (data flow, renderers; v1.0 `AccessibilityAttributes` by Run 5), [MCP Apps](/protocols/mcp-apps.md) (capability negotiation, SDK surface), [OpenUI](/frameworks/openui.md) (v0.5 language, Cloud, repo package structure + feature-comparison page by Run 3), [CopilotKit](/frameworks/copilotkit.md) (HITL renderers, skills; `with-langgraph-python` archive by Run 3; **Channels SDK by Run 5**), [Mastra agentic-UI](/frameworks/mastra-agentic-ui.md) (UI dojo; Cedar-OS third-party signal by Run 4; **`create-ag-ui-app --mastra` starter + software-factory cross-link by Run 5**), [Generative-UI ecosystem](/concepts/generative-ui-ecosystem.md) hub.
+- New: [AG-UI](/protocols/ag-ui.md) (Java/Go SDKs, community Swift SDK by Run 3, Kotlin SDK by Run 4, multi-sequential-run semantics by Run 5, Effect #6341/TanStack AI enriched by Run 5), [A2UI](/protocols/a2ui.md) (data flow, renderers; v1.0 `AccessibilityAttributes` by Run 5), [MCP Apps](/protocols/mcp-apps.md) (capability negotiation, SDK surface), [OpenUI](/frameworks/openui.md) (v0.5 language, Cloud, repo package structure + feature-comparison page by Run 3), [CopilotKit](/frameworks/copilotkit.md) (HITL renderers, skills; `with-langgraph-python` archive by Run 3; **Channels SDK by Run 5; `canvas-with-langgraph-python` archive + issues #1993/#2186 by Run 6**), [Mastra agentic-UI](/frameworks/mastra-agentic-ui.md) (UI dojo; Cedar-OS third-party signal by Run 4; **`create-ag-ui-app --mastra` starter + software-factory cross-link by Run 5; #1993 coupling signal by Run 6**), [Generative-UI ecosystem](/concepts/generative-ui-ecosystem.md) hub.
 - The earlier [agent-protocols web-search page](/sources/web-search.md) is unaffected.
 
 ## Confidence and gaps
 
 - **Confirmed:** run metadata, query set, and per-query result URLs (directly from the raw files).
 - **Source-backed:** protocol/framework characteristics grounded in each project's primary docs (README, specification pages, repo overview, docs sites).
-- **watchlist:** open SDK/feature issues (Oracle Open Agent Spec, governance dashboard, CopilotKit #2840, csharp-sdk, java-sdk, Effect #6341), third-party adoption claims (DataFoundry, Cedar-OS), package version numbers not cross-checked against release resources, the community AG-UI Swift SDK (single-contributor project), and the community-contributed AG-UI Kotlin SDK (single maintainer `mefinsf` per the overview).
-- **Gap (narrowed):** A2UI reference materials (renderers matrix, v1.0 spec surface incl. `AccessibilityAttributes`) and MCP Apps SDK surface are now directly retrieved; AG-UI's own SDK docs are now covered for Java, Go, Kotlin, and Swift, and its multi-sequential-run stream semantics are documented. Still to verify against release resources: exact AG-UI SDK package versions, CopilotKit package versions, and A2UI v1.0 GA status.
+- **watchlist:** open SDK/feature issues (Oracle Open Agent Spec, governance dashboard, CopilotKit #2840, csharp-sdk, java-sdk, Effect #6341, **CopilotKit #1993 / #2186 by Run 6**), third-party adoption claims (DataFoundry, Cedar-OS), package version numbers not cross-checked against release resources, the community AG-UI Swift SDK (single-contributor project), and the community-contributed AG-UI Kotlin SDK (single maintainer `mefinsf` per the overview).
+- **Gap (narrowed):** A2UI reference materials (renderers matrix, v1.0 spec surface incl. `AccessibilityAttributes`) and MCP Apps SDK surface are now directly retrieved; AG-UI's own SDK docs are now covered for Java, Go, Kotlin, and Swift, and its multi-sequential-run stream semantics are documented. Still to verify against release resources: exact AG-UI SDK package versions, CopilotKit package versions, and A2UI v1.0 GA status. The 2026-08-22 re-pull again returned no package-registry/release files for those artifacts.
