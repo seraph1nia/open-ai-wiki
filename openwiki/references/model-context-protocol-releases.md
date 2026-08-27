@@ -3,8 +3,8 @@ type: Reference
 title: Model Context Protocol releases
 description: Versioned revision history of the Model Context Protocol specification and Tier 1 SDK posture — revisions 2025-03-26, 2025-06-18, 2025-11-25 (RC 2025-11-15), and the current stateless 2026-07-28 revision, plus the Java SDK v2.0.0 GA (tracking 2025-11-25), the TypeScript SDK v2.0.0 monorepo split, beta SDK versions for Go and C#, and companion-repo release trails (servers, swift-sdk, mcpb, registry).
 resource: https://github.com/modelcontextprotocol/modelcontextprotocol/releases
-tags: [mcp, model-context-protocol, reference, releases, versions, sdk]
-timestamp: 2026-08-22
+tags: [mcp, model-context-protocol, reference, releases, versions, sdk, roadmap]
+timestamp: 2026-08-27
 ---
 
 # Model Context Protocol releases
@@ -21,7 +21,7 @@ Versioned information about the **Model Context Protocol** specification revisio
 | 2025-11-25 | 2025-11-25 | Stable revision | Stable release of the `2025-11-25` revision; was the current spec before 2026-07-28. Introduced experimental core Tasks (SEP-1686; states `working`/`input_required`/`completed`/`failed`/`cancelled`), CIMD URL-based client registration (SEP-991), the extensions concept (optional/additive/composable/independently versioned), security features (SEP-1024, SEP-835), and the enterprise-registry vision. Changelog in repo. |
 | **2026-07-28** | **2026-07-28** | **Current revision** | **Stateless protocol core** — no handshake or sessions (`initialize`/`initialized`, `Mcp-Session-Id` retired; optional `server/discover` RPC); **Multi Round-Trip Requests (MRTR)** (`input_required`/`inputResponses`, SEP-2322); header-based routing (`Mcp-Method`/`Mcp-Name`, SEP-2243); cacheable list results (`ttlMs`/`cacheScope`, SEP-2549); **full JSON Schema 2020-12 for tool schemas** (SEP-2106) and the `-32002`→`-32602` error-code change (SEP-2164); authorization hardening (RFC 9207 `iss`, `application_type`, issuer-bound credentials; **DCR formally deprecated in favor of CIMD**); formal **extensions framework** with Tasks moved to the `io.modelcontextprotocol/tasks` extension (SEP-2663); Roots/Sampling/Logging + HTTP+SSE transport deprecated with a 12-month minimum window (SEP-2577); **feature lifecycle policy** (_Active → Deprecated → Removed_, ≥12 months) and **conformance-suite gating** for Standards Track SEPs (SEP-2484) under the SDK tier system (PR 1777). RC announced 2026-05-21; RC-to-final was a ten-week validation window. |
 
-> **Note:** the GitHub spec-repo releases fragment retrieved (runs 1–3) shows 2025-03-26 … 2025-11-25-stable; the "latest release" claim in the Tavily `answer` ("2026.7.10") is the **servers** repository's release, not the spec repo. The 2026-07-28 revision is confirmed by the official blog post (2026-07-28) and referenced by the SDK beta post. The 2026-07-28 release tag format is blog-backed; the spec-repo releases page itself was not fully retrieved (the 2026-08-22 fragment re-confirmed the 2025-03-26 initial revision and version-negotiation quote).
+> **Note:** the GitHub spec-repo releases fragment retrieved (runs 1–4) shows 2025-03-26 … 2025-11-25-stable; the "latest release" claim in the Tavily `answer` ("2026.7.10") is the **servers** repository's release, not the spec repo. The 2026-07-28 revision is confirmed by the official blog post (2026-07-28) and referenced by the SDK beta post. The 2026-07-28 release tag format is blog-backed; the spec-repo releases page itself was not fully retrieved (the 2026-08-22 fragment re-confirmed the 2025-03-26 initial revision and version-negotiation quote).
 
 ## Version negotiation (stable contract)
 
@@ -50,7 +50,7 @@ Release trails of MCP's companion repositories that surfaced in the Tavily page 
 ## Prior-revision feature stream (as tracked in the wiki)
 
 - **2025-11-25** — stable revision covering the pre-stateless protocol surface: transports (stdio, streamable HTTP), tools/resources/prompts, sampling, the OAuth 2.1 authorization direction (with CIMD URL-based client registration from SEP-991), experimental core Tasks, the extension concept, and the start of the extension/SEP flow. See the [MCP page's prior-revision section](/protocols/model-context-protocol.md#the-2025-11-25-revision-prior-stable-first-anniversary).
-- **2026 roadmap (2026-03-09 blog)** — the revision-to-Working-Groups shift; Tasks (SEP-1686) lifecycle gaps (retry semantics, expiry policies), transport evolution/scalability, governance maturation (contributor ladder + Working Group delegation), enterprise readiness. See the [MCP page](/protocols/model-context-protocol.md#2026-roadmap-and-governance).
+- **2026 roadmap (2026-03-09 blog)** — the revision-to-Working-Groups shift; Tasks (SEP-1686) lifecycle gaps (retry semantics, expiry policies), transport evolution/scalability, governance maturation (contributor ladder + Working Group delegation), enterprise readiness. **Superseded** on 2026-08-22 by [The New MCP Roadmap](https://blog.modelcontextprotocol.io/posts/mcp-roadmap) (Soria Parra + Delimarsky), which re-organizes direction into five priority areas (agentic messaging primitives incl. server-initiated events/webhooks and Tasks extension maturation toward the spec; HTTP-native transport unification and hardening incl. Streamable HTTP over stdio; agent identity and enterprise-ready security incl. DPoP + Workload Identity Federation + ID-JAG under Enterprise-Managed Authorization; improved primitives incl. a single tool-result contract and progressive discovery; improved SDK developer experience with conformance testing). See the [MCP page](/protocols/model-context-protocol.md#2026-roadmap-and-governance).
 - **MCP Registry** (2025-09-08) — launched in preview as an open catalog/API for public MCP servers.
 
 ## Relationship to other release resources
@@ -60,6 +60,6 @@ Release trails of MCP's companion repositories that surfaced in the Tavily page 
 
 ## Source Map
 
-- [Web-search Agent integration protocols source evidence](/sources/web-search-agent-integration-protocols.md) — raw queries and reliability caveats (2026-08-17, 2026-08-18, and 2026-08-22 runs).
+- [Web-search Agent integration protocols source evidence](/sources/web-search-agent-integration-protocols.md) — raw queries and reliability caveats (2026-08-17, 2026-08-18, 2026-08-22, and 2026-08-27 runs).
 - Canonical spec-repo releases: <https://github.com/modelcontextprotocol/modelcontextprotocol/releases>
 - Blog: [The 2026-07-28 Specification](https://blog.modelcontextprotocol.io/posts/2026-07-28), [RC](https://blog.modelcontextprotocol.io/posts/2026-07-28-release-candidate), [SDK betas](https://blog.modelcontextprotocol.io/posts/sdk-betas-2026-07-28), [One Year of MCP (2025-11-25)](https://blog.modelcontextprotocol.io/posts/2025-11-25-first-mcp-anniversary)

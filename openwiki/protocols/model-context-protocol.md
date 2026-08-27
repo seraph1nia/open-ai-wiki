@@ -1,10 +1,10 @@
 ---
 type: Protocol
 title: Model Context Protocol (MCP)
-description: The Model Context Protocol (MCP) is the open standard for how AI agents integrate with external tools, data sources, and other agents — JSON-RPC 2.0-based tools, resources, and prompts with capability negotiation, sampling, elicitation, authorization, and a 2026-07-28 revision that made the core stateless, added Multi Round-Trip Requests, header-based routing, cacheable list results, full JSON Schema 2020-12 for tool schemas, and a formal extensions framework and lifecycle policy.
+description: The Model Context Protocol (MCP) is the open standard for how AI agents integrate with external tools, data sources, and other agents — JSON-RPC 2.0-based tools, resources, and prompts with capability negotiation, sampling, elicitation, authorization, and a 2026-07-28 revision that made the core stateless, added Multi Round-Trip Requests, header-based routing, cacheable list results, full JSON Schema 2020-12 for tool schemas, and a formal extensions framework and lifecycle policy. The 2026-08-22 "New MCP Roadmap" supersedes the March roadmap with five priority areas.
 resource: https://modelcontextprotocol.io
-tags: [mcp, model-context-protocol, protocol, agent-integration, tools, resources, prompts, authorization, extensions, registry]
-timestamp: 2026-08-22
+tags: [mcp, model-context-protocol, protocol, agent-integration, tools, resources, prompts, authorization, extensions, registry, roadmap]
+timestamp: 2026-08-27
 ---
 
 # Model Context Protocol (MCP)
@@ -16,7 +16,7 @@ timestamp: 2026-08-22
 - **Current revision:** **2026-07-28** (stateless protocol core; see [Releases reference](/references/model-context-protocol-releases.md))
 - **Extension:** [MCP Apps](/protocols/mcp-apps.md) extends MCP to deliver interactive UIs (first official extension, Jan 2026).
 
-Evidence for this page comes from the 2026-08-17, 2026-08-18, and 2026-08-22 [web-search Agent integration protocols runs](/sources/web-search-agent-integration-protocols.md) (MCP blog posts, the spec-repo releases page, and the MCP Apps `ext-apps` repository) plus earlier MCP Apps and AHP evidence. The 2026-08-18 re-pull retrieved the full 2026-07-28 announcement and the 2025-11-25 anniversary post, adding the SEP-level changelog details below; the 2026-08-22 re-pull added the full RC-post body (JSON Schema, lifecycle/conformance gating), the Java SDK v2.0.0 release surface, and registry open-source depth. Durable revisions are tracked on the [MCP releases reference](/references/model-context-protocol-releases.md).
+Evidence for this page comes from the 2026-08-17, 2026-08-18, 2026-08-22, and 2026-08-27 [web-search Agent integration protocols runs](/sources/web-search-agent-integration-protocols.md) (MCP blog posts, the spec-repo releases page, and the MCP Apps `ext-apps` repository) plus earlier MCP Apps and AHP evidence. The 2026-08-18 re-pull retrieved the full 2026-07-28 announcement and the 2025-11-25 anniversary post, adding the SEP-level changelog details below; the 2026-08-22 re-pull added the full RC-post body (JSON Schema, lifecycle/conformance gating), the Java SDK v2.0.0 release surface, and registry open-source depth; the 2026-08-27 re-pull surfaced the follow-on **The New MCP Roadmap** (2026-08-22) that supersedes the March 2026 roadmap. Durable revisions are tracked on the [MCP releases reference](/references/model-context-protocol-releases.md).
 
 ## What MCP standardizes
 
@@ -106,12 +106,22 @@ The **MCP Registry** (blog, 2025-09-08) is an open catalog and API for **discove
 
 ## 2026 roadmap and governance
 
-The [2026 MCP Roadmap](https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap) (2026-03-09) marks a shift "from releases to working groups":
+The roadmap has evolved through two posts. The original **[2026 MCP Roadmap](https://blog.modelcontextprotocol.io/posts/2026-mcp-roadmap)** (2026-03-09) marked a shift "from releases to working groups" with four priority areas:
 
 - **Transport Evolution and Scalability** — the stateless core + MRTR + cacheable lists land here.
 - **Agent Communication** — beyond tools, MCP grows toward agent-to-agent surfaces; Tasks (SEP-1686) lifecycle gaps (retry semantics, expiry policies) are the immediate iteration target.
 - **Governance Maturation** — the SEP (spec evolution proposal) process bottlenecks on core-maintainer review; the plan is a **contributor ladder** and **delegation to trusted Working Groups** so domain experts accept SEPs without a full core review, keeping strategic oversight at the core.
 - **Enterprise Readiness** — SSRF-hardened authorization, cacheable lists, and routable requests serve enterprise deployments.
+
+A follow-on **[The New MCP Roadmap](https://blog.modelcontextprotocol.io/posts/mcp-roadmap)** (2026-08-22, David Soria Parra + Den Delimarsky) reports on the progress the 2026-07-28 revision delivered on those four areas and re-organizes direction into **five priority areas**, each with dedicated Core Maintainers and one or more Working Groups:
+
+- **Agentic messaging primitives** — modern agentic workloads outgrow plain request-and-response; the work spans **server-initiated events** (webhooks and channels so clients aren't left polling), a **composition review** across the Agents, Transports, and Triggers & Events Working Groups, and **maturing the Tasks extension** (SEP-2663) so it can move into the specification.
+- **HTTP-native transport unification and hardening** — the 2026-07-28 revision made a remote MCP server "no different from any other HTTP workload"; this area stretches that to other deployment modes (e.g. Streamable HTTP over stdio) so that **one transport** simplifies server/client development.
+- **Agent identity and enterprise-ready security** — MCP authorization is built around a human approving access in a browser; the direction is a standardized way to recognize and trust **agent identities** (cloud workloads, acting on behalf of an absent user, delegating narrower authority to sub-agents), on existing standards rather than pasted API keys: finalizing **DPoP** ([RFC 9449](https://www.rfc-editor.org/rfc/rfc9449)), a Workload-Identity-Federation-informed path for agent identity and delegation, the **ID-JAG grant** behind [Enterprise-Managed Authorization](https://modelcontextprotocol.io/extensions/auth/enterprise-managed-authorization), standard token exchange, and continued engagement with IETF OAuth and WIMSE.
+- **Improved primitives** — **one clear `tools/call` result contract** (today a tool result can carry the same output in more than one form and a server can't know which form a client will surface), plus **progressive discovery** so a server with a large tool catalog can offer a small entry point and reveal more as the conversation narrows (today the model pays for the whole surface up front).
+- **Improved SDK developer experience** — investing in SDK ergonomics, spec conformance (the SDK-tier conformance suite), and clear, well-documented APIs, which matters now that many developers build MCP clients and servers by pointing an agent at the libraries.
+
+Governance milestones reached since the March roadmap: the **Contributor Ladder** was formally adopted; **Working Groups now triage SEPs in their own area** (delegating review out of the full core-maintainer path); the **feature lifecycle and deprecation policy** is in force (the 2026-07-28 deprecations were the first to follow it); and SEPs get **expedited review when they fall in a priority area**. Enterprise readiness landed primarily as **authorization** work (issuer validation, issuer-bound client credentials, CIMD as the preferred client-registration path, and Enterprise-Managed Authorization now available as a **stable** extension). New contributions can start as an **experimental extension** in an `experimental-ext-` repository per SEP-2133 before a formal SEP. On transport, the Server Card Working Group continues the `.well-known` metadata conventions so a server's capabilities can be discovered without connecting to it.
 
 ## Relationships to the rest of the wiki
 
@@ -125,12 +135,12 @@ The [2026 MCP Roadmap](https://blog.modelcontextprotocol.io/posts/2026-mcp-roadm
 ## Status and confidence
 
 - **Current revision:** 2026-07-28 (stateless core, MRTR, header-based routing, cacheable lists, full JSON Schema 2020-12 for tools, authorization hardening, extensions framework, Tasks extension, formal deprecation/lifecycle policy); release candidate 2026-05-21; prior stable 2025-11-25 (DCR→CIMD direction, experimental core Tasks, extensions concept, enterprise registry vision).
-- **Confidence:** source-backed — official MCP blog posts (2026-07-28 spec with full SEP changelog, 2026-07-28 RC body, sdk-betas, 2026 MCP roadmap, client registration, registry preview, 2025-11-25 anniversary post) plus the spec-repo releases fragment, the `modelcontextprotocol/registry` repo page, and the MCP Apps `ext-apps` docs, all retrieved in the 2026-08-17, 2026-08-18, and 2026-08-22 runs. The exact spec-repo release tag format for 2026-07-28 is blog-backed (the GitHub releases fragment only showed the 2025-03-26 … 2025-11-25 range) — not contested, but noted on the [releases reference](/references/model-context-protocol-releases.md).
-- **Watchlist:** SDK package versions and the TS v2.0.0 monorepo split are release-list observations (they will move as packages iterate); the experimental Tasks extension lifecycle iteration is a roadmap promise, not yet shipped; the 2025-11-25 Registry growth figures (2,000 entries, 407%) are from the anniversary post and will drift; the Java SDK v2.0.0 milestone was observed on its releases page fragment only. The conformance-suite (SEP-2484) and SDK-tier-system (PR 1777) gating of Standards Track SEPs is RC-post-backed, and the official conformance suite repo is linked.
+- **Confidence:** source-backed — official MCP blog posts (2026-07-28 spec with full SEP changelog, 2026-07-28 RC body, sdk-betas, 2026 MCP roadmap, **The New MCP Roadmap (2026-08-22)**, client registration, registry preview, 2025-11-25 anniversary post) plus the spec-repo releases fragment, the `modelcontextprotocol/registry` repo page, and the MCP Apps `ext-apps` docs, all retrieved in the 2026-08-17, 2026-08-18, 2026-08-22, and 2026-08-27 runs. The exact spec-repo release tag format for 2026-07-28 is blog-backed (the GitHub releases fragment only showed the 2025-03-26 … 2025-11-25 range) — not contested, but noted on the [releases reference](/references/model-context-protocol-releases.md).
+- **Watchlist:** SDK package versions and the TS v2.0.0 monorepo split are release-list observations (they will move as packages iterate); the new roadmap's priority-area promises (DPoP finalization, progressive discovery, Tasks extension maturation toward the spec, server-initiated events/webhooks) are direction statements, not yet shipped; the experimental Tasks extension lifecycle iteration is a roadmap promise, not yet shipped; the 2025-11-25 Registry growth figures (2,000 entries, 407%) are from the anniversary post and will drift; the Java SDK v2.0.0 milestone was observed on its releases page fragment only. The conformance-suite (SEP-2484) and SDK-tier-system (PR 1777) gating of Standards Track SEPs is RC-post-backed, and the official conformance suite repo is linked.
 
 ## Source Map
 
-- [Web-search Agent integration protocols source evidence](/sources/web-search-agent-integration-protocols.md) — all three runs' raw queries, hits, and reliability caveats (2026-08-17, 2026-08-18, 2026-08-22).
+- [Web-search Agent integration protocols source evidence](/sources/web-search-agent-integration-protocols.md) — all four runs' raw queries, hits, and reliability caveats (2026-08-17, 2026-08-18, 2026-08-22, 2026-08-27).
 - [MCP releases reference](/references/model-context-protocol-releases.md) — versioned revision history, SDK posture, deprecations.
 - [MCP Apps](/protocols/mcp-apps.md) — the first official extension.
 - [AHP `mcp://` side-channel](/protocols/agent-host-protocol.md#the-mcp-side-channel-links-to-mcp-apps) — AHP's relay of MCP traffic.

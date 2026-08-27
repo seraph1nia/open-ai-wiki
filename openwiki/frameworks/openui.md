@@ -79,6 +79,18 @@ The docs' **Feature Comparison** page positions OpenUI against three other strea
 
 **Confidence: source-backed** (OpenUI's own comparison page, i.e. a vendor positioning claim not independently cross-checked). The "best for" guidance routes data-driven chat UIs and dashboards, cross-platform multi-agent systems, and one-UI-across-web/mobile/PDF/email to OpenUI, and creative one-off visuals (animations, generative art) to CopilotKit OpenGenUI.
 
+## Community integrations and plugins (openui.com/lab, retrieved 2026-08-27)
+
+The OpenUI **lab** page lists community-built integrations and tooling beyond the core framework:
+
+- **Field Theory UI** — a local-first web interface for exploring X/Twitter bookmarks with OpenUI-powered interactive dashboards (community).
+- **Open WebUI Plugin** — brings OpenUI-rendered interactive responses into Open WebUI chat workflows (community).
+- **Ollama Integration** — uses OpenUI with local Ollama models via an OpenAI-compatible route or an Open WebUI workflow (community/provider).
+- **Genui VS Code Extension** — previews `.openui` files live in VS Code / Open VSX-compatible editors while agents write OpenUI Lang (community).
+- **OpenClaw OS Plugin** — uses OpenUI inside the OpenClaw OS (official).
+
+**Confidence:** watchlist/saved-context — community integration directory, not primary-feature documentation.
+
 ## Where OpenUI sits
 
 - **Rival/alternative** to the event-based [AG-UI](/protocols/ag-ui.md) and the declarative-JSON [A2UI](/protocols/a2ui.md) protocol: OpenUI is a *language-and-runtime* approach (a DSL + a streaming runtime + a managed backend), whereas AG-UI is an *event wire protocol* and A2UI is a *JSON payload schema*. See the [Generative-UI ecosystem](/concepts/generative-ui-ecosystem.md) comparison.

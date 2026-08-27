@@ -4,7 +4,7 @@ title: Agent Client Protocol (ACP)
 description: The Agent Client Protocol (ACP) is a standardized communication protocol between code editors and AI-powered coding agents, officially implemented in TypeScript by the @agentclientprotocol/sdk package; the spec repo also ships Rust/schema artifacts and GitHub Copilot CLI is an official ACP server.
 resource: https://github.com/agentclientprotocol/agent-client-protocol
 tags: [agent-client-protocol, acp, protocol, ai-agents, editors]
-timestamp: 2026-08-22
+timestamp: 2026-08-27
 ---
 
 # Agent Client Protocol (ACP)
@@ -45,10 +45,11 @@ Retrieved evidence (2026-08-16) documents how agents typically expose an ACP ser
 
 The org-wide, spec-README, and docs-github hits surfaced a small community ecosystem around ACP (all third-party, watchlist):
 
-- **`acp-components`** (`zvzuola/acp-components`) — a React UI component library for building agentic coding interfaces that talk to ACP agents like Claude Code; uses `@agentclientprotocol/sdk`, Zustand v5 (vanilla, no React dependency), React 18/19, Monaco (optional peer dep for a `FileViewer`), i18next, react-markdown/remark-gfm.
+- **`acp-components`** (`zvzuola/acp-components`) — a React UI component library for building agentic coding interfaces that talk to ACP agents like Claude Code; uses `@agentclientprotocol/sdk`, Zustand v5 (vanilla, no React dependency), React 18/19, Monaco (optional peer dep for a `FileViewer`), i18next, react-markdown/remark-gfm. The 2026-08-27 pull retrieved a fuller tech-stack/feature surface: `WorkbenchShell` + `@acp-components/core` made host/framework-independent (works with Vue, Svelte, Solid, vanilla TypeScript, or React in Tauri), and hooks such as `useSessionAvailableCommands(sessionId)` and `useSessionPendingToolCalls(sessionId)` for a typed data layer over sessions, streaming, tools, permissions, auth, and usage.
 - **`acpx`** (`openclaw/acpx`) — a headless CLI client for stateful ACP sessions (VISION.md, release-it config, ACP-session oriented).
 - **Qwen Code ACP streamable-HTTP issue chain** (`QwenLM/qwen-code#4782`) — tracks the ACP **Streamable HTTP transport** implementation status and a third-party SDK version gap (`@agentclientprotocol/sdk` 0.14.1 → 0.21.0 referenced by the issue); notes that `session/close`-related standard methods and new conformance-checking types are the unlocks, and that Zed/Goose/third-party clients can connect once Qwen's PRs #4563 → #4736 → #4737 land. **Watchlist:** issue-tracker claim; the SDK versions in the issue (0.14.1/0.21.0) are lower than the wiki's known v1.3.0 and reflect the issue author's pinned environment, not the current release.
-- The ACP org listing (re-confirmed) shows first-party **servers** `codex-acp` and `claude-agent-acp`.
+- The ACP org listing (re-confirmed 2026-08-27) shows the first-party **servers** `codex-acp` and `claude-agent-acp`, the official SDKs (TypeScript/Python/Rust/Kotlin/Java) plus the `registry` (367 stars at fetch), and the `agent-client-protocol` spec repo (~4.1k stars). New this run: **`OpenHands/typescript-client`** (a third-party TypeScript client for the OpenHands Agent Server API; ALPHA, remote conversations only) — ecosystem signal, out of the official ACP library set, watchlist.
+- The 2026-08-27 pull re-confirmed the official repository README, which details the **Experimental ACP v2** (`@agentclientprotocol/sdk/experimental/v2`), a migration file (`MIGRATION_0.26_0.27.md`), and the app-style builder API — no new released version appeared (the Qwen issue's 0.14.1 → 0.21.0 table remains issue-local, not the release resource).
 
 Excluded as out of scope: `adcontextprotocol/adcp-client` (AdCP — a different "ad context" protocol, unrelated to ACP).
 

@@ -1,10 +1,10 @@
 ---
 type: Source Evidence
 title: Web-search Agent wiki source evidence
-description: Ingestion and coverage notes for the web-search-agent-wiki runs (2026-08-17, 2026-08-18 re-pull, and 2026-08-22 release-page re-pull; 3 Tavily queries each over the OKF spec, the OpenWiki repository, and its releases page) — the durable OKF v0.2 and OpenWiki facts adopted, the OpenWiki v0.3.3 release trail and OKF-v0.2 output claim, the OKF ecosystem implementations surfaced (okc, erd2okf, okf-gem, openknowledge, okf-ingest), plus reliability warnings for synthesized answers.
+description: Ingestion and coverage notes for the web-search-agent-wiki runs (2026-08-17, 2026-08-18, 2026-08-22, and 2026-08-27; 3 Tavily queries each over the OKF spec, the OpenWiki repository, and its releases page). Adopted durable OKF v0.2 and OpenWiki facts, the OpenWiki v0.3.3 release trail and OKF-v0.2 output claim, the OKF ecosystem implementations surfaced (okc, erd2okf, okf-gem, openknowledge, okf-ingest, okf-skill, okf-lint, KSoR/KSP-001, the standalone open-knowledge-format repo, and a langsmith connector signal), plus reliability warnings for synthesized answers.
 resource: https://github.com/langchain-ai/openwiki
 tags: [web-search, source, evidence, okf, openwiki, agent-wiki, coverage, okf-ecosystem]
-timestamp: 2026-08-22
+timestamp: 2026-08-27
 ---
 
 # Web-search Agent wiki — source evidence
@@ -46,6 +46,34 @@ This page records the web-search ingestion for the **`web-search-agent-wiki`** s
   - **`okf-ingest`** (`travisjakel/okf-ingest`, ~4 stars) — a **consumer-side conformance harness**: documents OKF §11 "hard rules" (parseable frontmatter, non-empty `type`, reserved-file structure), v0.2 `generated.at`↔legacy `timestamp` fallback (§13), permissive-consumption (records findings, never rejects), untyped-link cross-link resolution with bundle-absolute/relative forms, and `okf_version` read from a bundle-root `index.md` — an independent corroboration of the OKF v0.2 conformance model.
   - **`okf-skill`** (`seanrobertwright/okf-skill`) — a working condensation of the **OKF v0.1** spec as an agent skill file (v0.1 target).
 - **Reliability.** The releases-query Tavily `answer` reported "latest release version 0.3.3 … released by Brace Sproul" with "improving Open Knowledge Format claims and grounding" — this run it matched the raw release-page fragment (v0.3.3 latest, Changesets flow). Still, v0.3.3 was treated as source-backed from the raw fragment, not from the answer. The `himanshu231204` (6th hit, off-target GitHub profile) and workflow-runs hits were filtered for in-scope signals only. The OKF-instance `answer` stays generic and unverified. No new OpenWiki release *dates* were captured, and the fragment does not enumerate the full v0.2.x–v0.3.x trail details.
+
+## Run 4 (2026-08-27) — re-pull
+
+- **Fetched:** 2026-08-27T11:31:19Z
+- **Raw data:** `2026-08-27T11-31-11-630Z/web-search-results.json`
+- Same 3 queries (OKF SPEC, openwiki repo, openwiki releases), 5 max results each, `timeRange: year`.
+
+### What this run added
+
+- **OKF ecosystem additions (all single-hit, source-backed as ecosystem entries / watchlist for adoption claims):**
+  - **`okf-lint`** (`thisismydesign/okf-lint`) — a **linter for OKF bundles** ("ESLint or RuboCop, but for OKF"): reports **errors** for mandatory OKF conformance (e.g. a concept document missing its `type` field) and **warnings** for optional-but-useful conventions (no `index.md`, no `log.md`, or a concept without a `description`). It is opinionated in exactly the spec's split — only true conformance failures are errors; recommendations are warnings that can be disabled. **Supports OKF `0.1` only**; when a bundle specifies no version (or one the linter does not support), the highest supported version is used. Independent corroboration that `okf_version` is per-bundle and consumers must tolerate unknown versions.
+  - **KSoR / KSP-001** (`panaversity/ksor` `research/ksor-standard-proposal-001-v0.1-draft9.md`) — an independent "Knowledge as a Service" standard proposal **built on OKF**: it presents OKF as the portable knowledge-at-rest format (markdown concepts with YAML frontmatter; trust vocabulary `sources`/`generated`/`verified`/`status`/`stale_after`/`Attested Computation`), normatively targets the **immutable OKF v0.2 spec revision at commit `3fcbb9f828c2f23d109c855ee403c3a4c81f3a96`** (2026-07-24) rather than a moving branch, and declares `okf_version: "0.2"` in a bundle-root `index.md` using the mechanism OKF defines. It also references the /llms.txt v2 spec (Answer.AI, revised August 2026), the MCP spec, and RFC 2119/8174. Signal: **third-party standards adoption of OKF v0.2 plus immutable-version pinning**.
+- **`GoogleCloudPlatform/open-knowledge-format`** — a **separate open-source repository** (distinct from `knowledge-catalog`, ~6 commits) that hosts the OKF spec and tooling directly: its own `SPEC.md`, `bundles/`, `connectors/`, `src/reference_agent/`, `tests/`, `pyproject.toml`. README frames OKF v0.2 as "a universal, vendor-neutral format" that "anyone can produce" (humans, agents on any framework — Google ADK, LangChain, custom — or export pipelines from Dataplex, Unity Catalog, Collibra) and "anyone can serve and consume" (static server, management UI, an LLM loading files, a search index, or the bundled graph viewer). Corroborates the existing OKF v0.2 wording and the reference-agent/visualizer claims.
+- **OpenWiki connector detail (source-backed from `quickstart.md`):** the repo lists a **`langsmith` built-in connector** (`src/connectors/sources/langsmith/` with `api.ts`, `index.ts`, `repo-config.ts`, `runs.ts`, `setup.ts`, `types.ts`) — evidence of a LangSmith sources connector alongside git-repo, gmail, hackernews, slack, web-search, x, mcp. See the [OpenWiki page](/frameworks/openwiki.md).
+- **Re-confirmations (no durable delta):** the OKF-spec query re-surfaced `seanrobertwright/okf-skill` (v0.1 condensed reference keyed to upstream SPEC.md; §10 versioning: minor bump = backward-compatible, major = breaking, `okf_version` only in bundle-root `index.md`) and `travisjakel/okf-ingest` (already recorded); the openwiki queries re-surfaced `architecture/overview.md`, `quickstart.md`, and `README.md` (199 lines / 33.4 KB) — all re-confirming the OKF v0.2 output claim, the 12-provider README list, the two modes, the Deep Agents docs agent, and the `verified: openwiki/0.3.3` engine stamp. The `AGENTS.md` hit was **not** adopted (agent-instruction file, out of scope).
+- **Releases query:** again returned **no release artifacts** — hits were repo docs, the `langchain-ai` org page, and an off-target `langchain-ai/deepagents` repo, all excluded. **No new OpenWiki release versions or dates**; the v0.3.3-latest line from run 3 stands.
+
+### Reliability
+
+- The Tavily `answer` fields were generic and unverified (OKF "targets version 0.2 specification"; OpenWiki "generates and maintains a wiki" / "outputs OKF v0.2"). As before, adoptions come from raw fragments, not answers. All new ecosystem entries are single GitHub/document hits — **source-backed as existence signals, watchlist for adoption/quality claims**.
+
+### Mapping to wiki pages
+
+- Added `okf-lint`, KSoR/KSP-001, and the standalone `open-knowledge-format` repo to the [OKF ecosystem section](/protocols/open-knowledge-format.md#ecosystem-and-tooling).
+- Added the `langsmith` connector evidence to the [OpenWiki connectors section](/frameworks/openwiki.md#connectors-and-ingestion).
+- Refreshed the [agent-maintained-knowledge-bases](/themes.md) theme row.
+- Added a new latest-ingestion note to [/quickstart.md](/quickstart.md).
+- No new open questions ([open-questions.md](/open-questions.md) unchanged) — all new signals are single-hit source-backed/watchlist without a corpus-coverage gap.
 
 ## Run 2 (2026-08-18) — re-pull
 

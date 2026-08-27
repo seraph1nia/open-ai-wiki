@@ -4,7 +4,7 @@ title: Blog post ingestion ledger
 description: Cumulative, append-only record of blog posts already ingested into this wiki (Zed, Solo.io, Mastra, gh-aw), used to keep blog ingestion idempotent — posts listed here are never fetched, summarized, or adopted again.
 resource: https://zed.dev/blog
 tags: [source, evidence, ledger, blog, deduplication, factory-tools]
-timestamp: 2026-08-22
+timestamp: 2026-08-27
 ---
 
 # Blog post ingestion ledger
@@ -42,6 +42,10 @@ Append-only. Newest first.
 
 | Post URL | Feed | Published | Ingested | Wiki pages changed |
 |---|---|---|---|---|
+| https://mastra.ai/blog/ai-sdk-v7-support | Mastra | 2026-08-18 | 2026-08-27 | [Mastra agentic-UI](/frameworks/mastra-agentic-ui.md) + [factory hub](/concepts/factory-toolchain.md) — AI SDK v7 support since June 25 2026 (image generation, reasoning control, multimodal, stream handlers) |
+| https://mastra.ai/blog/changelog-2026-02-26 | Mastra | 2026-02-26 | 2026-08-27 | [Mastra agentic-UI](/frameworks/mastra-agentic-ui.md) — `@mastra/core@1.8.0` supervisor pattern for multi-agent coordination (watchlist) |
+| https://www.solo.io/blog/warm-scale-to-zero-mcp-servers-with-agentgateway-and-agent-substrate | Solo.io | 2026-08-27* | 2026-08-27 | [factory hub](/concepts/factory-toolchain.md) — warm scale-to-zero MCP servers with agentgateway + Agent Substrate (watchlist, teaser) |
+| https://www.solo.io/blog/sidecars-ambient-zero-downtime | Solo.io | 2026-08-27* | 2026-08-27 | none — service-mesh migration post, out of scope for the factory toolchain |
 | https://www.solo.io/blog/solo-contributes-agentgateway-linux-foundation | Solo.io | 2026-08-22* | 2026-08-22 | [factory hub](/concepts/factory-toolchain.md) — official agentgateway Linux Foundation donation post (donation anchor), kmcp teaser (watchlist) |
 | https://zed.dev/blog/sandboxing | Zed | 2026-08-22* | 2026-08-22 | none — body not retrieved; sandboxing noted conceptually on the [factory hub](/concepts/factory-toolchain.md) |
 | https://mastra.ai/blog/copilotkitmastra | Mastra | 2025-09-18 | 2026-08-18 | [Mastra agentic-UI](/frameworks/mastra-agentic-ui.md) — `create-ag-ui-app --mastra` starter (Mastra backend + CopilotKit/AG-UI frontend); [CopilotKit](/frameworks/copilotkit.md) — Mastra guide cross-link |
@@ -75,6 +79,6 @@ Append-only. Newest first.
 ## Confidence and gaps
 
 - **Confirmed:** the feed list and the ledger protocol, both configured in the `web-search-factory-tools` source instance.
-- Ingested rows: 20 added 2026-08-17 (7 produced wiki changes, 13 none); 4 more added 2026-08-18 (3 produced wiki changes — Mastra AI-SDK-v5, Solo 2.2, Solo kagent — plus the gh-aw-workshop repo entry recorded with `none`); 1 more added by the 2026-08-18 generative-UI re-pull (Mastra `copilotkitmastra` → Mastra agentic-UI + CopilotKit); 2 more added by the 2026-08-22 re-pull (Solo Linux Foundation → factory hub; Zed sandboxing → `none`). Rows: 27 in total.
+- Ingested rows: 20 added 2026-08-17 (7 produced wiki changes, 13 none); 4 more added 2026-08-18 (3 produced wiki changes — Mastra AI-SDK-v5, Solo 2.2, Solo kagent — plus the gh-aw-workshop repo entry recorded with `none`); 1 more added by the 2026-08-18 generative-UI re-pull (Mastra `copilotkitmastra` → Mastra agentic-UI + CopilotKit); 2 more added by the 2026-08-22 re-pull (Solo Linux Foundation → factory hub; Zed sandboxing → `none`); 4 more added by the 2026-08-27 re-pull (Mastra AI SDK v7 → mastra + factory hub; Mastra changelog 2026-02-26 → mastra; Solo warm-scale-to-zero → factory hub watchlist; Solo sidecars→ambient → `none`). Rows: 31 in total.
 - Note: the gh-aw gallery and repo-style entries (e.g. `gh-aw-workshop`) are deliberately outside the ledger (see *Living index pages* above) or recorded only as repo entries; if the gallery later gains dated, individually addressable entries, ledger those entries like posts.
 - Note: the Mastra domain is also configured on the `web-search-generative-ui` instance for its integration docs. Blog posts from `mastra.ai/blog` are ledgered here regardless of which instance retrieved them, so the two instances cannot ingest the same post twice.
