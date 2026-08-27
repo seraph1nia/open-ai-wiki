@@ -4,7 +4,7 @@ title: OpenCode
 description: OpenCode is an open-source AI coding agent available as a terminal UI, desktop app, or IDE extension, with a type-safe JavaScript/TypeScript SDK (@opencode-ai/sdk) for building integrations and controlling the opencode server programmatically.
 resource: https://opencode.ai/docs/sdk/
 tags: [opencode, sdk, coding-agent, typescript, ai-agents]
-timestamp: 2026-08-22
+timestamp: 2026-08-27
 ---
 
 # OpenCode
@@ -30,9 +30,20 @@ OpenCode is one of the coding agents the [t3code](/frameworks/t3code.md) harness
 - A community Vercel-AI-SDK provider for OpenCode (`ai-sdk-provider-opencode-sdk`) documents almost full support for text generation, streaming (SSE), multi-turn session context, tool observation, reasoning parts, per-request model/agent selection (build, plan, general, explore), and abort; partial for image input and JSON-schema output; no custom client tools (server-side only).
 - Docs list common model/provider wiring through the AI SDK (`@ai-sdk/openai`, `@ai-sdk/openai-compatible`) for many providers (OpenAI-compatible endpoints). The 2026-08-18 pull corrected the prior run's inference: `opencode.ai/docs/go` is **OpenCode Go**, a low-cost **paid subscription** ($5 first month, then $10/month) giving global access to popular open coding models — **not** a Go language SDK. Its provider table maps models (Grok 4.5, GPT 5.6 Luna, GLM-5.x, Kimi K3, DeepSeek V4, MiMo-V2.5) to AI-SDK packages (`@ai-sdk/openai`, `@ai-sdk/openai-compatible`). The 2026-08-17 pull also captured an **ecosystem catalogue** (`opencode.ai/docs/ecosystem`: `opencode-background-agents`, `opencode-notify`, `opencode-workspace` multi-agent orchestration harness, browser UI `octto`).
 - A community integration note flags that Claude OAuth was removed from OpenCode in March 2026 (Anthropic legal action) and that the reliable path is the `@ai-sdk/openai-compatible` provider config — **watchlist**, single third-party source (headroomlabs-ai/headroom issue #78); note `ANTHROPIC_BASE_URL` env-var path construction differs across the Vercel AI SDK.
-- A community REST API client (`anomalyco/opencode-sdk-js`) mirrors the OpenCode REST API for server-side TS/JS — evidence of ecosystem traction, watchlist.
+- A community REST API client (`anomalyco/opencode-sdk-js`) mirrors the OpenCode REST API for server-side TS/JS — evidence of ecosystem traction, watchlist. The 2026-08-27 pull adds its Python sibling, **`anomalyco/opencode-sdk-python`** (also Stainless-generated, sync + async via `httpx`, Python 3.8+), further evidence of third-party ecosystem traction — watchlist.
 - **Ecosystem signal (watchlist, 2026-08-22):** the `anomalyco/opencode-sdk-js` repo documents that it is **generated with Stainless**, with the full generated API surface in `api.md` and streaming response support — a concrete third-party client maintained against the OpenCode REST API (re-confirmed usable as an alternative when a non-`createOpencode` client style is preferred; still third-party, not official).
 
+## V2 SDK is Effect-native (2026-08-27, source-backed)
+
+The 2026-08-27 pull surfaced a new v2 docs page — [`opencode.ai/v2/docs/build/sdk`](https://opencode.ai/v2/docs/build/sdk) — describing a **general-purpose, Effect-native SDK** for embedding OpenCode directly in an application:
+
+- `@opencode-ai/sdk` **hosts OpenCode in-process**: it assembles the OpenCode server and routes API calls through its HTTP router **in memory** — no HTTP listener, no network hop between client and server.
+- **`OpenCode.create()`** creates a scoped host; closing its Effect `Scope` releases the router, location services, fibers, and scoped plugin registrations. Example: `const opencode = yield OpenCode.create()` then `opencode.sessions.create({ location: Location.Ref.make({ directory: AbsolutePath.make("/workspace") }) })`.
+- The **V2 SDK is beta**: install the preview with `bun add @opencode-ai/sdk@dev`; the API may change before a stable release.
+- For non-Effect applications, the recommendation remains **run OpenCode as a server and use the TypeScript client** (the v1 network client above).
+
+This is a durable cross-link to the [Effect](/frameworks/effect.md) orchestration layer: the SDK is explicitly **Effect-native**, so it *composes with the factory's durable-orchestration foundation* rather than being framework-agnostic. The factory's OpenCode option now splits into the general-purpose Effect-native V2 SDK versus the framework-agnostic v1 network client.
+
 ## Confidence
-- **Source-backed:** SDK identity, purpose, and `createOpencode`/`@opencode-ai/sdk` usage from the official docs.
+- **Source-backed:** SDK identity, purpose, and `createOpencode`/`@opencode-ai/sdk` usage from the official docs; the V2 Effect-native SDK (`OpenCode.create()`, in-memory HTTP router, beta install) from the official `opencode.ai/v2/docs/build/sdk` page (2026-08-27).
 - **Watchlist:** the OAuth removal and community-provider feature matrix are third-party reports, not confirmed from primary OpenCode sources.

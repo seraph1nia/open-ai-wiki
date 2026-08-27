@@ -11,7 +11,7 @@ timestamp: 2026-08-22
 
 **MCP Apps** is the **first official extension to the Model Context Protocol**, co-developed by **Anthropic and OpenAI** and released as an open standard. It extends MCP so that **servers can deliver interactive user interfaces to hosts** — charts, forms, dashboards, rich media, and real-time displays — rendered **securely in iframes** inside any compliant host. Predecessors/alternatives (MCP-UI, OpenAI's Apps SDK, and assorted custom implementations) each solved UI support differently; MCP Apps standardizes one mechanism.
 
-Source: [`modelcontextprotocol/ext-apps`](https://github.com/modelcontextprotocol/ext-apps). Evidence for this page lives on the [web-search generative-UI source page](/sources/web-search-generative-ui.md) and the 2026-08-17/2026-08-18/2026-08-22 [Agent integration protocols source page](/sources/web-search-agent-integration-protocols.md). MCP Apps **extends the [Model Context Protocol](/protocols/model-context-protocol.md)** — the base JSON-RPC standard this extension builds on.
+Source: [`modelcontextprotocol/ext-apps`](https://github.com/modelcontextprotocol/ext-apps). Evidence for this page lives on the [web-search generative-UI source page](/sources/web-search-generative-ui.md) and the 2026-08-17/2026-08-18/2026-08-22/2026-08-27 [Agent integration protocols source page](/sources/web-search-agent-integration-protocols.md). MCP Apps **extends the [Model Context Protocol](/protocols/model-context-protocol.md)** — the base JSON-RPC standard this extension builds on.
 
 ## Why it exists
 
@@ -118,6 +118,6 @@ The dedicated package `@modelcontextprotocol/ext-apps` is the reference implemen
 ## Source Map
 
 - [Web-search generative-UI source evidence](/sources/web-search-generative-ui.md) — coverage and reliability notes.
-- [Web-search Agent integration protocols source evidence](/sources/web-search-agent-integration-protocols.md) — MCP-runs coverage (2026-08-17, 2026-08-18, 2026-08-22).
+- [Web-search Agent integration protocols source evidence](/sources/web-search-agent-integration-protocols.md) — MCP-runs coverage (2026-08-17, 2026-08-18, 2026-08-22, 2026-08-27).
 - [Generative-UI ecosystem](/concepts/generative-ui-ecosystem.md) — where MCP Apps fits among competing approaches.
 - Repo: <https://github.com/modelcontextprotocol/ext-apps>

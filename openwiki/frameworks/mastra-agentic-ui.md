@@ -4,7 +4,7 @@ title: Mastra agentic-UI integration
 description: Mastra is a TypeScript AI framework whose agentic-UI layer integrates common generative-UI frontends (AI SDK UI, assistant-ui, CopilotKit, AG-UI) through @mastra/ai-sdk and a UI dojo of runnable examples; Mastra 1.0 stable adds A2A support, AI Tracing, and (as of 2026-08-18) agent-loop + nested-streaming orchestration built on AI SDK v5.
 resource: https://mastra.ai/integrations/agentic-ui
 tags: [mastra, agentic-ui, framework, generative-ui, ai-sdk]
-timestamp: 2026-08-22
+timestamp: 2026-08-27
 ---
 
 # Mastra agentic-UI integration
@@ -41,7 +41,9 @@ The 2026-08-17 `web-search-factory-tools` blog pull added runtime-level signals 
 - **Agent-to-Agent (A2A) support** — Mastra agents and the Client SDK now support building cross-framework multi-agent systems with A2A-enabled agents (2026-05-19 post, source-backed). This connects Mastra to the A2A interop space alongside the [generative-UI ecosystem](/concepts/generative-ui-ecosystem.md).
 - **AI Tracing** — Mastra observability now filters noise across multiple observability platforms via a tracing layer over OpenTelemetry (2025-09-30, source-backed feature).
 - **Agent orchestration with AI SDK v5** (2026-08-26 post, adopted 2026-08-18): Mastra now **controls the agent loop and tool calling itself** (starting v0.14.0) rather than delegating to Vercel's AI SDK, while maintaining backward compatibility with both AI SDK **v4 and v5** message formats (the playground model switcher auto-detects versions). New `streamVNext`/`generateVNext` APIs emit v5 streams. Mastra also built its own streaming layer on top, adding **nested streaming support** — when an agent calls another agent in a tool, or a workflow calls an agent in a step, constituent streams compose correctly (long-running tools report progress without blocking). This is a durable runtime signal: Mastra is taking ownership of the orchestration loop that the [generative-UI ecosystem](/concepts/generative-ui-ecosystem.md) and the [factory toolchain hub](/concepts/factory-toolchain.md) depend on, with agent-loop control, retries (`maxSteps`), and planned middleware/token-optimization/HITL features.
-- Watchlist: the 2026-03-23 changelog documents token-aware model routing for observational memory, MongoDB-backed versioned datasets/experiments, and Okta SSO with RBAC — single-source signals, not yet confirmed on primary docs.
+- **AI SDK v7 support (2026-08-18 post, adopted 2026-08-27):** Mastra **supported AI SDK v7 from the day it was released (June 25, 2026)** and has continued improving the end-to-end developer experience since — covering **image generation, reasoning control, multimodal prompts, stream handlers, and UI helpers**. This extends Mastra's AI-SDK-version agnosticism beyond v4/v5 to the current v7 generation, reinforcing that Mastra owns agent-loop + tool-calling regardless of the AI SDK version (see [factory hub](/concepts/factory-toolchain.md)).
+- **Changelog 2026-02-26 (adopted 2026-08-27, watchlist):** `@mastra/core@1.8.0` adds a **supervisor pattern for multi-agent coordination**, metadata-only vector queries, more flexible `runEvals` options, LSP diagnostics after workspace edits, and a Blaxel sandbox provider. Single-source release-notes signal, watchlist until confirmed on primary docs.
+- Watchlist: the 2026-03-23 changelog documents token-aware model routing for observational memory, MongoDB-backed versioned datasets/experiments, and Okta SSO with RBAC — single-source signals, not yet confirmed on primary docs. (The 2026-08-27 pull re-surfaced this changelog with extra detail — tool-input null detection fix, streaming tool lists in traces, a sequential tool-only loop fix, and an Anthropic tool-ordering fix — still changelog-level, watchlist.)
 
 ## Third-party adoption signals
 
@@ -68,6 +70,10 @@ which "builds out a full app, with Mastra agents on the backend, CopilotKit + AG
 
 A community demand signal (watchlist): the open request [CopilotKit/CopilotKit#1993](https://github.com/CopilotKit/CopilotKit/issues/1993) (2025-06-16) asks for **agentic generative UI + shared state** through Mastra (with CopilotKit-driven human-in-the-loop), arguing Mastra currently lacks those major features — evidence that Mastra's generative-UI surface, while broad (AI SDK UI Custom UI, UI dojo, CopilotKit frontend), is still maturing on the CopilotKit-integrated axis. **Confidence: watchlist** (open feature request, retrieved 2026-08-22).
 
+## Generative-UI demand signals (2026-08-27 pull)
+
+A community issue, [mastra-ai/mastra#12807](https://github.com/mastra-ai/mastra/issues/12807), frames **frontend/DX** as a goal for "the standardized streaming provided by Vercel's AI SDK (or similar libraries like CopilotKit via AG-UI or Assistant UI) to gain generative UI." It is evidence of recurring demand for a standardized streaming/DX surface across Mastra's supported frontends (AI SDK UI, CopilotKit via AG-UI, assistant-ui) rather than a single protocol. **Confidence: watchlist** — an open issue surfaced 2026-08-27.
+
 ## Relationship to other frameworks
 
 - Consumes [CopilotKit](/frameworks/copilotkit.md), **assistant-ui**, and **Vercel AI SDK** as interchangeable frontends.
@@ -77,7 +83,7 @@ A community demand signal (watchlist): the open request [CopilotKit/CopilotKit#1
 ## Status
 
 - Actively documented; a dedicated agentic-UI + UI-dojo section demonstrates active investment in the generative-UI frontend space; Mastra 1.0 stable (2026) adds runtime-maturity signals.
-- **Confidence:** source-backed for `@mastra/ai-sdk` ↔ AI SDK UI (`useChat`/`useCompletion`/`useObject`), the Custom UI (generative UI) concept, the UI dojo (Mastra docs/blog + `mastra-ai/ui-dojo`), and the 1.0/A2A/AI-Tracing/AI-SDK-v5-orchestration run facts; watchlist for changelog single-source claims and third-party adoption signals (DataFoundry, Cedar-OS).
+- **Confidence:** source-backed for `@mastra/ai-sdk` ↔ AI SDK UI (`useChat`/`useCompletion`/`useObject`), the Custom UI (generative UI) concept, the UI dojo (Mastra docs/blog + `mastra-ai/ui-dojo`), and the 1.0/A2A/AI-Tracing/AI-SDK-v5-orchestration/AI-SDK-v7-support run facts; watchlist for changelog single-source claims (2026-02-26, 2026-03-23) and third-party adoption signals (DataFoundry, Cedar-OS).
 
 ## Source Map
 

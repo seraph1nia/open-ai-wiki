@@ -4,7 +4,7 @@ title: Effect
 description: Effect is a powerful TypeScript library for building complex synchronous and asynchronous programs with typed, composable effects; v4 is the current era. Its durable-execution surface (DurableQueue ported to v4, @effect/workflow in alpha) is confirmed source-backed from the official Effect v4 beta documentation.
 resource: https://www.effect.website/docs/v4/api/effect
 tags: [effect, typescript, durable-execution, framework, v4]
-timestamp: 2026-08-22
+timestamp: 2026-08-27
 ---
 
 # Effect
@@ -15,7 +15,7 @@ Source: [`effect.website`](https://www.effect.website/docs/v4/api/effect) (v4 AP
 
 ## Position in the factory toolchain
 
-Effect is the **typed orchestration / durable-execution foundation** of the [agentic SDLC factory toolchain](/concepts/factory-toolchain.md): where [t3code](/frameworks/t3code.md), [OpenCode SDK](/frameworks/opencode-sdk.md), and [Pi SDK](/frameworks/pi-sdk.md) drive or embed coding agents, Effect is the layer that models the pipeline's control flow as strongly-typed, recoverable effects rather than ad-hoc async code.
+Effect is the **typed orchestration / durable-execution foundation** of the [agentic SDLC factory toolchain](/concepts/factory-toolchain.md): where [t3code](/frameworks/t3code.md), [OpenCode SDK](/frameworks/opencode-sdk.md), and [Pi SDK](/frameworks/pi-sdk.md) drive or embed coding agents, Effect is the layer that models the pipeline's control flow as strongly-typed, recoverable effects rather than ad-hoc async code. The [OpenCode SDK V2](/frameworks/opencode-sdk.md) is explicitly **Effect-native** — it hosts OpenCode inside an Effect `Scope`, so it composes directly with this durable-orchestration foundation.
 
 ## What the retrieved evidence confirms
 
@@ -42,6 +42,16 @@ The 2026-08-16T12:51Z web-search pull **closed the durable-execution gap** with 
 - **Watchlist (added 2026-08-18 from the community "What's New in Effect v4" gist)** — v4 adds **enhanced STM transactional collections** for lock-free concurrent state management that compose atomically with `Effect.atomic()`: `TxHashMap`, `TxHashSet`, `TxQueue`, `TxChunk`, `TxSemaphore` (positioned for lock-free rate limiters, caches, and job queues), plus a `getOrThrow` behavior change (throws the error directly instead of wrapping) and `zipWith`/`ap`/`all()` API notes. This is a *community* summary gist, not an official doc — keep watchlist until confirmed on the official v4 docs.
 
 Still unverified from retrieved evidence: the *Activity* primitive's exact semantics and the full v4 workflow packaging/API surface — target the official `@effect/workflow` docs for a future run.
+
+## Durable-execution surface — partially closed (2026-08-27) + STM watchlist
+
+The 2026-08-27 web-search pull added two directly relevant data points for the durable-execution surface:
+
+- **Official Effect v4 Beta July 2026 recap** (source-backed, [`effect-v4beta-july-recap`](https://www.effect.website/blog/effect-v4beta-july-recap)) documents durable-execution and SQL fixes during the beta: **"Fixed the activity retry policy"**, plus `SQL.valuesUnprepared` for raw value interpolation, fixed `sqlite-do` Durable Object transactions, `sqlite-bun` now failing with a typed `SqlError` on statement-preparation throw, scoping unknown request-tag failures to the request instead of the connection, and **fixed SQL-backed persisted queues**. This reconfirms the `@effect/workflow` durable-execution story and confirms the *Activity* primitive exists with an explicit retry-policy surface.
+- **Concrete `@effect/workflow` Activity semantics from issue `Effect-TS/effect#6014`** (source-backed issue): a workflow using `Effect.all(activities, { concurrency: N })` where each branch is an `Activity.make(...)` completes on first execution but **deadlocks during durable replay** when `N > 1` (sequential `concurrency: 1` replays correctly). The issue is pinned to `@effect/workflow` **0.15.2 → 0.16.0** and describes the durable-replay model (activities replayed from the durable log; concurrent combinators must resume all branches). This is direct evidence of the Activity primitive's durable semantics and a known concurrency/replay edge case. Confidence: **source-backed** (official Effect issue tracker).
+- **backpine/durable-effect** (`@durable-effect/workflow`, third-party, **watchlist**): an experimental "first pass at making Durable Objects effectful" that only supports **Cloudflare Durable Objects as the execution engine**; API surface uses `Workflow.make`, `Workflow.step({ name, execute })`, `Workflow.sleep(...)`. Not an official Effect package — evidence the community is experimenting with effectful durability, not a v4 API.
+
+The 2026-08-16/2026-08-17 discoveries stand: the **July recap + issue reconfirm but do not replace** the earlier finding that the full v4 Workflow/Activity packaging surface still needs a direct read of the official `@effect/workflow` docs (the waveform persisted-queue fixes and retry policy are now captured, but the complete primitive semantic doc is not).
 
 ## STM transactional collections — watchlist (updated 2026-08-22)
 

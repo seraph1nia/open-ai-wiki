@@ -3,7 +3,7 @@ type: Reference
 title: Open Questions
 description: Active, answered, and stale questions about the AI knowledge wiki's coverage and memory graph, including gaps in evidence about projects tracked in this corpus (e.g. Effect's deep Workflow/Activity API semantics, generative-UI SDK version resources). OpenWiki's OKF version and current-release questions are now answered (v0.3.3, OKF v0.2 output).
 tags: [open-questions, memory-graph, wiki-quality, okf, openwiki]
-timestamp: 2026-08-22
+timestamp: 2026-08-27
 ---
 
 # Open Questions
@@ -12,17 +12,21 @@ timestamp: 2026-08-22
 
 ### effect-durable-execution: What are the exact Workflow / Activity primitive semantics in Effect v4?
 - Owner: unknown
-- Seen: 2026-08-22
-- Evidence: [Effect page](/frameworks/effect.md) — the v4 beta recap confirms `DurableQueue` ported from v3 to v4 with persistent semantics, workflow suspension/failure fixes, and `@effect/workflow` in alpha; the 2026-08-18 pull re-confirmed the v4 beta launch (2026-02-18) and v3 feature-freeze; the 2026-08-22 pull re-confirmed the official recap + This Week in Effect 116 and gave the community gist's STM transactional collections (`TxHashMap`/`TxHashSet`/`TxQueue`/`TxChunk`/`TxSemaphore`) another supporting data point, but the precise Workflow/Activity primitive semantics and packaging are still not fully retrieved.
-- Notes: The core semantics question is now largely **answered** (see Answered); this narrower gap remains for the deep Workflow/Activity API surface. The 2026-08-22 durable-execution query again returned no on-target official v4 workflow docs — only the recap, the newsletter, and off-target material. Confidence: watchlist — target the official v4 workflow docs directly before fully promoting.
+- Seen: 2026-08-27
+- Evidence: [Effect page](/frameworks/effect.md) — the v4 beta recap confirms `DurableQueue` ported from v3 to v4 with persistent semantics, workflow suspension/failure fixes, and `@effect/workflow` in alpha; the 2026-08-18 pull re-confirmed the v4 beta launch (2026-02-18) and v3 feature-freeze; the 2026-08-22 pull re-confirmed the official recap + This Week in Effect 116 and gave the community gist's STM transactional collections another supporting data point. The **2026-08-27 pull narrowed the gap**: the official **July 2026 recap** documents "fixed the activity retry policy" (confirming a retryable Activity surface), and **issue #6014** documents the exact Activity/Workflow replay model (dangerous `Effect.all({concurrency: N})` + `Activity.make` deadlock during durable replay; activity replay "worked" from the durable log) — but the full procedural primitive/API packaging of `@effect/workflow` is still not retrieved.
+- Notes: The core semantics question is largely answered (see Answered); the Activity retry policy + a concrete replay edge case are now confirmed from official Effect sources, but the complete procedural `@effect/workflow` API surface and packaging remain un-retrieved. Confidence: watchlist — target the official v4 workflow docs directly before fully promoting.
 
-### generative-ui-sdk-versions: Do the AG-UI / CopilotKit SDK versions and A2UI v1.0 match the release resources?
+### generative-ui-sdk-versions: Do the CopilotKit package versions and A2UI v1.0 GA match the release resources?
 - Owner: unknown
-- Seen: 2026-08-18
-- Evidence: Version-adjacent claims — CopilotKit issue #2840's `@copilotkit/runtime@1.10.6` / `@ag-ui/client@0.0.41` peer conflict (watchlist bug), the A2UI v1.0 candidate spec (incl. its `AccessibilityAttributes`), and AG-UI Java/Go/Kotlin SDK package structure — come from docs/README/issues, not formal release files. The 2026-08-17, 2026-08-18, and 2026-08-22 re-pulls re-surfaced the SDK docs tree (including `docs/sdk/kotlin/overview.mdx`) but no package registry/release resources. See [web-search generative-UI source page](/sources/web-search-generative-ui.md) and the [AG-UI](/protocols/ag-ui.md) / [OpenUI](/frameworks/openui.md) pages.
-- Notes: This is a corpus-coverage gap (version claims not yet cross-checked against release resources), matching the existing backlog entry in [quickstart](/quickstart.md). The 2026-08-22 re-pull returned no release/registry material, so it remains open. Watchlist confidence.
+- Seen: 2026-08-27
+- Evidence: The **AG-UI side of this question is now answered** — the 2026-08-27 pull retrieved the AG-UI releases page with exact package/registry versions (latest release 2026-08-20): `@ag-ui/mastra@1.1.2`, `@ag-ui/langgraph@0.0.43`, `@ag-ui/langchain@0.0.3`, `@ag-ui/pydantic-ai@0.0.3`, `@ag-ui/ag2@0.0.2`, `@ag-ui/agno@0.0.6`, `@ag-ui/crewai@0.0.4`, `@ag-ui/llamaindex@0.2.0`, PyPI `ag-ui-langgraph==0.0.43`/`ag-ui-crewai==0.3.0`/`ag_ui_strands==0.3.0`, NuGet `AGUI.*@0.0.5`, Maven `com.ag-ui.community:java-*@0.1.0`, Kotlin `0.4.1` (see [AG-UI](/protocols/ag-ui.md)). Still open: **CopilotKit package versions** (only the watchlist #2840 peer-conflict detail `@copilotkit/runtime@1.10.6`/`@ag-ui/client@0.0.41` is available) and **A2UI v1.0 GA status** (v0.9.1 is the confirmed current production spec; v1.0 remains a Q4-2026 candidate). See [web-search generative-UI source page](/sources/web-search-generative-ui.md).
+- Notes: The AG-UI portion was promoted to Answered (registry-confirmed). The remaining gap is CopilotKit package versions + A2UI v1.0 GA. Watchlist confidence for the residual items.
 
 ## Answered
+
+### generative-ui-sdk-versions: Do the AG-UI SDK versions match the release resources?
+- Evidence: The [AG-UI releases page](/protocols/ag-ui.md) (retrieved 2026-08-27) returned exact package/registry versions across NPM/PyPI/NuGet/Maven, confirming the AG-UI framework adapters and SDK packages (latest release 2026-08-20; `@ag-ui/mastra@1.1.2`, `@ag-ui/langgraph@0.0.43`, `@ag-ui/langchain@0.0.3`, `@ag-ui/crewai@0.0.4`, `@ag-ui/llamaindex@0.2.0`, `ag_ui_strands==0.3.0`, `AGUI.*@0.0.5`, `com.ag-ui.community:java-*@0.1.0`, Kotlin `0.4.1`, etc.). The earlier gap (no release resources) is superseded for AG-UI. The related open question is narrowed to CopilotKit package versions + A2UI v1.0 GA (see Active).
+- Answered: 2026-08-27
 
 ### effect-durable-execution: What exactly are Effect v4's Workflow, Activity, and DurableQueue semantics?
 - Evidence: [Effect page](/frameworks/effect.md) — the 2026-08-16 web-search Factory tools run retrieved the official Effect v4 beta February–May recap, which documents `DurableQueue` ported from v3 to v4 (persistent queue semantics), workflow suspension/failure fixes, and `@effect/workflow` delivering durable workflows in alpha. The earlier gap entry (off-target `NousResearch/hermes-agent` hit) is superseded. See [web-search Factory tools source page](/sources/web-search-factory-tools.md).

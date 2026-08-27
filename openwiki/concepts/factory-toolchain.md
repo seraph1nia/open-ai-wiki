@@ -3,7 +3,7 @@ type: Concept
 title: Agentic SDLC factory toolchain
 description: The composition of protocols and SDKs behind an agentic software development lifecycle (SDLC) factory — ACP and AHP for agent wiring and hosting, Pierre, t3code, Effect (durable-execution surface source-backed), OpenCode, and the Pi SDK as the tooling layer, plus the CI-native gh-aw workflow layer and the followed engineering-blog feeds (Zed, Solo.io, Mastra) folded into one pipeline.
 tags: [factory, toolchain, agentic-sdlc, ai-agents, sdks, gh-aw, blogs]
-timestamp: 2026-08-22
+timestamp: 2026-08-27
 ---
 
 # Agentic SDLC factory toolchain
@@ -21,8 +21,8 @@ The factory idea: an agent orchestrates coding, hosting, diffs, durable tasks, a
 
 - **[Pierre](/frameworks/pierre.md)** — the Pierre Computer Company's open-source toolkit (diffs, trees, memes) plus its in-place file-diff editors, used to visualize and edit the outputs agents produce.
 - **[t3code](/frameworks/t3code.md)** — an "agent harness control surface" that controls the agents already on your machine (Claude Code, Codex, Cursor, Grok Build, OpenCode) from one mobile/web/desktop app; distributed via a nightly `0.0.34-nightly.*` release stream plus `npx t3@latest`.
-- **[Effect](/frameworks/effect.md)** — the TypeScript library (v4 era) providing the typed, effectful orchestration foundation; its durable-execution surface is confirmed source-backed: `DurableQueue` ported from v3 with persistent semantics and `@effect/workflow` delivering durable workflows in alpha.
-- **[OpenCode SDK](/frameworks/opencode-sdk.md)** — the type-safe JS/TS client (`@opencode-ai/sdk`) for controlling the opencode server programmatically.
+- **[Effect](/frameworks/effect.md)** — the TypeScript library (v4 era) providing the typed, effectful orchestration foundation; its durable-execution surface is confirmed source-backed: `DurableQueue` ported from v3 with persistent semantics, `@effect/workflow` delivering durable workflows in alpha, and — from the 2026-08-27 [July 2026 recap](https://www.effect.website/blog/effect-v4beta-july-recap) — the **activity retry policy fixed** plus SQL-backed persisted-queue fixes. This runtime is now directly consumable by the Effect-native OpenCode V2 SDK.
+- **[OpenCode SDK](/frameworks/opencode-sdk.md)** — the type-safe JS/TS client (`@opencode-ai/sdk`) for controlling the opencode server programmatically; a new **V2 SDK (beta)** is **Effect-native** (`OpenCode.create()` hosts OpenCode in-process through an in-memory HTTP router), so it composes directly with the [Effect](/frameworks/effect.md) orchestration layer below.
 - **[Pi SDK](/frameworks/pi-sdk.md)** — programmatic access (`pi.dev/docs/latest/sdk`) to the Pi coding agent's capabilities for embedding in applications and automated workflows; for non-JS integrations it exposes an RPC mode (`pi --mode rpc`, strict LF-delimited JSONL over stdin/stdout).
 
 ## How they compose
@@ -37,6 +37,7 @@ flowchart LR
     T -->|controls| OPC[OpenCode]
     T -->|controls| AG
     EFF[Effect durable orchestration] --> OPC
+    OPC2[OpenCode V2 Effect-native] --> EFF
     PS[Pi SDK] -->|embeds coding agent| APP[Apps / workflows]
 ```
 *How the factory composes: ACP/AHP wire and hosting layer, tooling/control surface (t3code), diff editing (Pierre), durable orchestration (Effect), and embedding SDKs (OpenCode, Pi).*
@@ -69,6 +70,7 @@ The factory also depends on the knowledge-base layer that documents it: the [Ope
 - **Continuous documentation workflows** (2026-01-13 post): a collections-of-agents approach where separate agents generate, maintain, and validate docs — a concrete pattern for the factory's documentation pipeline.
 - **Safety/permission model**: because gh-aw runs agents as Actions, its safety surface is the CI permission model (workflow permissions, tokens, runners) — the gateway/guardrail layer for factory agents.
 - **Technical Preview + org move (2026-08-22 re-read):** the community discussion [GitHub Agentic Workflows now in Technical Preview](https://github.com/orgs/community/discussions/186451) confirms gh-aw is in **technical preview** and is a collaboration between GitHub, **Microsoft Research, and Azure Core Upstream** — with install (`gh-aw`), a quick start, and the workflow gallery as the adoption surface. The org move `githubnext/gh-aw` → `github/gh-aw` (PR #13335) was noted in the 2026-08-18 run. Sources also re-surface the gallery/quick-start install and `gh-aw-mcpg`; the "weekly-blog-post-writer" GitHub workflow shows the gh-aw blog itself is produced by a gh-aw workflow (dogfooding).
+- **Status wording (2026-08-27):** the gh-aw homepage now reads **"GitHub Agentic Workflows is in Public Preview"**, a governance-status wording drift from the earlier "technical preview" discussion framing — record as a wording change, not a material status change. The technical-preview collaboration (GitHub × Microsoft Research × Azure Core Upstream) and install surface (CLI, `gh aw add-wizard`, Markdown-with-YAML-frontmatter → `.lock.yml` Actions compilation) were re-confirmed.
 - Watchlist: **`gh-aw-mcpg`** — a Docker-based **MCP Gateway** for gh-aw (config `awmg-config.json`), connecting the CI-agent layer to the MCP ecosystem and aligning with the gateway theme below.
 - Watchlist: blog index "Weekly Update – July 13, 2026" reports **v0.82.8** and a fixed Docker-authentication bug affecting `sbx`-runtime workflows. The `v0.86.1` in the synthesized answer is **unverified** — treat as watchlist.
 
@@ -86,16 +88,18 @@ The factory also depends on the knowledge-base layer that documents it: the [Ope
 - **kagent (context-aware Kubernetes)** — Solo Enterprise for kagent extends Kubernetes so agents, tools, and LLMs are first-class workloads ("context-aware"), tied to the donation of **agentgateway to the Linux Foundation** as an open project.
 - **agentgateway Linux Foundation donation (2026-08-22, official [donation post](https://www.solo.io/blog/solo-contributes-agentgateway-linux-foundation), ledgered 2026-08-22):** the dedicated donation announcement confirms the earlier-implied donation fact: agentgateway is contributed to the Linux Foundation "to Make AI Agents More Accessible, Capable, and Secure" — the governance anchor for the gateway layer. Watchlist: the same post and the related "From MCP Servers to Services: Introducing **kmcp** for Enterprise-Grade MCP Development" teaser (kmcp = an MCP-server-as-Kubernetes-service development companion, gateway-side) are teaser snippets only; fetch full bodies before promoting.
 - **AAIF (Agentic AI Foundation)** announcement — enterprise secure agentic infrastructure for MCP.
+- **Warm scale-to-zero MCP servers (2026-08-27, watchlist):** the new post "[Warm Scale-to-Zero MCP Servers with agentgateway and Agent Substrate](https://www.solo.io/blog/warm-scale-to-zero-mcp-servers-with-agentgateway-and-agent-substrate)" surfaces the gateway-side runtime/scale story (agentgateway + Agent Substrate) — teaser snippet, no full body, so the durable detail is pending a full fetch. Consistent with the gateway theme above. A second new Solo result, "Migrating from sidecars to ambient with zero downtime," is a **service-mesh** migration post and is **out of scope** for the factory toolchain (ledgered as `none`).
 
 **Mastra blog signals (source-backed where primary runtime facts, watchlist otherwise):**
 
 - **Mastra 1.0 stable** — stabilized APIs, simplified deployment, improved observability, production issues addressed. **A2A (Agent-to-Agent) support** for cross-framework multi-agent systems. **AI Tracing** — noise filtering across multiple observability platforms (OpenTelemetry-based).
 - **Agent orchestration on AI SDK v5** (2026-08-26, adopted 2026-08-18): Mastra now controls the agent loop and tool calling itself (from v0.14.0) while remaining backward-compatible with AI SDK v4 and v5, and added **nested streaming** so agent-in-tool / agent-in-workflow streams compose — a durable runtime capability for the factory's orchestration layer (see [Mastra agentic-UI](/frameworks/mastra-agentic-ui.md)).
-- Watchlist: Changelog 2026-03-23 (token-aware model routing, MongoDB-backed versioned datasets/experiments, Okta SSO with RBAC).
+- **AI SDK v7 supported from day one (2026-08-18 post, adopted 2026-08-27):** Mastra supported the AI SDK **v7** release (June 25, 2026) from its launch day, covering image generation, reasoning control, multimodal prompts, stream handlers, and UI helpers — extending Mastra's version-agnostic agent loop to the current AI-SDK generation (see [Mastra](/frameworks/mastra-agentic-ui.md)).
+- Watchlist (2026-08-27): Changelog 2026-02-26 (`@mastra/core@1.8.0`) adds a **supervisor pattern for multi-agent coordination**(with metadata-only vector queries, more flexible `runEvals`, LSP diagnostics, and a Blaxel sandbox provider) — single-source, watchlist.
 
 All blog signals remain **watchlist** level unless confirmed from primary docs (Solo 2.2 and kagent product facts above are source-backed from the post bodies); the ledger records each post so a later run only re-examines them if content demonstrably changed.
 
 ## Backlog
-- **Activity semantics + full `@effect/workflow` API surface** — the DurableQueue port and workflow fixes are source-backed, but the exact Workflow/Activity primitive semantics and packaging were not fully retrieved; target the official v4 workflow docs directly.
+- **Full `@effect/workflow` API surface + Activity semantics** — the DurableQueue port, workflow fixes, and (via issue #6014 and the July recap) an Activity retry policy and a replay-extending concurrency edge case are source-backed, but the complete procedural `@effect/workflow` API surface and packaging were not retrieved; target the official v4 workflow docs directly.
 - **Direct ingestion of Pierre, t3code, Effect, OpenCode, and Pi repo/release resources** — each was only witnessed via web-search results this run; direct repo/release ingestion would confirm version history and cadence. (Pi's official release trail exists at `pi.dev/news` but is only partially covered; t3code's nightly stream was captured 2026-08-18.)
 - **Full-body re-reads of the followed blog feeds** — prior runs captured teaser snippets; the [ledger](/sources/blog-post-ledger.md) now closes those posts, so budget direct fetches of *new* posts on future runs (revisiting a closed post requires demonstrably changed content). The 2026-08-18 run began moving several Solo.io gateway topics from teaser-only to source-backed post bodies; the 2026-08-22 run added the Solo.io Linux Foundation donation post (anchor adopted, the **kmcp** companion teaser still pending a full fetch) and the Zed sandboxing post (no body retrieved).

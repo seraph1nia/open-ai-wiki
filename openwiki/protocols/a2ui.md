@@ -24,6 +24,37 @@ A2UI is built on a small set of concepts:
 - **Accessibility** (v1.0 candidate) — the spec standardizes **`AccessibilityAttributes`** attached via `ComponentCommon` to any component, supporting `label` (`DynamicString`), `description` (`DynamicString`), `live` (`"off"` | `"polite"` | `"assertive"`), and `hidden` (`DynamicBoolean`), so generated UIs carry accessibility metadata natively. **Confidence: source-backed** (v1.0 candidate spec, retrieved 2026-08-18).
 - **Message** — a JSON object such as `surfaceUpdate`, `dataModelUpdate`, or `beginRendering`. On the wire, streamed messages are usually formatted as **JSON Lines (JSONL)**, one complete JSON object per line.
 
+## v0.9.1 protocol surface (current production spec, retrieved 2026-08-27)
+
+The complete **v0.9.1** specification page (the current production release, generated from `specification/v0_9_1/docs/a2ui_protocol.md`) was retrieved for the first time on 2026-08-27, providing the concrete wire/model detail:
+
+- **Four server-to-client message types** (a unidirectional JSON stream; the client parses each object as a distinct message and incrementally builds/updates the UI):
+  - `createSurface` — signals the client to create a new surface and begin rendering it.
+  - `updateComponents` — a list of component definitions to add to or update in a specific surface.
+  - `updateDataModel` — new data to insert into or replace a surface's data model.
+  - `deleteSurface` — explicitly removes a surface and its contents.
+- **Transport contract** (v0.9 introduced transport decoupling): a transport must provide **reliable ordered delivery** (stateful updates corrupt if reordered), **message framing** (JSONL/WebSocket frames/SSE events), and **metadata support** (for data-model sync via `sendDataModel` and client/server **capabilities exchange**); **bidirectional capability is optional** (a return channel for `action` messages).
+- **Transport bindings:** **A2A** (each A2UI envelope maps to a single A2A message Part; `a2uiClientDataModel`/`a2uiClientCapabilities` ride in A2A `metadata`; sessions map to a shared A2A `contextId`), **AG-UI**, **MCP** (tool outputs / resource subscriptions), **SSE + JSON-RPC**, **WebSockets**, and **REST** (works but lacks streaming).
+
+```mermaid
+sequenceDiagram
+    participant Server as Agent/Server
+    participant Client as Client/Renderer
+    Server->>Client: createSurface(surfaceId:"main")
+    Server->>Client: updateComponents(surfaceId:"main", components:[...])
+    Server->>Client: updateDataModel(surfaceId:"main", path:"/user", value:"Alice")
+    Client->>Server: action(name:"submit", context:{...})
+    Server->>Client: updateComponents / updateDataModel (dynamic update)
+    Server->>Client: deleteSurface(surfaceId:"main")
+```
+
+- **Catalog-agnostic envelope:** `server_to_client.json` references components/theme via a placeholder `$ref: "catalog.json#/$defs/anyComponent"` (and `#/$defs/theme`), which maps to either the Basic Catalog or the client's own catalog — so one envelope schema serves any compliant component catalog. The Basic Catalog defines components (`Text`, `Button`, `Row`, `CheckBox`, `TextField`, `DateTimeInput`, `ChoicePicker`, `Slider`), functions (e.g. `required`, `email`, `formatString`, logical `or`/`not`), and a theme schema.
+- **Data binding types:** `DynamicString` / `DynamicNumber` / `DynamicBoolean` / `DynamicStringList` resolve to a literal value, a **`path`** (JSON Pointer, RFC 6901), or a **`FunctionCall`**. `ChildList` models child containers as either a static array of `ComponentId` references or an object template generated from a data-bound list.
+- **Prompt-first family (v0.9):** v0.9 introduced a *prompt-first* protocol designed to be embedded directly in an LLM's prompt (the model emits JSON matching provided examples/schema), versus v0.8 which targeted structured-output constraints. This yields richer, more modular schemas but requires a **prompt-generate-validate loop** with post-generation validation, error handling, and correction/retry before rendering.
+- **Two-way binding & reactivity** via the read/write contract: input components bind to the data model, user edits are synchronized to the server, and `formatString` supports nested interpolation and type conversion.
+
+**Confidence:** source-backed (a2ui.org v0.9.1 specification page, retrieved 2026-08-27). The **verbatim `Tavily` `answer` fields were not adopted** (they are generic, off-target summaries).
+
 ## How an A2UI response is generated and rendered
 
 ```mermaid
@@ -87,7 +118,7 @@ A2UI is designed to interop with the rest of the agent-UI space rather than repl
 
 ## Status
 
-- **Confidence:** source-backed (a2ui.org specification v1.0 candidate/v0.9.1/v0.8, data-flow, renderers reference, who-is-it-for, and roadmap pages, plus the `a2ui-project/a2ui` repo README; single primary source on most points, not independently cross-checked).
+- **Confidence:** source-backed (a2ui.org specification v1.0 candidate/v0.9.1/v0.8, data-flow, renderers reference, who-is-it-for, catalogs, and roadmap pages, plus the `a2ui-project/a2ui` repo README; single primary source on most points, not independently cross-checked). The full v0.9.1 spec surface was retrieved 2026-08-27.
 - Actively developed and shaped by community roadmap feedback; current stable is v0.9.1; v1.0 is a candidate targeting Q4 2026; long-term vision is full app UIs, multi-agent coordination, accessibility, advanced UI patterns, and ecosystem growth.
 
 ## Source Map

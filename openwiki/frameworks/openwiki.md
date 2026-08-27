@@ -4,7 +4,7 @@ title: OpenWiki
 description: OpenWiki is a self-maintaining-wiki CLI (MIT, npm) that an agent uses to read sources, synthesize a linked Markdown wiki, and keep it current — with code and personal modes, built-in connectors (local git, Notion, Slack, Gmail, X, Web Search, Hacker News, Custom MCP), 12 README-listed model providers (13 incl. GitHub Copilot on v0.3.3+), OKF v0.2 output with validated Mermaid diagrams, an interactive visualizer, and CI self-update workflows. Latest release v0.3.3 (source-backed 2026-08-22).
 resource: https://github.com/langchain-ai/openwiki
 tags: [openwiki, agent-docs, wiki, cli, connectors, okf, mermaid, self-updating]
-timestamp: 2026-08-22
+timestamp: 2026-08-27
 ---
 
 # OpenWiki
@@ -61,6 +61,7 @@ Connector specifics (from the README):
 - `google` uses the Gmail API directly with OAuth user credentials to fetch recent mail.
 - `web-search` uses Tavily through LangChain and requires `TAVILY_API_KEY`.
 - `hackernews` uses the public Hacker News feed and search APIs, with no credentials required.
+- `langsmith` — a built-in connector surfaced in the repo's `quickstart.md` source tree this run: `src/connectors/sources/langsmith/` (`api.ts`, `index.ts`, `repo-config.ts`, `runs.ts`, `setup.ts`, `types.ts`) adds LangSmith trace/run evidence as a source (note: not listed in the README's connector count, which the repo's own docs also omit).
 
 ## Authentication
 
@@ -134,4 +135,5 @@ Primary: the [OpenWiki repository](https://github.com/langchain-ai/openwiki), it
 - **Source-backed (run 2):** the 13-provider list with credential models, operational file layout (`INSTRUCTIONS.md`, `onboarding.json` with cron/LaunchAgent/`pmset` metadata), full-history CI clones, provider resolution order, SHA-256 content-snapshot no-op behavior, docs-only backend + virtual mounts, and the three validation passes — from the repo's `openwiki/` docs (quickstart, architecture/overview, operations/credentials-and-updates) retrieved as raw evidence.
 - **Source-backed (run 3):** the **v0.3.3-latest release trail** and v0.3.3 change list (raw releases-page fragment), the **OKF v0.2 output claim** (README), the **12-provider README count** (13 incl. Copilot on v0.3.3+), and the `verified: openwiki/0.3.3` engine stamp (usage-doc sample).
 - **Watchlist:** OpenWiki release *dates* and complete v0.2.x–v0.3.x changelogs (fragment only); whether the npm build at HEAD matches the README's v0.2-output claim.
+- **Source-backed (run 4, 2026-08-27):** the **`langsmith` built-in connector** — surfaced from the repo's `quickstart.md` source tree (`src/connectors/sources/langsmith/` with `api.ts`, `repo-config.ts`, `runs.ts`, `setup.ts`, `types.ts`); note the README's connector count (eight built-ins) is not affected — langsmith is a source module the README does not enumerate (see the [source page](/sources/web-search-agent-wiki.md)).
 - Gap: only the top release-page fragment was retrieved; direct release-file ingestion (npm/GitHub) is the follow-up (see [open questions](/open-questions.md) — the version and OKF-emitted questions are answered, the dates/changelog detail remains).
