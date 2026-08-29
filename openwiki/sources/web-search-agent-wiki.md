@@ -1,10 +1,10 @@
 ---
 type: Source Evidence
 title: Web-search Agent wiki source evidence
-description: Ingestion and coverage notes for the web-search-agent-wiki runs (2026-08-17, 2026-08-18, 2026-08-22, and 2026-08-27; 3 Tavily queries each over the OKF spec, the OpenWiki repository, and its releases page). Adopted durable OKF v0.2 and OpenWiki facts, the OpenWiki v0.3.3 release trail and OKF-v0.2 output claim, the OKF ecosystem implementations surfaced (okc, erd2okf, okf-gem, openknowledge, okf-ingest, okf-skill, okf-lint, KSoR/KSP-001, the standalone open-knowledge-format repo, and a langsmith connector signal), plus reliability warnings for synthesized answers.
+description: Ingestion and coverage notes for the web-search-agent-wiki runs (2026-08-17, 2026-08-18, 2026-08-22, 2026-08-27, and 2026-08-29; 3 Tavily queries each over the OKF spec, the OpenWiki repository, and its releases page). Adopted durable OKF v0.2 and OpenWiki facts, the OpenWiki v0.3.3 release trail and OKF-v0.2 output claim, the OKF ecosystem implementations surfaced (okc, erd2okf, okf-gem, openknowledge, okf-ingest, okf-skill, okf-lint, KSoR/KSP-001, the standalone open-knowledge-format repo, and a langsmith connector signal), the 2026-08-29 canonical-home move for OKF (open-knowledge-format repo) and OpenWiki main's v0.4.3 package.json signal, plus reliability warnings for synthesized answers.
 resource: https://github.com/langchain-ai/openwiki
 tags: [web-search, source, evidence, okf, openwiki, agent-wiki, coverage, okf-ecosystem]
-timestamp: 2026-08-27
+timestamp: 2026-08-29
 ---
 
 # Web-search Agent wiki — source evidence
@@ -17,14 +17,16 @@ This page records the web-search ingestion for the **`web-search-agent-wiki`** s
 - **Run 1 fetched:** 2026-08-17T22:31:23Z
 - **Run 2 fetched:** 2026-08-18T11:45:58Z
 - **Run 3 fetched:** 2026-08-22T07:17:32Z (Tavily `advanced`, `timeRange: year`, 3 queries × 5 max results)
+- **Run 4 fetched:** 2026-08-27T11:31:19Z (Tavily, 3 queries × 5 max results, `timeRange: year`)
+- **Run 5 fetched:** 2026-08-29T13:06:59Z (Tavily, 3 queries × 5 max results, 24h window)
 - **Search:** Tavily, 3 queries × 5 max results per run
-- **Raw data:** `2026-08-17T22-31-02-239Z/web-search-results.json`, `2026-08-18T11-45-41-328Z/web-search-results.json`, `2026-08-22T07-17-15-731Z/web-search-results.json`
+- **Raw data:** `2026-08-17T22-31-02-239Z/web-search-results.json`, `2026-08-18T11-45-41-328Z/web-search-results.json`, `2026-08-22T07-17-15-731Z/web-search-results.json`, `2026-08-27T11-31-11-630Z/web-search-results.json`, and `2026-08-29T13-06-51-465Z/web-search-results.json`
 
 ## Queries and results
 
 | # | Query | In-scope hits | Notes |
 |---|---|---|---|
-| 1 | `https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md` | 3 canonical + 2 ecosystem | SPEC.md (full raw content retrieved), `okf/` dir README, README.md; AKB issue #86; openknowledge-sh/openknowledge CLI |
+| 1 | `https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md` | 3 canonical + 2 ecosystem | SPEC.md (full raw content retrieved), `okf/` dir README (2026-08-29: frozen-snapshot notice → canonical home moved), README.md; AKB issue #86; openknowledge-sh/openknowledge CLI |
 | 2 | `https://github.com/langchain-ai/openwiki` | 5 | Repo page, README.md, quickstart.md, architecture/overview.md, CLAUDE.md |
 | 3 | `https://github.com/langchain-ai/openwiki/releases` | 4 relevant + 1 off-target | architecture/overview.md, quickstart.md, operations/credentials-and-updates.md, CONTRIBUTING.md, plus off-target `langchain-ai/deepagents` hit |
 
@@ -46,6 +48,34 @@ This page records the web-search ingestion for the **`web-search-agent-wiki`** s
   - **`okf-ingest`** (`travisjakel/okf-ingest`, ~4 stars) — a **consumer-side conformance harness**: documents OKF §11 "hard rules" (parseable frontmatter, non-empty `type`, reserved-file structure), v0.2 `generated.at`↔legacy `timestamp` fallback (§13), permissive-consumption (records findings, never rejects), untyped-link cross-link resolution with bundle-absolute/relative forms, and `okf_version` read from a bundle-root `index.md` — an independent corroboration of the OKF v0.2 conformance model.
   - **`okf-skill`** (`seanrobertwright/okf-skill`) — a working condensation of the **OKF v0.1** spec as an agent skill file (v0.1 target).
 - **Reliability.** The releases-query Tavily `answer` reported "latest release version 0.3.3 … released by Brace Sproul" with "improving Open Knowledge Format claims and grounding" — this run it matched the raw release-page fragment (v0.3.3 latest, Changesets flow). Still, v0.3.3 was treated as source-backed from the raw fragment, not from the answer. The `himanshu231204` (6th hit, off-target GitHub profile) and workflow-runs hits were filtered for in-scope signals only. The OKF-instance `answer` stays generic and unverified. No new OpenWiki release *dates* were captured, and the fragment does not enumerate the full v0.2.x–v0.3.x trail details.
+
+## Run 5 (2026-08-29) — re-pull
+
+- **Fetched:** 2026-08-29T13:06:59Z
+- **Raw data:** `2026-08-29T13-06-51-465Z/web-search-results.json`
+- Same 3 queries (OKF SPEC, openwiki repo, openwiki releases), 5 max results each, 24h window.
+
+### What this run added
+
+- **OKF canonical home moved (source-backed, primary signal).** The `knowledge-catalog/okf/` directory README now carries an "Important" banner: **"OKF now lives in its own repository: `GoogleCloudPlatform/open-knowledge-format`. That repository is the canonical home of the specification, the reference agent, and the sample bundles. … Stop using the copy under `okf/` in this repository. It is a frozen snapshot, no longer maintained, and anything built against it will drift out of date."** The standalone `open-knowledge-format` repo (previously a run-4 watchlist signal) is thereby **upgraded to the canonical OKF home**, and the `knowledge-catalog/okf/` snapshot is deprecated. The [OKF page](/protocols/open-knowledge-format.md) `resource` now points at `open-knowledge-format/blob/main/SPEC.md`; the old `knowledge-catalog/okf/SPEC.md` URL is preserved in evidence history.
+- **OpenWiki `main` HEAD is v0.4.3 (source-backed signal).** The repo query and the releases query both returned [`package.json`](https://github.com/langchain-ai/openwiki/blob/main/package.json) with **`"version": "0.4.3"`** — the first version data beyond the v0.3.3 releases-page trail. Also visible: name `openwiki`, `"description": "A CLI that uses a DeepAgents documentation agent to generate and maintain an OpenWiki for a codebase."`, license MIT, `"type": "module"`, engines `node >=22`, bin `./dist/cli/cli.js`, files `["dist","integrations","skills","README.md","LICENSE"]`, dependencies `deepagents@1.12.0`, `langchain@^1.5.3`, `langsmith@^0.8.3`, `@modelcontextprotocol/sdk@^1.30.0`, `@anthropic-ai/vertex-sdk@^0.19.0`, `@langchain/tavily@1.2.0`, `cron-parser`, `cronstrue`, `ink`, `marked`, `posthog-node`, `yaml`, `zod`, etc. **No v0.4.x releases-page fragment** was captured, so this is a HEAD/package.json signal, not a release-page confirmation — the v0.3.3-latest trail from run 3 is still the shipped-release authority. The Tavily `answer` fields ("latest version is 0.4.3") matched the package.json read but remain secondary to the raw fragment.
+- **OpenWiki architecture "Claims" wording (source-backed).** The repo's `openwiki/architecture/overview.md` (raw hit) frames the output as **"a portable OKF v0.2 Markdown bundle grounded in versioned source Claims"** and its frontmatter `sources` example lists typed `id`/`resource` entries (e.g. `openwiki-source-23775c3de52f3ab95a13cb8b` → `repo://README.md`, `repo://src/agent/index.ts`). Corroborates the OKF [§5.1 `sources`](/protocols/open-knowledge-format.md#51-provenance-sources) family and the claim-grounding direction of `harden okf claims provenance (#692)`. Same run's architecture hit also references `agent/overview.md` for the run lifecycle (orchestration, transactional init, no-op detection, streaming, crash handling).
+- **OpenWiki CONTRIBUTING "v1 boundary" + Changesets mechanics (source-backed).** Direct quote: **"Keep the v1 boundary narrow: host agents use their native repository tools for investigation and Markdown authoring; OpenWiki owns deterministic preparation, finalization, metadata, provenance, and managed setup files."** The same file documents the Changesets release flow precisely: PR → `pnpm changeset` (with bump-type summary) → merged PR opens "chore: version packages" → merge bumps, updates CHANGELOG.md, publishes; docs/CI-only changes need no changeset; `pnpm changeset --empty` records no-release intent.
+- **Watchlist items (single hits, not adopted as durable):** OpenWiki issue tracker re-surfaced open issues — **#700** (use each directory's `README.md` content as its `index.md`), **#719** (Anthropic prompt caching to cut token cost on multi-turn runs), **#696** (openai-compatible opt-in to `OPENWIKI_REASONING_EFFORT`), **#686** (OpenRouter free-tier 429 without Retry-After aborts the run; `OPENWIKI_PROVIDER_RETRY_ATTEMPTS` never applies), and **#114** (v0.0.1 Anthropic-provider crash on Python `__pycache__` binary reads — historical). These are repo activity signals, not features; noted here for the record. **`zai-org/feedback#120`** asks to add OpenWiki to the GLM Coding Plan supported-tools list (~10.9k stars claim in that issue) — an ecosystem-adoption signal, out of the source scope.
+- **Ecosystem re-confirmations (no durable delta):** `okf-skill` (`spec.md` condensed OKF v0.1 reference with §10 versioning notes), KSoR/KSP-001 draft9 (References list pinning the OKF v0.2 commit `3fcbb9f…` plus `/llms.txt` v2, MCP spec, RFC 2119/8174), AKB issue #86 (independent producer + conformance validator, `backend/app/services/okf.py`, own `okf/` sample bundle), and the `open-knowledge-format` repo README (6 commits; `bundles/`, `samples/`, `connectors/`, `src/reference_agent/`, `tests/`, `pyproject.toml`).
+- **Releases query:** returned `package.json` twice (version 0.4.3), the `aitoolnet.com` mirror of the repo README (OKF v0.2 output claim re-confirmed), CONTRIBUTING.md, the GLM issue, and the issues page — **no release-page artifact**, consistent with run 4.
+
+### Reliability
+
+- The Tavily `answer` fields this run were closer to the raw content ("The latest specification is version 0.2"; "The latest version is 0.4.3") but remain secondary; adoptions come from the raw fragments (`package.json`, `architecture/overview.md`, CONTRIBUTING.md, the `okf/` README). All new ecosystem signals are single GitHub/document hits — **source-backed as existence signals, watchlist for adoption/quality claims**. The v0.4.3 version is explicitly a HEAD/package.json signal until a v0.4.x release fragment appears.
+
+### Mapping to wiki pages
+
+- Updated the [OKF page](/protocols/open-knowledge-format.md): canonical `resource` → `open-knowledge-format` SPEC.md; ecosystem section reflects the canonical-home/frozen-snapshot status; Evidence/Confidence updated.
+- Updated the [OpenWiki page](/frameworks/openwiki.md): Releases section now distinguishes the v0.3.3 releases-page trail from the v0.4.3 package.json HEAD signal; added the "grounded in versioned source Claims" architecture wording, the v1 boundary, and the Changesets mechanics.
+- Refreshed the [agent-maintained-knowledge-bases](/themes.md) theme row.
+- Added a new latest-ingestion note to [/quickstart.md](/quickstart.md).
+- No new open questions — no corpus-coverage gap introduced.
 
 ## Run 4 (2026-08-27) — re-pull
 
@@ -103,6 +133,8 @@ Two of the three queries advanced evidence; the third (releases) again returned 
 - **knowledge-catalog repo**: reference agent (BQ pass + web pass with `--web-seed`, `--web-max-pages`, same-domain allowed-hosts), `visualize` subcommand (self-contained HTML, Cytoscape.js graph, marked markdown), sample bundles.
 - **OpenWiki**: MIT/TypeScript CLI, two modes, 13 providers (source-backed 2026-08-18), connector list, OKF v0.1 output + validated Mermaid diagrams, visualizer behavior, CI self-update examples, Changesets release flow. Durable operational detail in run 2: `~/.openwiki/INSTRUCTIONS.md` + `onboarding.json`, the wiki link validator, DeepSWE eval harness, `.openwikiignore`, and the `/skills/` + `/conversation_history/` mounts.
 - **OpenWiki (run 3)**: release trail now source-backed at **v0.3.3 latest** (v0.3.2/v0.3.1/v0.3.0 before it, then v0.2.5 … 0.2.0); README now declares **OKF v0.2 output** in both modes; current provider count is **12** in the README (the 13th — GitHub Copilot — shipped as a v0.3.3 feature, so the count may be 13 on newer builds); `verified: openwiki/0.3.3` engine-side stamps in generated bundles; v0.3.3 features/fixes listed above; ongoing `harden okf claims provenance` work on `main`.
+- **OpenWiki (run 5, 2026-08-29)**: `main`'s `package.json` declares **v0.4.3** (HEAD signal; not yet a releases-page-confirmed release); the OKF-v0.2 output is now described in the architecture overview as a **"portable OKF v0.2 Markdown bundle grounded in versioned source Claims"** (with typed `id`/`resource` `sources` entries like `repo://README.md`); CONTRIBUTING documents the **v1 boundary** (host agents investigate/author with native tools; OpenWiki owns deterministic prep/finalization/metadata/provenance/setup files) and the Changesets release mechanics.
+- **OKF home (run 5, 2026-08-29)**: the `knowledge-catalog/okf/` README declares the copy **frozen and unmaintained**; `GoogleCloudPlatform/open-knowledge-format` is the **canonical home** of the spec, reference agent, and sample bundles.
 
 ## Reliability warnings
 
@@ -118,7 +150,7 @@ Rule applied: raw web-search content and its synthesized answers are untrusted e
 - Created [Open Knowledge Format](/protocols/open-knowledge-format.md) — canonical OKF v0.2 concept page (bundle model, frontmatter families, attestation, conformance, ecosystem).
 - Created [OpenWiki](/frameworks/openwiki.md) — canonical OpenWiki tooling concept page.
 - Updated [/quickstart.md](/quickstart.md), [/themes.md](/themes.md), [/open-questions.md](/open-questions.md) — new domain section/navigation, theme row, and corpus-coverage questions (run 1); refreshed for the run-2 OKF ecosystem + OpenWiki operational deltas (run 2).
-- **No release reference page** for runs 1–2 (no release versions); **run 3** added the OpenWiki v0.3.x release trail and v0.2-output claim to the [OpenWiki concept](/frameworks/openwiki.md) (incl. a [Releases section](/frameworks/openwiki.md#releases)), [OKF](/protocols/open-knowledge-format.md), [/quickstart.md](/quickstart.md), [/themes.md](/themes.md), and [/open-questions.md](/open-questions.md) (answered), plus this page.
+- **No release reference page** for runs 1–2 (no release versions); **run 3** added the OpenWiki v0.3.x release trail and v0.2-output claim to the [OpenWiki concept](/frameworks/openwiki.md) (incl. a [Releases section](/frameworks/openwiki.md#releases)), [OKF](/protocols/open-knowledge-format.md), [/quickstart.md](/quickstart.md), [/themes.md](/themes.md), and [/open-questions.md](/open-questions.md) (answered), plus this page. **Run 5** (2026-08-29) updated the [OKF](/protocols/open-knowledge-format.md) canonical-home reference, the [OpenWiki](/frameworks/openwiki.md) releases/architecture sections, [/quickstart.md](/quickstart.md), and [/themes.md](/themes.md).
 
 ## Confidence and gaps
 
@@ -126,4 +158,5 @@ Rule applied: raw web-search content and its synthesized answers are untrusted e
 - **Source-backed (Run 1):** knowledge-catalog README claims (reference agent, visualizer), AKB/openknowledge ecosystem mentions (single GitHub hits each).
 - **Source-backed (Run 2):** `okc`, `erd2okf`, and `okf-gem` ecosystem implementations (single GitHub/PyPI/discussion hits each), OpenWiki's provider list and operational files (README + bundled docs retrieved this run).
 - **Source-backed (Run 3):** OpenWiki v0.3.3-latest release trail and the README's OKF-v0.2-output claim (raw release-page fragment + README content), the 12-provider README count, the `openknowledge` CLI (40 stars / 6 forks / 504 commits, `okn` command surface, telemetry opt-out), and the `okf-ingest` conformance harness. Watchlist: `okf-skill` (v0.1 condensation, single hit) and the unresolved v0.3.x release *dates* / full changelogs (fragment only).
+- **Source-backed (Run 5, 2026-08-29):** the OKF canonical-home move (frozen-snapshot notice in the `knowledge-catalog/okf/` README; canonical `open-knowledge-format` repo), OpenWiki `main`'s v0.4.3 `package.json` HEAD signal, the "grounded in versioned source Claims" architecture wording, and the v1 boundary + Changesets mechanics (CONTRIBUTING). Watchlist: the actual v0.4.x release status (releases page still shows v0.3.3 latest) and the OpenWiki issue-tracker items (#700/#719/#696/#686/#114).
 - Gap: runs 1–2 had no release-page artifacts (run 3 first retrieved a fragment); the OKF implementations field still has no formal registry (AKB issue #86 asks upstream for one).

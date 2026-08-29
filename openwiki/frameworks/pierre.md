@@ -4,7 +4,7 @@ title: Pierre (Pierre Computer Company)
 description: Pierre is the open-source TypeScript toolkit from the Pierre Computer Company for diffs, trees, and memes, including the @pierre/diffs library that renders and edits file diffs; maintained at github.com/pierrecomputer/pierre.
 resource: https://github.com/pierrecomputer/pierre
 tags: [pierre, diffs, sdlc, toolkit, typescript]
-timestamp: 2026-08-22
+timestamp: 2026-08-29
 ---
 
 # Pierre (Pierre Computer Company)
@@ -45,3 +45,4 @@ Project repo metadata (path listing) shows a pnpm/moon workspace with `packages/
 - **Feature request [CLI] issue #728** (pierrecomputer/pierre) — users want a CLI surface for the toolkit (retrieved 2026-08-17).
 - Repo activity (2026-08-17 fetch): a `[diffs/edit]` refactor of the `onChange` editor option (PR merge, ~2 weeks before) and a `chore: update @pierre/diffs to 1.3.0` commit — ongoing work on the diff editor surface.
 - The release-list snapshot (2026-08-22 fetch) shows a `[diffs/edit]` focus continuing through 1.3.1–1.3.5 (newline retokenization fix, empty-new FileDiff edit fix — see above).
+- **Repo and PR activity (2026-08-29 fetch, watchlist):** repo snapshot now ~**6.1k stars / 207 forks**; the `apps/` monorepo surface and tags list (through v1.1.0-beta.19-era `@pierre/diffs` / `@piere/diffs` bumps) re-confirmed the diff/theme/fix cadence. PR stream shows ongoing product-direction work around the diff presentation layer: **#1024** (`[diffs/edit]` **edit-prediction support**), **#1046** ([diffshub] **comment support**), **#853** ([diffshub] persist display preferences), **#1053** (export palette/theme colors as **Figma variables**), and **#664** (trees context-menu fix). Open bug **#450** (FileContent `lang` override not changing Shiki highlighting) re-surfaced. All PR/issue-level, watchlist.

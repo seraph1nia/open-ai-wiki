@@ -4,7 +4,7 @@ title: A2UI (Agent to UI) Protocol
 description: A2UI is a declarative, Apache-2.0 UI protocol for agent-driven interfaces, in which agents generate a JSON payload describing UI components that render natively across web, mobile, and desktop without executing arbitrary code.
 resource: https://a2ui.org
 tags: [a2ui, protocol, agent-ui, generative-ui, declarative, ai-agents]
-timestamp: 2026-08-18
+timestamp: 2026-08-29
 ---
 
 # A2UI (Agent to UI) Protocol
@@ -107,10 +107,11 @@ A2UI is explicitly "declarative data, no code execution": agents send abstract c
 ## Versioning, roadmap, and releases
 
 - Semantic Versioning: MAJOR = incompatible protocol changes, MINOR = backward-compatible additions, PATCH = backward-compatible bug fixes.
-- Planned release cycle: major (1.0, 2.0) annually or on significant breaking changes; minor quarterly; patch as needed.
-- Roadmap milestones: **Q2 2025** research across Google teams and internal products; **Q4 2025 v0.8**; **Q2 2026 v0.9**; **Q3 2026 v0.9 & v1.0**; **Q4 2026 v1.0**. Last updated June 2026. Long-term vision: full app UIs, multi-agent coordination, accessibility features, advanced UI patterns, ecosystem growth.
+- Planned release cycle: major (1.0, 2.0) annually or on significant breaking changes; minor quarterly; patch as needed. (Re-confirmed from the roadmap page, retrieved 2026-08-29.)
+- Roadmap milestones: **Q2 2025** research across multiple Google teams **including integration into internal products and agents**; **Q4 2025 v0.8**; **Q2 2026 v0.9**; **Q3 2026 v0.9 & v1.0**; **Q4 2026 v1.0**. Last updated June 2026. Long-term vision: full app UIs, multi-agent coordination, accessibility features, advanced UI patterns, ecosystem growth.
+- The v0.8 milestone line explicitly credits an **"AG-UI / CopilotKit integration (thanks CopilotKit)"** as part of the Q4-2025 v0.8 release — direct first-party evidence of the A2UI ↔ [AG-UI](/protocols/ag-ui.md) / [CopilotKit](/frameworks/copilotkit.md) interop line already documented on this page and the [ecosystem hub](/concepts/generative-ui-ecosystem.md). **Confidence: source-backed** (a2ui.org roadmap, retrieved 2026-08-29).
 - Specification versions on the site: v1.0 (candidate), v0.9.1 (current), v0.9 (previous stable), v0.8 (legacy), plus a `v0.8` A2A extension (`surfaceId` + catalog negotiation for agent-to-UI delivery over A2A).
-- `a2ui-project/a2ui` (Apache-2.0, ~16k stars) tracks toward API 1.0 with a restaurant-finder quickstart demo.
+- `a2ui-project/a2ui` (Apache-2.0, ~16.2k stars / 1.3k forks as of the 2026-08-29 pull) tracks toward API 1.0 with a restaurant-finder quickstart demo; its README frames spec stabilization toward v1.0, more renderers (React, Jetpack Compose, iOS/SwiftUI), more transports (REST), and more agent frameworks (Genkit, LangGraph) as the near-term community work.
 
 ## Interoperability surfaces
 

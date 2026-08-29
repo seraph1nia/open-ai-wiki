@@ -4,7 +4,7 @@ title: OpenUI (Open Standard for Generative UI)
 description: OpenUI is a generative-UI toolkit for building agents that respond with interactive interfaces rather than text, comprising the Agent Interface frontend SDK, the OpenUI Lang streaming declarative language and runtime, and the OpenUI Cloud managed backend.
 resource: https://www.openui.com/docs/overview
 tags: [openui, generative-ui, framework, agent-ui, language, runtime]
-timestamp: 2026-08-16
+timestamp: 2026-08-29
 ---
 
 # OpenUI (Open Standard for Generative UI)
@@ -81,13 +81,26 @@ The docs' **Feature Comparison** page positions OpenUI against three other strea
 
 ## Community integrations and plugins (openui.com/lab, retrieved 2026-08-27)
 
-The OpenUI **lab** page lists community-built integrations and tooling beyond the core framework:
+The OpenUI **lab** page lists community-built integrations and tooling beyond the core framework (the 2026-08-29 re-pull expanded the directory; all entries below are watchlist/saved-context):
 
 - **Field Theory UI** — a local-first web interface for exploring X/Twitter bookmarks with OpenUI-powered interactive dashboards (community).
 - **Open WebUI Plugin** — brings OpenUI-rendered interactive responses into Open WebUI chat workflows (community).
 - **Ollama Integration** — uses OpenUI with local Ollama models via an OpenAI-compatible route or an Open WebUI workflow (community/provider).
 - **Genui VS Code Extension** — previews `.openui` files live in VS Code / Open VSX-compatible editors while agents write OpenUI Lang (community).
 - **OpenClaw OS Plugin** — uses OpenUI inside the OpenClaw OS (official).
+
+The 2026-08-29 re-pull returned a broader lab directory (all watchlist/saved-context entries):
+
+- **Vue Lang** (official) — define OpenUI component libraries and render OpenUI Lang responses in Vue 3 (`vue-lang` package; corroborates the repo `packages/vue-lang`).
+- **Svelte Lang** (official) — define OpenUI component libraries and render OpenUI Lang responses in Svelte 5 (corroborates the repo `packages/svelte-lang`).
+- **React Native Example** (official) — a mobile chat example showing OpenUI rendered in a React Native application.
+- **AppLess** (official) — an experimental "no-app" phone experience that streams OpenUI-generated native interfaces on iOS and Android.
+- **OpenUI Plotly** (community) — scaffolds a Next.js generative-UI chat with typed Plotly chart components for data-heavy responses (npm package).
+- **FastAPI Backend Example** (community) — OpenUI with a FastAPI backend.
+- **Curio** (community) — an open-source reading companion that uses OpenUI generative UI to explore words/phrases without leaving the text.
+- **OpenUI Forge** (community) — a coding-assistant toolkit for generating and wiring OpenUI integrations across common AI stacks.
+- **GAIA** (community) — a proactive personal AI assistant for inboxes, calendars, tools, and workflows built with OpenUI.
+- **Noetic** (community) — an agent-framework integration that returns OpenUI interfaces through a streaming output codec, durable surface layer, and transport.
 
 **Confidence:** watchlist/saved-context — community integration directory, not primary-feature documentation.
 

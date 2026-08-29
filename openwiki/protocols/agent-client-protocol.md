@@ -4,7 +4,7 @@ title: Agent Client Protocol (ACP)
 description: The Agent Client Protocol (ACP) is a standardized communication protocol between code editors and AI-powered coding agents, officially implemented in TypeScript by the @agentclientprotocol/sdk package; the spec repo also ships Rust/schema artifacts and GitHub Copilot CLI is an official ACP server.
 resource: https://github.com/agentclientprotocol/agent-client-protocol
 tags: [agent-client-protocol, acp, protocol, ai-agents, editors]
-timestamp: 2026-08-27
+timestamp: 2026-08-29
 ---
 
 # Agent Client Protocol (ACP)
@@ -15,7 +15,7 @@ Canonical materials:
 - Spec repository: [`agentclientprotocol/agent-client-protocol`](https://github.com/agentclientprotocol/agent-client-protocol) (Rust tooling, Apache-2.0)
 - Official documentation and protocol overview: <https://agentclientprotocol.com>
 - Official TypeScript implementation: [`@agentclientprotocol/sdk`](https://www.npmjs.com/package/@agentclientprotocol/sdk), release history on the [ACP TypeScript SDK releases](/references/agent-client-protocol-typescript-sdk-releases.md) page
-- Official SDK set (org listing + spec README, confirmed 2026-08-16, re-listed 2026-08-18): TypeScript (`@agentclientprotocol/sdk`), Python (`python-sdk`), Rust (`rust-sdk`), Kotlin (`acp-kotlin`, JVM), and Java (`java-sdk`), plus a `registry` of implementing agents. The 2026-08-18 org listing adds two first-party ACP **server** implementations: `codex-acp` (exposes Codex CLI functionality for ACP clients/IDEs) and `claude-agent-acp` ("use Claude Agent SDK from any ACP client"), alongside a shared `meetings` repo. Evidence: [web-search Factory tools source page](/sources/web-search-factory-tools.md).
+- Official SDK set (org listing + spec README, confirmed 2026-08-16, re-listed 2026-08-18 and 2026-08-29): TypeScript (`@agentclientprotocol/sdk`), Python (`python-sdk`), Rust (`rust-sdk`), Kotlin (`acp-kotlin`, JVM), and Java (`java-sdk`), plus a `registry` of implementing agents. The 2026-08-18 org listing adds two first-party ACP **server** implementations: `codex-acp` (exposes Codex CLI functionality for ACP clients/IDEs) and `claude-agent-acp` ("use Claude Agent SDK from any ACP client"), alongside a shared `meetings` repo. The 2026-08-29 re-pull re-confirmed the same set plus the spec README's wire-compat rule and the `schema/v1` + `schema/v2` artifact locations. Evidence: [web-search Factory tools source page](/sources/web-search-factory-tools.md).
 
 ## What ACP standardizes
 
@@ -50,6 +50,7 @@ The org-wide, spec-README, and docs-github hits surfaced a small community ecosy
 - **Qwen Code ACP streamable-HTTP issue chain** (`QwenLM/qwen-code#4782`) — tracks the ACP **Streamable HTTP transport** implementation status and a third-party SDK version gap (`@agentclientprotocol/sdk` 0.14.1 → 0.21.0 referenced by the issue); notes that `session/close`-related standard methods and new conformance-checking types are the unlocks, and that Zed/Goose/third-party clients can connect once Qwen's PRs #4563 → #4736 → #4737 land. **Watchlist:** issue-tracker claim; the SDK versions in the issue (0.14.1/0.21.0) are lower than the wiki's known v1.3.0 and reflect the issue author's pinned environment, not the current release.
 - The ACP org listing (re-confirmed 2026-08-27) shows the first-party **servers** `codex-acp` and `claude-agent-acp`, the official SDKs (TypeScript/Python/Rust/Kotlin/Java) plus the `registry` (367 stars at fetch), and the `agent-client-protocol` spec repo (~4.1k stars). New this run: **`OpenHands/typescript-client`** (a third-party TypeScript client for the OpenHands Agent Server API; ALPHA, remote conversations only) — ecosystem signal, out of the official ACP library set, watchlist.
 - The 2026-08-27 pull re-confirmed the official repository README, which details the **Experimental ACP v2** (`@agentclientprotocol/sdk/experimental/v2`), a migration file (`MIGRATION_0.26_0.27.md`), and the app-style builder API — no new released version appeared (the Qwen issue's 0.14.1 → 0.21.0 table remains issue-local, not the release resource).
+- The **2026-08-29 pull** re-confirmed the org/spec surface; a new third-party community adapter `blowmage/cursor-agent-acp-npm` (a "Cursor Agent ACP Adapter" bridging Cursor CLI to ACP-compliant editors over stdio) surfaced as a watchlist ecosystem signal.
 
 Excluded as out of scope: `adcontextprotocol/adcp-client` (AdCP — a different "ad context" protocol, unrelated to ACP).
 

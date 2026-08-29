@@ -4,7 +4,7 @@ title: Agent Host Protocol (AHP)
 description: The Agent Host Protocol (AHP) is Microsoft's synchronized, multi-client state protocol for AI agent sessions, framed on JSON-RPC 2.0 with channel-based routing, immutable state, pure reducers, and write-ahead reconciliation.
 resource: https://github.com/microsoft/agent-host-protocol
 tags: [agent-host-protocol, protocol, ai-agents, json-rpc, sessions]
-timestamp: 2026-08-17
+timestamp: 2026-08-29
 ---
 
 # Agent Host Protocol (AHP)
@@ -119,10 +119,15 @@ stateDiagram-v2
 - **Multi-host:** Rust, Swift, and Go SDKs ship a `MultiHostClient` for talking to two or more hosts at once; single-host consumers use the same API (`MultiHostClient::single` / `.single(...)` / `hosts.Single(...)`).
 - **Related ecosystem:** MCP servers surface in AHP as first-class session customizations with a lifecycle and OAuth challenge flow; the `mcp://` side-channel further links AHP to [MCP Apps](/protocols/mcp-apps.md) generative-UI hosting.
 
+### How AHP composes with ACP (2026-08-29, source-backed issue #282)
+
+The relationship between the two "agent protocols" is now documented on the AHP issue tracker: `microsoft/agent-host-protocol#282` ("Relationship between ACP and AHP", 2026-06-27) frames **ACP** ([Agent Client Protocol](/protocols/agent-client-protocol.md)) as the protocol for communication **between a client and an agent runtime**, and **AHP** as the **host that sits between the client and the agent**, translating client requests into ACP to talk to the agent. Many existing clients (IDEs, editors, desktop apps) can implement ACP directly; the host model is for the case where clients speak AHP to the host and the host speaks ACP (and its `mcp://` channel) onward. In factory terms this is a clean layering: ACP is the agent-facing wire, AHP is the session/state hosting layer in front of it (see the [factory hub](/concepts/factory-toolchain.md)).
+
 ### Agent-host issue stream (2026-08-17 pull, watchlist)
 
 - **Detached-shell lifecycle** (issue #331027): the host stops detached shells when idle sessions are released; the SDK exposes authoritative detached-task state through `session.rpc.tasks.refresh()` and `session.rpc.tasks.list()`, and a running detached shell is represented as a task (official agent-host issue, source-backed behavior note, single source).
 - **WSL connections** (issue #307568) and **GitHub Enterprise (GHE) Copilot auth** (issue #313396) are open agent-host feature areas alongside the self-hosting issue above.
+- **Remote/web agent-hosting signals (2026-08-29 re-pull, watchlist):** the issue stream re-surfaced #326016 ("Remote Agent Host fails to start", VS Code milestone 1.129.1) and #317380 ("AgentHost: Dev Containers support", WSL/containers feature request) — continuing coverage of the self-hosting/remote surface; no new spec release appeared (the releases query again drifted to `microsoft/agent-framework` AG-UI work, out of scope). The `mcp://` channel spec file re-confirmed `AhpMcpUiHostCapabilities` as the only defined capability set.
 
 The Release-evidence and current-version headline features (including multiroot working directories, side chats, and MCP tool-call OAuth in v0.7.0) are synthesized on the [Agent Host Protocol releases](/references/agent-host-protocol-releases.md) page.
 
