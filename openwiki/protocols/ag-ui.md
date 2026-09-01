@@ -40,7 +40,7 @@ The TypeScript codebase shapes agent interaction around:
 2. **`HttpAgent`** — standard HTTP client supporting SSE and binary protocols for connecting to agent endpoints.
 3. **Event types** — lifecycle, message, tool, and state-management event families.
 
-Official and community SDKs cover TypeScript (`@ag-ui/core`, `@ag-ui/client`, `@ag-ui/encoder`, `@ag-ui/proto`), Python, Kotlin Multiplatform (Android/iOS/JVM, community-maintained), Go (community), and Swift (community), plus community in-progress Dart, Rust, Ruby, C++, Flowise, and Langflow tracks. See the AG-UI repo structure (`/sdks/typescript/`, `/python-sdk`, `/sdks/community/*`).
+Official and community SDKs cover TypeScript (`@ag-ui/core`, `@ag-ui/client`, `@ag-ui/encoder`, `@ag-ui/proto`), Python, plus community SDKs. The README SDKs table (retrieved **2026-08-29**) marks **Kotlin Multiplatform (Android/iOS/JVM), Go, Java, Dart, Rust, Ruby, and C++ as ✅ Supported (community)** with "Getting Started" resources — moving **Dart, Rust, Ruby, and C++ from the earlier in-progress tracks to supported** in the README listing. Swift ships as the community third-party [paduh/ag-ui-swift](https://github.com/paduh/ag-ui-swift); .NET, Nim, Flowise, and Langflow remain in-progress tracks (watchlist). See the AG-UI repo structure (`/sdks/typescript/`, `/sdks/python/`, `/sdks/community/*`). **Confidence: source-backed** (AG-UI README SDKs table, retrieved 2026-08-29).
 
 ### Expanded integration surface (README, retrieved 2026-08-27)
 
@@ -122,7 +122,7 @@ sequenceDiagram
 ## Status
 
 - Actively developed with a frequent (~weekly) release cadence; README features a quickstart (`npx create-ag-ui-app`), an AG-UI Dojo of 50–200 line building-block examples, a contributed-integration process, and a growing framework/SDK integration surface.
-- **Confidence:** source-backed (AG-UI README and `CLAUDE.md` protocol architecture plus the `docs/sdk/*` overviews from the official `ag-ui-protocol/ag-ui` repo; single primary source, not independently cross-checked); **confirmed** for the exact package/registry version strings retrieved 2026-08-27.
+- **Confidence:** source-backed (AG-UI README and `CLAUDE.md` protocol architecture plus the `docs/sdk/*` overviews from the official `ag-ui-protocol/ag-ui` repo; single primary source, not independently cross-checked); **confirmed** for the exact package/registry version strings retrieved 2026-08-27 (re-confirmed on the 2026-08-29 re-pull with no new adapter versions).
 
 ## Source Map
 

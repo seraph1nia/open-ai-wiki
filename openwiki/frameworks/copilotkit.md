@@ -4,7 +4,7 @@ title: CopilotKit (generative-UI frontend stack)
 description: CopilotKit is a 1st-party client/agent framework for building agent-powered apps with generative UI, consolidated into a monorepo and built on the AG-UI protocol; it renders static generative UI, A2UI declarative JSON, and MCP Apps UIs, and extends agents to chat platforms via its Channels SDK.
 resource: https://github.com/CopilotKit/CopilotKit
 tags: [copilotkit, generative-ui, framework, agent-ui, ag-ui]
-timestamp: 2026-08-22
+timestamp: 2026-08-29
 ---
 
 # CopilotKit (generative-UI frontend stack)
@@ -36,6 +36,7 @@ Also relevant:
 - `CopilotKit/with-langgraph-python` (CopilotKit with LangGraph in Python, star ~24) was likewise **archived** and consolidated into the monorepo at `examples/integrations/langgraph-python` (revealed by the 2026-08-16 third generative-UI pull). **Confidence: source-backed** (repo archive banner; archive date not retrieved for this repo).
 - `CopilotKit/canvas-with-langgraph-python` ("Start for building AG-UI canvas copilots using CopilotKit and LangGraph with Python") was **archived by the owner on 2026-03-12** and consolidated into the monorepo alongside `with-langgraph-python` (revealed by the 2026-08-22 re-pull). The AG-UI Canvas with CopilotKit + Mastra example referenced in the [Mastra starter](/frameworks/mastra-agentic-ui.md) lives in this lineage. **Confidence: source-backed** (repo archive banner, retrieved 2026-08-22).
 - `CopilotKit/with-mcp-apps` (demonstrating CopilotKit consuming MCP Apps UIs) was likewise **archived** and consolidated into the monorepo at `examples/integrations/mcp-apps` (revealed by the 2026-08-27 pull; small standalone repo, ~6 stars). This tracks the [MCP Apps](/protocols/mcp-apps.md) integration into the same monorepo as the other generative-UI integrations. **Confidence: source-backed** (repo archive banner, retrieved 2026-08-27).
+- `CopilotKit/with-a2a-middleware` (CopilotKit frontend with an A2A middleware agent backend: Next.js app + `agents/` directory) was likewise **archived on 2026-03-12** and consolidated into the monorepo at `examples/integrations/a2a-middleware` (revealed by the 2026-08-29 pull; 3 commits, 7 stars). This folds the A2A protocol integration into the same `examples/integrations/` line as the ADK and LangGraph-Python consolidations. **Confidence: source-backed** (repo archive banner, retrieved 2026-08-29).
 - CopilotKit's **skills** (open Agent Skills standard) live under the monorepo, with a routing table across specialized sub-skills (setup, develop, integrations, debug, upgrade, `copilotkit-agui` for building AG-UI backends, contribute, self-update).
 - The CopilotKit README's "AG-UI: The Agent–User Interaction Protocol" section promotes `npx create-ag-ui-app` for new AG-UI apps.
 

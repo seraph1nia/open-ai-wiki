@@ -4,7 +4,7 @@ title: Effect
 description: Effect is a powerful TypeScript library for building complex synchronous and asynchronous programs with typed, composable effects; v4 is the current era. Its durable-execution surface (DurableQueue ported to v4, @effect/workflow in alpha) is confirmed source-backed from the official Effect v4 beta documentation.
 resource: https://www.effect.website/docs/v4/api/effect
 tags: [effect, typescript, durable-execution, framework, v4]
-timestamp: 2026-08-27
+timestamp: 2026-08-29
 ---
 
 # Effect
@@ -60,3 +60,9 @@ The community "What's New in Effect v4" gist was **re-confirmed by the 2026-08-2
 - All operations compose atomically with `Effect.atomic()`; collections: **`TxHashMap`, `TxHashSet`, `TxQueue`, `TxChunk`, `TxSemaphore`**.
 - Positioned for lock-free rate limiters, caches, and job queues; automatic rollback on errors.
 - Additional gist claims (watchlist, community summary): `getOrThrow` now throws the error directly instead of wrapping; `zipWith`/`ap` removed in favor of `all()` for parallel composition; first-class, composable transformations and filters (with `errors: "all"` multi-issue reporting) replacing v3's schema-embedded equivalents; core `Effect<A, E, R>` unchanged across v3→v4.
+
+## 2026-08-29 re-pull (reconfirmation + secondary signals)
+
+- **Reconfirmation (no new v4 API surface):** the v4 API query returned the deterministic official set — the "What's New in Effect v4" gist (community, watchlist), the official [February–May recap](https://www.effect.website/blog/effect-v4beta-launch-to-may-recap), the official [v4 Beta release post](https://effect.website/blog/releases/effect/40-beta), plus the **`Effect-TS/effect` repo's own `LLMS.md`** (an LLM-oriented summary of the Effect repo on `main`) and the repo itself. The February–May recap's durable facts (DurableQueue port, `@effect/workflow` alpha, STM collections) were reconfirmed; the STM/`getOrThrow` gist claims remain watchlist.
+- **Durable-execution query (secondary, watchlist):** the top hits stayed on the official `Effect-TS/effect#6014` Activity-replay bug (already documented above) plus community durable-engine material that remains **out of scope** (`backpine/durable-effect`, `durable-workflow/workflow` — the former Laravel Workflow package rebranded, and `dotty-cps-async/durable-monad`'s replay-vs-snapshot design notes). The durable-monad notes are a useful secondary description of replay-based vs snapshot-based durable execution but are not Effect v4 documentation.
+- **Gap unchanged:** the full procedural `@effect/workflow` primitive/API packaging is still un-retrieved; the official v4 workflow docs remain the target.

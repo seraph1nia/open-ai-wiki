@@ -1,9 +1,9 @@
 ---
 type: Reference
 title: Open Questions
-description: Active, answered, and stale questions about the AI knowledge wiki's coverage and memory graph, including gaps in evidence about projects tracked in this corpus (e.g. Effect's deep Workflow/Activity API semantics, generative-UI SDK version resources). OpenWiki's OKF version and current-release questions are now answered (v0.3.3, OKF v0.2 output).
+description: Active, answered, and stale questions about the AI knowledge wiki's coverage and memory graph, including gaps in evidence about projects tracked in this corpus (e.g. Effect's deep Workflow/Activity API semantics, CopilotKit package versions, A2UI v1.0 GA status, OpenWiki v0.4.x release confirmation). OpenWiki's OKF version and current-release questions are now answered (releases-page v0.3.3; OKF v0.2 output; main HEAD at v0.4.3, watchlist).
 tags: [open-questions, memory-graph, wiki-quality, okf, openwiki]
-timestamp: 2026-08-27
+timestamp: 2026-08-29
 ---
 
 # Open Questions
@@ -18,8 +18,8 @@ timestamp: 2026-08-27
 
 ### generative-ui-sdk-versions: Do the CopilotKit package versions and A2UI v1.0 GA match the release resources?
 - Owner: unknown
-- Seen: 2026-08-27
-- Evidence: The **AG-UI side of this question is now answered** — the 2026-08-27 pull retrieved the AG-UI releases page with exact package/registry versions (latest release 2026-08-20): `@ag-ui/mastra@1.1.2`, `@ag-ui/langgraph@0.0.43`, `@ag-ui/langchain@0.0.3`, `@ag-ui/pydantic-ai@0.0.3`, `@ag-ui/ag2@0.0.2`, `@ag-ui/agno@0.0.6`, `@ag-ui/crewai@0.0.4`, `@ag-ui/llamaindex@0.2.0`, PyPI `ag-ui-langgraph==0.0.43`/`ag-ui-crewai==0.3.0`/`ag_ui_strands==0.3.0`, NuGet `AGUI.*@0.0.5`, Maven `com.ag-ui.community:java-*@0.1.0`, Kotlin `0.4.1` (see [AG-UI](/protocols/ag-ui.md)). Still open: **CopilotKit package versions** (only the watchlist #2840 peer-conflict detail `@copilotkit/runtime@1.10.6`/`@ag-ui/client@0.0.41` is available) and **A2UI v1.0 GA status** (v0.9.1 is the confirmed current production spec; v1.0 remains a Q4-2026 candidate). See [web-search generative-UI source page](/sources/web-search-generative-ui.md).
+- Seen: 2026-08-29
+- Evidence: The **AG-UI side of this question is now answered** — the 2026-08-27 pull retrieved the AG-UI releases page with exact package/registry versions (latest release 2026-08-20): `@ag-ui/mastra@1.1.2`, `@ag-ui/langgraph@0.0.43`, `@ag-ui/langchain@0.0.3`, `@ag-ui/pydantic-ai@0.0.3`, `@ag-ui/ag2@0.0.2`, `@ag-ui/agno@0.0.6`, `@ag-ui/crewai@0.0.4`, `@ag-ui/llamaindex@0.2.0`, PyPI `ag-ui-langgraph==0.0.43`/`ag-ui-crewai==0.3.0`/`ag_ui_strands==0.3.0`, NuGet `AGUI.*@0.0.5`, Maven `com.ag-ui.community:java-*@0.1.0`, Kotlin `0.4.1` (see [AG-UI](/protocols/ag-ui.md)); the **2026-08-29 re-pull re-confirmed** those registry versions and returned no newer adapter releases. Still open: **CopilotKit package versions** (only the watchlist #2840 peer-conflict detail `@copilotkit/runtime@1.10.6`/`@ag-ui/client@0.0.41` is available) and **A2UI v1.0 GA status** (v0.9.1 is the confirmed current production spec; the 2026-08-29 roadmap re-pull re-confirmed Q4-2026 v1.0 as the target, not a GA). See [web-search generative-UI source page](/sources/web-search-generative-ui.md).
 - Notes: The AG-UI portion was promoted to Answered (registry-confirmed). The remaining gap is CopilotKit package versions + A2UI v1.0 GA. Watchlist confidence for the residual items.
 
 ## Answered
@@ -41,7 +41,7 @@ timestamp: 2026-08-27
 - Answered: 2026-08-22
 
 ### openwiki-current-release: What is the current released OpenWiki version (npm), and what does the release trail contain?
-- Evidence: The [OpenWiki releases page](https://github.com/langchain-ai/openwiki/releases) fragment (retrieved 2026-08-22) is **v0.3.3 Latest** — the v0.3.x line (v0.3.2, v0.3.1, v0.3.0) above v0.2.5, 0.2.4, 0.2.3, 0.2.2, 0.2.1, 0.2.0 — with the v0.3.3 body listing Copilot-provider and multilingual-output features plus connector/retry fixes (see the [Releases section](/frameworks/openwiki.md#releases)). Engine stamps in generated bundles read `verified: by openwiki/0.3.3` (2026-08-21). Release dates and complete changelogs remain un-captured.
+- Evidence: The [OpenWiki releases page](https://github.com/langchain-ai/openwiki/releases) fragment (retrieved 2026-08-22) is **v0.3.3 Latest** — the v0.3.x line (v0.3.2, v0.3.1, v0.3.0) above v0.2.5, 0.2.4, 0.2.3, 0.2.2, 0.2.1, 0.2.0 — with the v0.3.3 body listing Copilot-provider and multilingual-output features plus connector/retry fixes (see the [Releases section](/frameworks/openwiki.md#releases)). Engine stamps in generated bundles read `verified: by openwiki/0.3.3` (2026-08-21). The 2026-08-29 re-pull added a **HEAD signal**: `main`'s `package.json` declares **v0.4.3** (not yet a releases-page-confirmed release — tracked as watchlist in the Backlog, not a new open question). Release dates and complete changelogs remain un-captured.
 - Answered: 2026-08-22
 
 ## Stale

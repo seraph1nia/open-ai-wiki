@@ -4,7 +4,7 @@ title: OpenCode
 description: OpenCode is an open-source AI coding agent available as a terminal UI, desktop app, or IDE extension, with a type-safe JavaScript/TypeScript SDK (@opencode-ai/sdk) for building integrations and controlling the opencode server programmatically.
 resource: https://opencode.ai/docs/sdk/
 tags: [opencode, sdk, coding-agent, typescript, ai-agents]
-timestamp: 2026-08-27
+timestamp: 2026-08-29
 ---
 
 # OpenCode
@@ -43,6 +43,10 @@ The 2026-08-27 pull surfaced a new v2 docs page — [`opencode.ai/v2/docs/build/
 - For non-Effect applications, the recommendation remains **run OpenCode as a server and use the TypeScript client** (the v1 network client above).
 
 This is a durable cross-link to the [Effect](/frameworks/effect.md) orchestration layer: the SDK is explicitly **Effect-native**, so it *composes with the factory's durable-orchestration foundation* rather than being framework-agnostic. The factory's OpenCode option now splits into the general-purpose Effect-native V2 SDK versus the framework-agnostic v1 network client.
+
+## 2026-08-29 re-pull (reconfirmation)
+
+The 2026-08-29 pull re-confirmed the two SDK docs surfaces — the official v1 page (`opencode.ai/docs/sdk`: `createOpencode()` client, options table `baseUrl`/`fetch`/`parseAs`/`responseStyle`/`throwOnError`) and the V2 Effect-native page (`opencode.ai/v2/docs/build/sdk`: `@opencode-ai/sdk` hosts OpenCode in-process via its HTTP router; `OpenCode.create()`; beta install `bun add @opencode-ai/sdk@dev`) — plus the third-party **`anomalyco/opencode-sdk-python`** Python client (watchlist ecosystem signal). No new SDK release version or API surface appeared. The V2-vs-v1 split described above remains the current state.
 
 ## Confidence
 - **Source-backed:** SDK identity, purpose, and `createOpencode`/`@opencode-ai/sdk` usage from the official docs; the V2 Effect-native SDK (`OpenCode.create()`, in-memory HTTP router, beta install) from the official `opencode.ai/v2/docs/build/sdk` page (2026-08-27).
