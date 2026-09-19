@@ -1,10 +1,10 @@
 ---
 type: Reference
 title: Pierre (Pierre Computer Company)
-description: Pierre is the open-source TypeScript toolkit from the Pierre Computer Company for diffs, trees, and memes, including the @pierre/diffs library that renders and edits file diffs; maintained at github.com/pierrecomputer/pierre.
+description: Pierre is the open-source TypeScript toolkit from the Pierre Computer Company for diffs, trees, and memes, including the @pierre/diffs library that renders and edits file diffs; maintained at github.com/pierrecomputer/pierre. Current @pierre/diffs release is v1.4.2 (2026-09-11, TypeScript 7, v1.4 breaking-change line with a migration guide from 1.3).
 resource: https://github.com/pierrecomputer/pierre
 tags: [pierre, diffs, sdlc, toolkit, typescript]
-timestamp: 2026-08-29
+timestamp: 2026-09-19
 ---
 
 # Pierre (Pierre Computer Company)
@@ -31,9 +31,19 @@ The 2026-08-22 re-pull captured the current release trail: **v1.3.0 → v1.3.1 �
 - Fix for **empty-new `FileDiff` edit** handling, plus a syntax update for the `contrast-color()` function on marker popovers (with e2e coverage).
 - Contributions from @mdo and @ije.
 
-Project repo metadata (path listing) shows a pnpm/moon workspace with `packages/`, `apps/`, and a `skills/` directory, plus `AGENTS.md`/`CLAUDE.md` — a modern, agent-native monorepo layout. Repo snapshot (2026-08-22 fetch): **6.0k stars / 201 forks** — watchlist only, page snapshots not release metadata.
+### The v1.4 line — `@pierre/diffs` v1.4.2 (2026-09-11, source-backed release body)
 
-- **Source-backed:** the repo's existence, TypeScript/monorepo nature, the `@pierre/diffs` v1.3.0-v1.3.5 release content (incl. the v1.3.5 edit-retokenization fix), and focus on diffs/trees (retrieved from the GitHub repo and releases pages this run).
+The 2026-09-19 re-pull captured the next generation: **v1.3.6 → v1.4.0 → v1.4.1 → v1.4.2 (latest, released 2026-09-11 by `@amadeus`, commit `f6d917f`)**. The v1.4 line is a **breaking-change line**: the v1.4.2 release notes explicitly say "(if updating from 1.3, please follow the migration guide)". **v1.4.2** highlights:
+
+- **"chore: update the entire app to use typescript 7"** (#1114) — the whole app now builds on TypeScript 7.
+- **"[diffs] Ensure both languages are loaded on a diff that renames languages"** (#1122) — a multi-language diff-loading fix for renamed files.
+- Full changelog: `diffs-v1.4.1...diffs-v1.4.2`.
+
+The migration-guide pointer means a future run should capture the v1.4.0 breaking-change body (not retrieved this run) for the concrete migration surface.
+
+Project repo metadata (path listing) shows a pnpm/moon workspace with `packages/`, `apps/`, and a `skills/` directory, plus `AGENTS.md`/`CLAUDE.md` — a modern, agent-native monorepo layout. Repo snapshot (2026-08-22 fetch): **6.0k stars / 201 forks** — watchlist only, page snapshots not release metadata. The 2026-09-19 fetch re-confirmed the repo surface (sprite/config files, ~886 commits, open PRs incl. `feat(diffs/editor): Add marker support` #787).
+
+- **Source-backed:** the repo's existence, TypeScript/monorepo nature, the `@pierre/diffs` v1.3.0-v1.3.5 release content (incl. the v1.3.5 edit-retokenization fix) and the **v1.4.0–v1.4.2 line** (TypeScript 7 migration, renamed-language loading fix, migration guide from 1.3) — retrieved from the GitHub repo and releases pages this run.
 - **Watchlist:** the Tavily `answer` fields (e.g. "over 6,000 stars", focus claims) are synthesized and not independently verified; treat star counts as unconfirmed (6.0k stars / 201 forks per the 2026-08-22 page snapshot).
 - Gap: the repository and its releases resource were only witnessed via web-search results this run, not ingested directly. Direct repo/release ingestion would confirm version history and cadence.
 

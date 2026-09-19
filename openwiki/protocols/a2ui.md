@@ -4,7 +4,7 @@ title: A2UI (Agent to UI) Protocol
 description: A2UI is a declarative, Apache-2.0 UI protocol for agent-driven interfaces, in which agents generate a JSON payload describing UI components that render natively across web, mobile, and desktop without executing arbitrary code.
 resource: https://a2ui.org
 tags: [a2ui, protocol, agent-ui, generative-ui, declarative, ai-agents]
-timestamp: 2026-08-29
+timestamp: 2026-09-19
 ---
 
 # A2UI (Agent to UI) Protocol
@@ -98,7 +98,7 @@ Client (Stream Reader) → Message Parser → Renderer → Native UI
 
 ## Renderers and client libraries
 
-Maintained renderers cover **React, Lit (Web Components), Angular, and Flutter (GenUI SDK)**, all stable for v0.8 and v0.9.1; SwiftUI (iOS/macOS) and Jetpack Compose (Android) are planned for v1.0. A compliant renderer must parse the A2UI adjacency-list JSON format, map abstract components to native widgets, handle data binding and lifecycle events, process incremental messages to build/update UI, support server-initiated updates, and support user actions.
+Maintained renderers cover **React, Lit (Web Components), Angular, Web Core (shared lib for all web renderers), Flutter (GenUI SDK), and Lynx (ReactLynx renderer for A2UI v0.9)**, all stable for v0.8 and v0.9.1; SwiftUI (iOS/macOS) and Jetpack Compose (Android) are planned for v1.0/Q2 2026, with Vue, Svelte/Kit, and ShadCN (React) proposed via community interest (roadmap renderers table, retrieved 2026-09-19 — **Lynx stable is a new durable delta**). A compliant renderer must parse the A2UI adjacency-list JSON format, map abstract components to native widgets, handle data binding and lifecycle events, process incremental messages to build/update UI, support server-initiated updates, and support user actions.
 
 ## Security and trust-boundary model
 
@@ -115,11 +115,11 @@ A2UI is explicitly "declarative data, no code execution": agents send abstract c
 
 ## Interoperability surfaces
 
-A2UI is designed to interop with the rest of the agent-UI space rather than replace it. The site documents explicit cross-integrations: **A2UI over [MCP](/protocols/model-context-protocol.md)**, **MCP Apps in A2UI**, and **A2UI in MCP Apps** (see the [MCP Apps page](/protocols/mcp-apps.md)). Its roadmap mentions supporting more renderers (Jetpack Compose, SwiftUI) and more transports (REST). The v1.0 candidate spec adds transport contracts/binings, a functions-in-content execution model (with async evaluation and pending states), and agent/renderer capability negotiation. Interactive tools on a2ui.org include the **A2UI Composer** (visual widget builder that generates A2UI JSON for pasting into agent prompts) and **A2UI Theater** (step-through streaming scenarios across Lit, React, and Angular renderers).
+A2UI is designed to interop with the rest of the agent-UI space rather than replace it. The site documents explicit cross-integrations: **A2UI over [MCP](/protocols/model-context-protocol.md)**, **MCP Apps in A2UI**, and **A2UI in MCP Apps** (see the [MCP Apps page](/protocols/mcp-apps.md)). Its roadmap mentions supporting more renderers (Jetpack Compose, SwiftUI) and more transports (REST). The [How to Use A2UI](https://a2ui.org/introduction/how-to-use) page (retrieved 2026-09-19) formalizes this as **three integration paths** — *Host Application (frontend)*, *Agent (backend)*, and *Using an Existing Framework* — with the third routing to **AG-UI / CopilotKit** ("full-stack agentic app framework with A2UI rendering") and the **Flutter GenUI SDK** ("uses A2UI internally"), plus explicit backend agent-framework guidance (Python: Google ADK, LangChain, custom; Node.js: A2A SDK, Vercel AI SDK, custom). The v1.0 candidate spec adds transport contracts/binings, a functions-in-content execution model (with async evaluation and pending states), and agent/renderer capability negotiation. Interactive tools on a2ui.org include the **A2UI Composer** (visual widget builder that generates A2UI JSON for pasting into agent prompts) and **A2UI Theater** (step-through streaming scenarios across Lit, React, and Angular renderers). The v0.8↔v0.9 [evolution guide](https://a2ui.org/specification/v0.9-evolution-guide) (retrieved 2026-09-19) documents the breaking renames and semantic shifts between the two families (e.g. data binding `dataBinding`/`literalString` → `path`/native JSON types; `beginRendering` → `createSurface`; explicit `sendDataModel` client→server data syncing), corroborating the v0.9 prompt-first design on this page.
 
 ## Status
 
-- **Confidence:** source-backed (a2ui.org specification v1.0 candidate/v0.9.1/v0.8, data-flow, renderers reference, who-is-it-for, catalogs, and roadmap pages, plus the `a2ui-project/a2ui` repo README; single primary source on most points, not independently cross-checked). The full v0.9.1 spec surface was retrieved 2026-08-27.
+- **Confidence:** source-backed (a2ui.org specification v1.0 candidate/v0.9.1/v0.8, data-flow, data-binding, renderers reference, who-is-it-for, how-to-use, evolution guide, catalogs, and roadmap pages, plus the `a2ui-project/a2ui` repo README; single primary source on most points, not independently cross-checked). The full v0.9.1 spec surface was retrieved 2026-08-27; the Lynx renderer, how-to paths, and evolution guide were retrieved 2026-09-19.
 - Actively developed and shaped by community roadmap feedback; current stable is v0.9.1; v1.0 is a candidate targeting Q4 2026; long-term vision is full app UIs, multi-agent coordination, accessibility, advanced UI patterns, and ecosystem growth.
 
 ## Source Map

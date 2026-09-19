@@ -4,7 +4,7 @@ title: OpenCode
 description: OpenCode is an open-source AI coding agent available as a terminal UI, desktop app, or IDE extension, with a type-safe JavaScript/TypeScript SDK (@opencode-ai/sdk) for building integrations and controlling the opencode server programmatically.
 resource: https://opencode.ai/docs/sdk/
 tags: [opencode, sdk, coding-agent, typescript, ai-agents]
-timestamp: 2026-08-29
+timestamp: 2026-09-19
 ---
 
 # OpenCode
@@ -48,6 +48,10 @@ This is a durable cross-link to the [Effect](/frameworks/effect.md) orchestratio
 
 The 2026-08-29 pull re-confirmed the two SDK docs surfaces — the official v1 page (`opencode.ai/docs/sdk`: `createOpencode()` client, options table `baseUrl`/`fetch`/`parseAs`/`responseStyle`/`throwOnError`) and the V2 Effect-native page (`opencode.ai/v2/docs/build/sdk`: `@opencode-ai/sdk` hosts OpenCode in-process via its HTTP router; `OpenCode.create()`; beta install `bun add @opencode-ai/sdk@dev`) — plus the third-party **`anomalyco/opencode-sdk-python`** Python client (watchlist ecosystem signal). No new SDK release version or API surface appeared. The V2-vs-v1 split described above remains the current state.
 
+## 2026-09-19 re-pull (reconfirmation + v1 current-state detail)
+
+The 2026-09-19 pull re-confirmed the official v1 SDK docs surface (type-safe client; creating integrations; "control opencode programmatically") and the **`opencode.ai/docs/go`** page — **OpenCode Go**, the low-cost **paid subscription** ($5 first month, then $10/month) giving global access to popular open coding models (Grok 4.6, GPT 5.6 Luna, GLM-5.x, Kimi K2.x, LongCat-2.0, DeepSeek V4 Pro/Flash) — **not** a Go language SDK (corrected in the 2026-08-18 run, re-confirmed here). Two community ecosystem signals were surfaced: **`ai-sdk-provider-opencode-sdk`** (`ben-vargas`, a Vercel-AI-SDK provider for OpenCode whose v2.x supports **AI SDK v6** via the `@opencode-ai/sdk/v2` APIs, with `generateText()`/`streamText()`/`streamObject()`, native JSON-schema output, tool-approval flows, and file/source access) and the **`anomalyco/opencode-sdk-python`** client — both third-party, watchlist. No official SDK release-version change appeared; the V2-vs-v1 split stands.
+
 ## Confidence
-- **Source-backed:** SDK identity, purpose, and `createOpencode`/`@opencode-ai/sdk` usage from the official docs; the V2 Effect-native SDK (`OpenCode.create()`, in-memory HTTP router, beta install) from the official `opencode.ai/v2/docs/build/sdk` page (2026-08-27).
-- **Watchlist:** the OAuth removal and community-provider feature matrix are third-party reports, not confirmed from primary OpenCode sources.
+- **Source-backed:** SDK identity, purpose, and `createOpencode`/`@opencode-ai/sdk` usage from the official docs; the V2 Effect-native SDK (`OpenCode.create()`, in-memory HTTP router, beta install) from the official `opencode.ai/v2/docs/build/sdk` page (2026-08-27); the OpenCode Go subscription identity re-confirmed 2026-09-19.
+- **Watchlist:** the OAuth removal and community-provider feature matrix (`ai-sdk-provider-opencode-sdk`) are third-party reports, not confirmed from primary OpenCode sources.

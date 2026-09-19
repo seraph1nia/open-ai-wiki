@@ -4,7 +4,7 @@ title: CopilotKit (generative-UI frontend stack)
 description: CopilotKit is a 1st-party client/agent framework for building agent-powered apps with generative UI, consolidated into a monorepo and built on the AG-UI protocol; it renders static generative UI, A2UI declarative JSON, and MCP Apps UIs, and extends agents to chat platforms via its Channels SDK.
 resource: https://github.com/CopilotKit/CopilotKit
 tags: [copilotkit, generative-ui, framework, agent-ui, ag-ui]
-timestamp: 2026-08-29
+timestamp: 2026-09-19
 ---
 
 # CopilotKit (generative-UI frontend stack)
@@ -35,7 +35,8 @@ Also relevant:
 - `CopilotKit/with-adk` (demo of CopilotKit with the AG-UI `ada-middleware`, i.e. Google ADK support) was **archived on 2026-03-12** and consolidated into the monorepo at `examples/integrations/adk`.
 - `CopilotKit/with-langgraph-python` (CopilotKit with LangGraph in Python, star ~24) was likewise **archived** and consolidated into the monorepo at `examples/integrations/langgraph-python` (revealed by the 2026-08-16 third generative-UI pull). **Confidence: source-backed** (repo archive banner; archive date not retrieved for this repo).
 - `CopilotKit/canvas-with-langgraph-python` ("Start for building AG-UI canvas copilots using CopilotKit and LangGraph with Python") was **archived by the owner on 2026-03-12** and consolidated into the monorepo alongside `with-langgraph-python` (revealed by the 2026-08-22 re-pull). The AG-UI Canvas with CopilotKit + Mastra example referenced in the [Mastra starter](/frameworks/mastra-agentic-ui.md) lives in this lineage. **Confidence: source-backed** (repo archive banner, retrieved 2026-08-22).
-- `CopilotKit/with-mcp-apps` (demonstrating CopilotKit consuming MCP Apps UIs) was likewise **archived** and consolidated into the monorepo at `examples/integrations/mcp-apps` (revealed by the 2026-08-27 pull; small standalone repo, ~6 stars). This tracks the [MCP Apps](/protocols/mcp-apps.md) integration into the same monorepo as the other generative-UI integrations. **Confidence: source-backed** (repo archive banner, retrieved 2026-08-27).
+- `CopilotKit/with-mcp-apps` (demonstrating CopilotKit consuming MCP Apps UIs) was nonetheless **archived** and consolidated into the monorepo at `examples/integrations/mcp-apps` (revealed by the 2026-08-27 pull; small standalone repo, ~6 stars). This tracks the [MCP Apps](/protocols/mcp-apps.md) integration into the same monorepo as the other generative-UI integrations. **Confidence: source-backed** (repo archive banner, retrieved 2026-08-27).
+- `CopilotKit/mcp-apps-demo` ("Interactivity at a new level - MCP apps"; Next.js demo with `mcp-server/`, `public/`, `src/`, `CLAUDE.md`, `Dockerfile`, `railway.toml`) was **archived** and consolidated into the CopilotKit monorepo (revealed by the 2026-09-19 pull) — a second MCP-Apps demo joining `with-mcp-apps` in the same consolidation line. **Confidence: source-backed** (repo archive banner, retrieved 2026-09-19).
 - `CopilotKit/with-a2a-middleware` (CopilotKit frontend with an A2A middleware agent backend: Next.js app + `agents/` directory) was likewise **archived on 2026-03-12** and consolidated into the monorepo at `examples/integrations/a2a-middleware` (revealed by the 2026-08-29 pull; 3 commits, 7 stars). This folds the A2A protocol integration into the same `examples/integrations/` line as the ADK and LangGraph-Python consolidations. **Confidence: source-backed** (repo archive banner, retrieved 2026-08-29).
 - CopilotKit's **skills** (open Agent Skills standard) live under the monorepo, with a routing table across specialized sub-skills (setup, develop, integrations, debug, upgrade, `copilotkit-agui` for building AG-UI backends, contribute, self-update).
 - The CopilotKit README's "AG-UI: The Agent–User Interaction Protocol" section promotes `npx create-ag-ui-app` for new AG-UI apps.
@@ -43,11 +44,12 @@ Also relevant:
 ## Tooling and versioning
 
 - **v2 API surface** — CopilotKit skills and docs target the v2 API (`@copilotkit/react-core`, `@copilotkit/runtime`, `@copilotkit/react-ui`, etc.). Setup packages: frontend `@copilotkit/react` + `@copilotkit/core`; runtime `@copilotkit/runtime` + `@copilotkit/agent` (with Express/single-route endpoint factories such as `createCopilotEndpoint`, `createCopilotEndpointExpress`).
-- **Dependency coupling to AG-UI** — `@copilotkit/runtime` declares a peer dependency on `@ag-ui/client` (≥0.0.39), and the AG-UI LangGraph adapter pins `@ag-ui/langgraph`; the open issue [CopilotKit/CopilotKit#2840](https://github.com/CopilotKit/CopilotKit/issues/2840) documents an `ERESOLVE` peer-dependency conflict between `@ag-ui/client@0.0.41` and `@ag-ui/langgraph`'s pinned `@ag-ui/client@0.0.40-alpha.7`. **Confidence: watchlist** — a single bug report, not a stable fact, but it evidences the tight CopilotKit↔AG-UI coupling.
+- **Dependency coupling to AG-UI** — `@copilotkit/runtime` declares a peer dependency on `@ag-ui/client` (≥0.0.39), and the AG-UI LangGraph adapter pins `@ag-ui/langgraph`; the open issue [CopilotKit/CopilotKit#2840](https://github.com/CopilotKit/CopilotKit/issues/2840) documents an `ERESOLVE` peer-dependency conflict between `@ag-ui/client@0.0.41` and `@ag-ui/langgraph`'s pinned `@ag-ui/client@0.0.40-alpha.7`. **Confidence: watchlist** — a single bug report, not a stable fact, but it evidences the tight CopilotKit↔AG-UI coupling. CopilotKit's own docs make the coupling official: [docs.copilotkit.ai/teams/mastra/backend/ag-ui](https://docs.copilotkit.ai/teams/mastra/backend/ag-ui) confirms CopilotKit "is built on the AG-UI protocol" and that **messages, state updates, tool calls, and agent lifecycle events all flow through AG-UI**, with the resolved agent being a standard AG-UI `AbstractAgent` (retrieved 2026-09-19; source-backed).
 - **Unresolved integration demand (watchlist)** — two open CopilotKit feature requests evidence the coupling the ecosystem wants and its current runtime-boundary:
   - [CopilotKit/CopilotKit#2186](https://github.com/CopilotKit/CopilotKit/issues/2186) (2025-07-18) requests sending **AG-UI events directly to CopilotKit from custom agent backends** without the CopilotKit Runtime / Node.js intermediary (`CopilotKit <== AG-UI ==> My Agent Backend`), i.e. decoupling CopilotKit from its runtime backend.
   - [CopilotKit/CopilotKit#1993](https://github.com/CopilotKit/CopilotKit/issues/1993) (2025-06-16, assigned `tylerslaton`) requests **agentic generative UI + shared state** in the [Mastra agentic-UI](/frameworks/mastra-agentic-ui.md) feature set via CopilotKit-driven human-in-the-loop, arguing only LangGraph currently has a viable alternative.
   **Confidence: watchlist** (open feature requests, retrieved 2026-08-22).
+- **Closed compatibility bug (#2897, watchlist)** — [CopilotKit/CopilotKit#2897](https://github.com/CopilotKit/CopilotKit/issues/2897) (opened 2025-12-19) records a closed error where a **langgraph agent's tool-return `Command`** triggered `{ "code": "invalid_type", "expected": "string", "received": "undefined", "path": ["toolCallId"], "message": "Required" }` in Copilot. It evidences AG-UI-related schema strictness in the LangGraph agent path (toolCallId propagation) and is **closed**; useful as a compatibility data point for the CopilotKit↔AG-UI coupling, not an open issue. **Confidence: source-backed** (issue body, retrieved 2026-09-19).
 
 ## Channels SDK
 
@@ -67,7 +69,7 @@ Also relevant:
 ## Status
 
 - Actively maintained under a monorepo; skills and docs consolidated; the generative-UI playground now lives inside the repo.
-- **Confidence:** source-backed for the monorepo consolidation, skill location, and generative-UI types (official `CopilotKit/CopilotKit` sub-repos and docs); watchlist for the open dependency bug.
+- **Confidence:** source-backed for the monorepo consolidation, skill location, generative-UI types, and the AG-UI coupling (official `CopilotKit/CopilotKit` sub-repos, `docs.copilotkit.ai` AG-UI page retrieved 2026-09-19, and the AG-UI README); watchlist for the open dependency bug (#2840) and the closed #2897 compatibility edge case.
 
 ## Source Map
 

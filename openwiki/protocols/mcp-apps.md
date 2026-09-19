@@ -4,14 +4,16 @@ title: MCP Apps (Model Context Protocol Apps extension)
 description: MCP Apps is the first official extension to the Model Context Protocol, co-developed by Anthropic and OpenAI, letting MCP servers deliver interactive UIs (charts, forms, dashboards) rendered securely in sandboxed iframes inside any compliant host — with a 5-phase UI lifecycle, ui:// tool-linked resources, JSON-RPC-over-postMessage communication, tool visibility, host theming/context, display modes, and a View-side App runtime API (@modelcontextprotocol/ext-apps).
 resource: https://github.com/modelcontextprotocol/ext-apps
 tags: [mcp, mcp-apps, protocol, extension, agent-ui, generative-ui]
-timestamp: 2026-08-29
+timestamp: 2026-09-19
 ---
 
 # MCP Apps (Model Context Protocol Apps extension)
 
 **MCP Apps** is the **first official extension to the Model Context Protocol**, co-developed by **Anthropic and OpenAI** and released as an open standard. It extends MCP so that **servers can deliver interactive user interfaces to hosts** — charts, forms, dashboards, rich media, and real-time displays — rendered **securely in iframes** inside any compliant host. Predecessors/alternatives (MCP-UI, OpenAI's Apps SDK, and assorted custom implementations) each solved UI support differently; MCP Apps standardizes one mechanism.
 
-Source: [`modelcontextprotocol/ext-apps`](https://github.com/modelcontextprotocol/ext-apps). Evidence for this page lives on the [web-search generative-UI source page](/sources/web-search-generative-ui.md) and the 2026-08-17/2026-08-18/2026-08-22/2026-08-27/2026-08-29 [Agent integration protocols source page](/sources/web-search-agent-integration-protocols.md). MCP Apps **extends the [Model Context Protocol](/protocols/model-context-protocol.md)** — the base JSON-RPC standard this extension builds on.
+Source: [`modelcontextprotocol/ext-apps`](https://github.com/modelcontextprotocol/ext-apps). Evidence for this page lives on the [web-search generative-UI source page](/sources/web-search-generative-ui.md) and the 2026-08-17/2026-08-18/2026-08-22/2026-08-27/2026-08-29/2026-09-19 [Agent integration protocols source page](/sources/web-search-agent-integration-protocols.md). MCP Apps **extends the [Model Context Protocol](/protocols/model-context-protocol.md)** — the base JSON-RPC standard this extension builds on.
+
+In addition to the extension repo, the **official protocol site** documents MCP Apps at <https://modelcontextprotocol.io/extensions/apps/overview> (retrieved run 6, 2026-09-19) — the protocol reference mirroring the repo docs.
 
 ## Why it exists
 
@@ -70,6 +72,19 @@ Views and Hosts communicate using **JSON-RPC over `postMessage`**, keeping the c
 
 In the architecture the **View acts as an MCP client**, the **Host acts as a proxy**, and the **Server is a standard MCP server** — the View runs client-side and reaches the server through the Host's MCP connection.
 
+### The wire protocol is postMessage-only, and the `App` class is a convenience wrapper
+
+The official protocol-site overview ([MCP Apps overview](https://modelcontextprotocol.io/extensions/apps/overview), retrieved run 6) frames the wire contract sharply: **MCP Apps uses its own dialect of MCP, built on JSON-RPC like the core protocol** — some messages are shared with regular MCP (e.g. `tools/call`), while others are specific to apps (e.g. `ui/initialize`), and **the transport is `postMessage` instead of stdio or HTTP**. Because it is all standard web primitives, hosts and Views are free to implement the postMessage protocol directly — **the `App` class from `@modelcontextprotocol/ext-apps` is a convenience wrapper, not a requirement**. The repo's `examples/` directory includes starter templates for React, Vue, Svelte, Preact, Solid, and vanilla JavaScript, shown as recommended patterns per framework rather than requirements.
+
+### Host-side integration: `@mcp-ui/client` and AppBridge
+
+For **hosts** that want to render MCP Apps views, the overview documents two integration paths:
+
+1. **`@mcp-ui/client`** — a React package providing components for rendering and interacting with MCP Apps views inside a host application (see the MCP-UI documentation for usage).
+2. **AppBridge** — a module in the SDK that handles rendering apps in sandboxed iframes, message passing, tool-call proxying, and **security-policy enforcement**; the `basic-host` example shows how to integrate it.
+
+These are the host-side counterparts to the View-side `App` runtime and the server-side `registerAppTool()`/`registerAppResource()` surface (see below).
+
 ### Tool visibility
 
 Tools can be visible to the model, the app, or both; by default they are visible to both (`visibility: ["model", "app"]`). **App-only tools** (`visibility: ["app"]`) exist purely for the View to call and never clutter the agent's context — e.g. refresh buttons, pagination controls, or form submissions.
@@ -82,7 +97,7 @@ When a View initializes, the Host provides context about its environment: **them
 
 - The repository ships **four agent skills** (`agent-skills.md`): `create-mcp-app` (scaffolds a new MCP App with an interactive UI), `migrate-oai-app` (migrates an existing OpenAI App to the MCP Apps SDK), `add-app-to-server` (adds interactive UI to an existing MCP server's tools), and `convert-web-app` (converts an existing web application into an MCP App). Skills install via a Claude Code plugin (`/plugin marketplace add modelcontextprotocol/ext-apps`) or the Vercel Skills CLI (`npx skills add modelcontextprotocol/ext-apps`), and work across Claude Code, VS Code/GitHub Copilot, Codex, Gemini CLI, Cline, and Goose.
 - **Specification**: the extension is defined under `specification/2026-01-26/apps.mdx` (a `specification/draft/apps.mdx` tracks the next iteration) and is identified by the extension ID **`io.modelcontextprotocol/ui`**.
-- **Published docs**: the repository docs are published at <https://apps.extensions.modelcontextprotocol.io> (the 2026-08-22 and 2026-08-29 re-pulls hit its [Quickstart](https://apps.extensions.modelcontextprotocol.io/api/documents/Quickstart.html) for `@modelcontextprotocol/ext-apps` **v1.1.2** — a watchlist package-version signal for the extension docs/website trail, and the source of the View-side `App` runtime API above).
+- **Published docs**: the repository docs are published at <https://apps.extensions.modelcontextprotocol.io> (the 2026-08-22 and 2026-08-29 re-pulls hit its [Quickstart](https://apps.extensions.modelcontextprotocol.io/api/documents/Quickstart.html) for `@modelcontextprotocol/ext-apps` **v1.1.2** — a watchlist package-version signal for the extension docs/website trail, and the source of the View-side `App` runtime API above); the **official protocol site** carries the canonical [MCP Apps extension page](https://modelcontextprotocol.io/extensions/apps/overview) (retrieved 2026-09-19), which mirrors the repo docs and adds the wire-dialect framing and host-integration paths above.
 - **Adoption demand (watchlist, source-backed single hit):** a [PrefectHQ/fastmcp discussion #2629](https://github.com/PrefectHQ/fastmcp/discussions/2629) ("the MCP Apps spec was officially released… is this feature in the roadmap?") asks whether FastMCP — the popular Python MCP library — will add MCP Apps support. Community demand signal only; no fastmcp commitment or release evidence yet, and unlike the official-SDK issues it is not filed in an official MCP SDK repo.
 
 ### Client/server capability negotiation
@@ -99,7 +114,7 @@ The dedicated package `@modelcontextprotocol/ext-apps` is the reference implemen
 
 - `extensions` fields on `ClientCapabilities` and `ServerCapabilities`; generic `_meta` on tool definitions.
 - `@modelcontextprotocol/ext-apps/server` module: `registerAppTool()` (tools with normalized UI metadata), `registerAppResource()` (resources with the default MCP Apps MIME type), `getUiCapability()`; typed interfaces `McpUiToolMeta`, `McpUiResourceMeta`, `McpUiResourceCsp`, `McpUiClientCapabilities`; constants `RESOURCE_MIME_TYPE`, `EXTENSION_ID`, `RESOURCE_URI_META_KEY`.
-- **View-side `App` runtime (source-backed, official docs host):** the published docs-host [Quickstart](https://apps.extensions.modelcontextprotocol.io/api/documents/Quickstart.html) — "Build Your First MCP App", docs package **v1.1.2** — documents the View-side client API used inside the iframe: `new App({ name, version })` creates the app instance; `app.ontoolresult` receives tool results from the server and must be set **before** `app.connect()` to avoid missing the initial tool result; `app.callServerTool({ name, arguments })` lets the interactive View request fresh data from the server on demand (e.g. a "Get Server Time" button). This is the View-side counterpart of the server-side registration surface and matches the core pattern the tutorial states: **MCP Apps = Tool + UI Resource**.
+- **View-side `App` runtime (source-backed, official docs host):** the published docs-host [Quickstart](https://apps.extensions.modelcontextprotocol.io/api/documents/Quickstart.html) — "Build Your First MCP App", docs package **v1.1.2** — documents the View-side client API used inside the iframe: `new App({ name, version })` creates the app instance; `app.ontoolresult` receives tool results from the server and must be set **before** `app.connect()` to avoid missing the initial tool result; `app.callServerTool({ name, arguments })` lets the interactive View request fresh data from the server on demand (e.g. a "Get Server Time" button). This is the View-side counterpart of the server-side registration surface and matches the core pattern the tutorial states: **MCP Apps = Tool + UI Resource**. The protocol-site overview (run 6) additionally frames `App` as an **optional convenience wrapper** — Views can implement the postMessage protocol directly.
 - **Python SDK** — the `mcp` Python package carries MCP Apps support alongside the TypeScript SDK (per the csharp-sdk SEP-1865 issue's SDK survey).
 - **Java SDK gap (watchlist)** — as of Java SDK **v0.17.2** there is no MCP Apps support: feature request [modelcontextprotocol/java-sdk#780](https://github.com/modelcontextprotocol/java-sdk/issues/780) (2026-02-12, opened by MiniClaw/Spring Boot client author, waiting for triage) asks for protocol-level support so Spring Boot clients can render server-provided UIs; the TS implementation and AppBridge docs are cited as reference. The 2026-08-22 re-pull additionally surfaced the **Java SDK v2.0.0 GA** (see the [releases reference](/references/model-context-protocol-releases.md#sdk-posture-for-the-2026-07-28-revision)) — a major-version modernization tracking the 2025-11-25 spec — which does **not** add MCP Apps support, so the Apps gap persists past the v2.0.0 line. The csharp-sdk issue [#1431](https://github.com/modelcontextprotocol/csharp-sdk/issues/1431) (SEP-1865, milestone "2026-07-28 Spec Compliance") frames MCP Apps as the first official extension, co-developed by Anthropic and OpenAI, released January 2026, and specifies it in `ext-apps/specification/2026-01-26/apps.mdx` using existing MCP primitives (tools, resources, capabilities) augmented with the `extensions` capability fields and generic `_meta`.
 
@@ -114,12 +129,14 @@ The dedicated package `@modelcontextprotocol/ext-apps` is the reference implemen
 ## Status
 
 - Released as an open standard in **January 2026** (spec snapshot `2026-01-26`), the first official MCP extension.
-- **Confidence:** source-backed (the `modelcontextprotocol/ext-apps` overview, `agent-skills.md`, the 2026-01-26 `apps.mdx` specification, and the official docs-host Quickstart from the official repo, retrieved across the 2026-08-17/18/22/27/29 runs).
-- **Watchlist:** the published docs host pins `@modelcontextprotocol/ext-apps` **v1.1.2** (observed 2026-08-22 and re-confirmed 2026-08-29, no release resource checked); the Java SDK MCP Apps gap persists past the Java SDK **v2.0.0** line (issue [#780](https://github.com/modelcontextprotocol/java-sdk/issues/780)); the FastMCP roadmap demand (discussion [#2629](https://github.com/PrefectHQ/fastmcp/discussions/2629)) is a single community hit, not an SDK commitment.
+- **Confidence:** source-backed (the `modelcontextprotocol/ext-apps` overview, `agent-skills.md`, the 2026-01-26 `apps.mdx` specification, the official docs-host Quickstart from the official repo, and the official protocol-site [MCP Apps overview](https://modelcontextprotocol.io/extensions/apps/overview), retrieved across the 2026-08-17/18/22/27/29 and 2026-09-19 runs).
+- **Watchlist:** the published docs host pins `@modelcontextprotocol/ext-apps` **v1.1.2** (observed 2026-08-22, re-confirmed 2026-08-29 and 2026-09-19, no release resource checked); the Java SDK MCP Apps gap persists past the Java SDK **v2.0.0** line (issue [#780](https://github.com/modelcontextprotocol/java-sdk/issues/780)); the FastMCP roadmap demand (discussion [#2629](https://github.com/PrefectHQ/fastmcp/discussions/2629)) is a single community hit, not an SDK commitment; the `@mcp-ui/client` and AppBridge host-side surfaces (run 6) are fragment-backed from the protocol-site overview — no separate API docs were retrieved for them.
 
 ## Source Map
 
 - [Web-search generative-UI source evidence](/sources/web-search-generative-ui.md) — coverage and reliability notes.
-- [Web-search Agent integration protocols source evidence](/sources/web-search-agent-integration-protocols.md) — MCP-runs coverage (2026-08-17, 2026-08-18, 2026-08-22, 2026-08-27, 2026-08-29).
+- [Web-search Agent integration protocols source evidence](/sources/web-search-agent-integration-protocols.md) — MCP-runs coverage (2026-08-17, 2026-08-18, 2026-08-22, 2026-08-27, 2026-08-29, 2026-09-19).
 - [Generative-UI ecosystem](/concepts/generative-ui-ecosystem.md) — where MCP Apps fits among competing approaches.
 - Repo: <https://github.com/modelcontextprotocol/ext-apps>
+- Official protocol-site extension page: <https://modelcontextprotocol.io/extensions/apps/overview>
+- Docs host: <https://apps.extensions.modelcontextprotocol.io>
