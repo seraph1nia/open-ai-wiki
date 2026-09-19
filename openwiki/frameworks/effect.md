@@ -1,10 +1,10 @@
 ---
 type: Framework
 title: Effect
-description: Effect is a powerful TypeScript library for building complex synchronous and asynchronous programs with typed, composable effects; v4 is the current era. Its durable-execution surface (DurableQueue ported to v4, @effect/workflow in alpha) is confirmed source-backed from the official Effect v4 beta documentation.
+description: Effect is a powerful TypeScript library for building complex synchronous and asynchronous programs with typed, composable effects; v4 is the current era and is now in Release Candidate (2026-08-14) with the API presumed stable. Its durable-execution surface (DurableQueue ported to v4, @effect/workflow in alpha, cluster/persisted-queue fixes, activity retry policy) is confirmed source-backed from the official Effect v4 beta/RC documentation.
 resource: https://www.effect.website/docs/v4/api/effect
 tags: [effect, typescript, durable-execution, framework, v4]
-timestamp: 2026-08-29
+timestamp: 2026-09-19
 ---
 
 # Effect
@@ -66,3 +66,13 @@ The community "What's New in Effect v4" gist was **re-confirmed by the 2026-08-2
 - **Reconfirmation (no new v4 API surface):** the v4 API query returned the deterministic official set — the "What's New in Effect v4" gist (community, watchlist), the official [February–May recap](https://www.effect.website/blog/effect-v4beta-launch-to-may-recap), the official [v4 Beta release post](https://effect.website/blog/releases/effect/40-beta), plus the **`Effect-TS/effect` repo's own `LLMS.md`** (an LLM-oriented summary of the Effect repo on `main`) and the repo itself. The February–May recap's durable facts (DurableQueue port, `@effect/workflow` alpha, STM collections) were reconfirmed; the STM/`getOrThrow` gist claims remain watchlist.
 - **Durable-execution query (secondary, watchlist):** the top hits stayed on the official `Effect-TS/effect#6014` Activity-replay bug (already documented above) plus community durable-engine material that remains **out of scope** (`backpine/durable-effect`, `durable-workflow/workflow` — the former Laravel Workflow package rebranded, and `dotty-cps-async/durable-monad`'s replay-vs-snapshot design notes). The durable-monad notes are a useful secondary description of replay-based vs snapshot-based durable execution but are not Effect v4 documentation.
 - **Gap unchanged:** the full procedural `@effect/workflow` primitive/API packaging is still un-retrieved; the official v4 workflow docs remain the target.
+
+## 2026-09-19 re-pull — v4 is Release Candidate (source-backed)
+
+The 2026-09-19 `web-search-factory-tools` pull (evidence on the [Factory tools source page](/sources/web-search-factory-tools.md)) advanced the durable-execution story with the **v4 Release Candidate milestone**:
+
+- **Effect v4 is now in Release Candidate** ("[This Week in Effect 131](https://effect.website/blog/this-week-in-effect/131)", 2026-08-14): **the API surface is presumed stable** and the project's focus has shifted entirely to correctness, reliability, and documentation. This upgrades the durability framing from beta-era fixes to a stabilization posture — and makes the official v4 docs (the gap target) the stated priority.
+- **Cluster & durable-execution fixes (RC window):** fixed a **cluster shutdown hang from abandoned requests**; fixed **defecting execution-plan observers replacing outcomes and leaving events unpaired**; fixed **TxPubSub subscriber release interrupting after hub shutdown**; fixed SQL `findById` resolvers invoking NonEmpty callbacks with empty batches; fixed SQL resolvers executing empty batches; **used migrations for SQL persisted queues**; added integration coverage for **entity shutdown, replay, workflow owner-loss, and cluster transport failure** scenarios. This closes out the beta-era fix trail (activity retry policy, persisted queues) into an explicit correctness/reliability program.
+- **New unstable CLI module in the v4 API reference:** `effect/unstable/cli/HelpDoc` — a **"structured help documentation model" for the unstable CLI package** capturing the user-facing parts of a command (description, usage string, positional arguments, flags, global flags, subcommands, annotations, examples); the module defines **data shapes only**, with terminal-text rendering handled by `CliOutput`. Added in v4.0.0. (API-reference surface, source-backed.)
+- **Third-party adopter signal (out of scope):** LionSR/TeXRA tracking issues #12025/#12081 document an external project adopting `effect/unstable/workflow` — Workflow, Activity, DurableDeferred, DurableQueue, DurableClock — as its durable-execution model with a repo-owned WorkflowEngine. Confirms external consumption of the unstable workflow surface but is not Effect documentation.
+- **Gap unchanged:** the complete procedural `@effect/workflow` primitive/API packaging is still not directly retrieved, but with the API "presumed stable" in RC, the official v4 workflow docs are now the explicit next target. The [open question](/open-questions.md) stays Active with the RC milestone recorded.

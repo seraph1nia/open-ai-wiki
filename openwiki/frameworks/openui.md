@@ -4,7 +4,7 @@ title: OpenUI (Open Standard for Generative UI)
 description: OpenUI is a generative-UI toolkit for building agents that respond with interactive interfaces rather than text, comprising the Agent Interface frontend SDK, the OpenUI Lang streaming declarative language and runtime, and the OpenUI Cloud managed backend.
 resource: https://www.openui.com/docs/overview
 tags: [openui, generative-ui, framework, agent-ui, language, runtime]
-timestamp: 2026-08-29
+timestamp: 2026-09-19
 ---
 
 # OpenUI (Open Standard for Generative UI)
@@ -19,6 +19,7 @@ Canonical materials: the OpenUI docs at <https://www.openui.com/docs/overview> a
 2. **OpenUI Lang** — an **open-source, streaming-first language and runtime** for generative UI. Agents compose interfaces from your component library while the runtime parses and renders their output progressively as it streams.
 3. **OpenUI Cloud** — the **managed backend** for OpenUI: model access with automatic fallbacks, output validation, conversation/artifact persistence, and built-in artifacts.
    - The agent-framework integration surface includes CopilotKit, assistant-ui, custom, and "Gen UI" via the OpenUI Lang runtime, plus LangGraph, Mastra, and Vercel AI SDK as agent frameworks, and Anthropic / OpenAI / Google Gemini as models.
+   - The [openui.com/docs overview](https://www.openui.com/docs) (retrieved 2026-09-19) re-confirms this surface and describes OpenUI as *"the Open Standard for Generative UI"* — a generative-UI toolkit for building "agents that respond with interactive interfaces, not just text." (**source-backed**, openui.com overview page).
 
 ## OpenUI Lang — a streaming-first declarative language
 
@@ -36,7 +37,7 @@ s2 = Series("Product B", [5, 15, 25])
 - **Expressions & types** — a strict subset of JavaScript values: component calls `Type(arg1, arg2)`, strings, numbers, booleans, null, arrays, objects, and identifier references.
 - **Component resolution** — the parser maps **positional arguments** in OpenUI Lang to **named props** in the target component library (e.g. React) using the library's Zod schemas; the order of keys in the `z.object` schema defines the expected argument order. Agents emit components from *your* library while the runtime resolves and renders them.
 - **Versions** — the v0.1 specification is the original static-UI language. The current language (v0.5) adds **reactive state, data queries, `$variables`, and actions** (e.g. `@Reset` after a form submit rather than `@Set($var, "")`), with custom system-prompt preambles and additional rules for agent steering.
-- **Token efficiency** — the reference repo claims OpenUI Lang uses **up to 67% fewer tokens than JSON** for the same UI.
+- **Token efficiency** — the reference repo (`thesysdev/openui`) and the openui.com docs both claim OpenUI Lang uses **up to 67% fewer tokens than JSON** for the same UI (re-confirmed on the 2026-09-19 pull's README fragments and openui.com docs snippet).
 
 ## OpenUI Cloud
 
@@ -115,7 +116,7 @@ There is an unrelated `Fallomai/openui` repo pitched as "an AI command center fo
 
 ## Status
 
-- **Confidence:** source-backed (openui.com overview, `openui-lang` v0.1 and v0.5 specification pages, OpenUI Cloud docs, plus the `thesysdev/openui` repo; single primary source on most points, not independently cross-checked).
+- **Confidence:** source-backed (openui.com overview, `openui-lang` v0.1 and v0.5 specification pages, OpenUI Cloud docs, plus the `thesysdev/openui` repo; single primary source on most points, not independently cross-checked). The openui.com overview re-confirmed 2026-09-19.
 - Actively marketed as *the* open standard for generative UI with a growing first-party backend (OpenUI Cloud).
 
 ## Source Map

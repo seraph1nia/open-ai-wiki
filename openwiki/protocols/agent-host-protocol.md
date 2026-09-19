@@ -4,7 +4,7 @@ title: Agent Host Protocol (AHP)
 description: The Agent Host Protocol (AHP) is Microsoft's synchronized, multi-client state protocol for AI agent sessions, framed on JSON-RPC 2.0 with channel-based routing, immutable state, pure reducers, and write-ahead reconciliation.
 resource: https://github.com/microsoft/agent-host-protocol
 tags: [agent-host-protocol, protocol, ai-agents, json-rpc, sessions]
-timestamp: 2026-08-29
+timestamp: 2026-09-19
 ---
 
 # Agent Host Protocol (AHP)
@@ -128,6 +128,7 @@ The relationship between the two "agent protocols" is now documented on the AHP 
 - **Detached-shell lifecycle** (issue #331027): the host stops detached shells when idle sessions are released; the SDK exposes authoritative detached-task state through `session.rpc.tasks.refresh()` and `session.rpc.tasks.list()`, and a running detached shell is represented as a task (official agent-host issue, source-backed behavior note, single source).
 - **WSL connections** (issue #307568) and **GitHub Enterprise (GHE) Copilot auth** (issue #313396) are open agent-host feature areas alongside the self-hosting issue above.
 - **Remote/web agent-hosting signals (2026-08-29 re-pull, watchlist):** the issue stream re-surfaced #326016 ("Remote Agent Host fails to start", VS Code milestone 1.129.1) and #317380 ("AgentHost: Dev Containers support", WSL/containers feature request) — continuing coverage of the self-hosting/remote surface; no new spec release appeared (the releases query again drifted to `microsoft/agent-framework` AG-UI work, out of scope). The `mcp://` channel spec file re-confirmed `AhpMcpUiHostCapabilities` as the only defined capability set.
+- **Reconfirmation (2026-09-19):** the repo README re-confirmed the **"synchronized, multi-client state protocol for AI agent sessions"** framing, the **immutable state + pure reducers + write-ahead reconciliation** design triad (see [Design foundations](#design-foundations)), the per-language client-library table (Rust `ahp`/`ahp-types`/`ahp-ws`, TypeScript `@microsoft/agent-host-protocol`, Kotlin `com.microsoft.agenthostprotocol`), the **doctrine doc** (`docs/guide/doctrine.md` — "authoritative, replayable view"), and the **spec versioning model** (`docs/specification/versioning.md`: semantic `MAJOR.MINOR.PATCH` strings, no pre-release/build metadata, negotiation during initialize). **No new spec release appeared** (the releases query returned repo-tree and RELEASING/spec-versioning docs only — the change resource remains independent per-language SemVer tracks, see the [AHP releases](/references/agent-host-protocol-releases.md) page).
 
 The Release-evidence and current-version headline features (including multiroot working directories, side chats, and MCP tool-call OAuth in v0.7.0) are synthesized on the [Agent Host Protocol releases](/references/agent-host-protocol-releases.md) page.
 

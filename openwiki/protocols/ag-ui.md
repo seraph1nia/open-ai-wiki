@@ -4,7 +4,7 @@ title: AG-UI (Agent-User Interaction Protocol)
 description: AG-UI is an open, lightweight, event-based wire protocol for streaming AI agent output to user-facing applications, standardizing how agents describe and stream UI over SSE, WebSockets, HTTP, and custom transports.
 resource: https://github.com/ag-ui-protocol/ag-ui
 tags: [ag-ui, protocol, agent-ui, ai-agents, streaming, generative-ui]
-timestamp: 2026-08-18
+timestamp: 2026-09-19
 ---
 
 # AG-UI (Agent-User Interaction Protocol)
@@ -40,7 +40,7 @@ The TypeScript codebase shapes agent interaction around:
 2. **`HttpAgent`** — standard HTTP client supporting SSE and binary protocols for connecting to agent endpoints.
 3. **Event types** — lifecycle, message, tool, and state-management event families.
 
-Official and community SDKs cover TypeScript (`@ag-ui/core`, `@ag-ui/client`, `@ag-ui/encoder`, `@ag-ui/proto`), Python, plus community SDKs. The README SDKs table (retrieved **2026-08-29**) marks **Kotlin Multiplatform (Android/iOS/JVM), Go, Java, Dart, Rust, Ruby, and C++ as ✅ Supported (community)** with "Getting Started" resources — moving **Dart, Rust, Ruby, and C++ from the earlier in-progress tracks to supported** in the README listing. Swift ships as the community third-party [paduh/ag-ui-swift](https://github.com/paduh/ag-ui-swift); .NET, Nim, Flowise, and Langflow remain in-progress tracks (watchlist). See the AG-UI repo structure (`/sdks/typescript/`, `/sdks/python/`, `/sdks/community/*`). **Confidence: source-backed** (AG-UI README SDKs table, retrieved 2026-08-29).
+Official and community SDKs cover TypeScript (`@ag-ui/core`, `@ag-ui/client`, `@ag-ui/encoder`, `@ag-ui/proto`), Python, plus community SDKs. The README SDKs table (retrieved **2026-09-19**) marks **Kotlin Multiplatform (Android/iOS/JVM), Go, Java, Dart, Rust, Ruby, C++, and .NET as ✅ Supported (Community)** with "Getting Started" resources — moving **Dart, Rust, Ruby, C++ by 2026-08-29 and .NET by 2026-09-19 from the earlier in-progress tracks to supported** in the README listing. Swift ships as the community third-party [paduh/ag-ui-swift](https://github.com/paduh/ag-ui-swift); Nim, Flowise, and Langflow remain in-progress tracks (watchlist). See the AG-UI repo structure (`/sdks/typescript/`, `/sdks/python/`, `/sdks/community/*`). **Confidence: source-backed** (AG-UI README SDKs table, retrieved 2026-09-19).
 
 ### Expanded integration surface (README, retrieved 2026-08-27)
 
@@ -104,7 +104,7 @@ sequenceDiagram
 
 ## Ecosystem adoption
 
-- **CopilotKit** is the 1st-party client/agent framework with AG-UI built in (see the [CopilotKit page](/frameworks/copilotkit.md)).
+- **CopilotKit** is the 1st-party client/agent framework with AG-UI built in (see the [CopilotKit page](/frameworks/copilotkit.md)). CopilotKit's own docs confirm the coupling: [docs.copilotkit.ai/teams/mastra/backend/ag-ui](https://docs.copilotkit.ai/teams/mastra/backend/ag-ui) states CopilotKit "is built on the AG-UI protocol … a lightweight, event-based standard that defines how AI agents communicate with user-facing applications over Server-Sent Events (SSE)", that **messages, state updates, tool calls, and agent lifecycle events all flow through AG-UI**, and that the resolved agent is a standard AG-UI **`AbstractAgent`** whose state you can read and methods you can invoke. **Confidence: source-backed** (CopilotKit docs, retrieved 2026-09-19).
 - Other supported clients per the AG-UI README: Terminal+Agent (community), **chat platforms (Slack, Microsoft Teams) via the [CopilotKit Channels SDK](/frameworks/copilotkit.md#channels-sdk)** (1st party, with the OpenTag example), and React Native (help-wanted, community).
 - The [Effect-TS/effect issue #6341](https://github.com/Effect-TS/effect/issues/6341) proposes native AG-UI support in `effect/unstable/ai` so an Effect HTTP server can run LLM calls and be driven by any AG-UI client; it names **TanStack AI (`@tanstack/ai-react`, `useChat` + `fetchServerSentEvents`)** as a client that is "fully AG-UI compliant" and frames AG-UI as covering "agent-to-UI the way MCP, already supported here, covers agent-to-tools." **Confidence: watchlist** — a single issue, not shipped support.
 - [Oracle's Open Agent Spec integration, issue #828](https://github.com/ag-ui-protocol/ag-ui/issues/828), proposes a server-side adapter tracing Agent Spec events (LLM messages, tool calls, tool executions) into AG-UI events for LangGraph and Oracle's WayFlow runtimes, with a FastAPI endpoint per AG-UI Dojo demo (agentic_chat, backend_tool_rendering, human_in_the_loop, tool_based_generative_ui). **Confidence: watchlist** — an open proposal, not shipped.
@@ -122,7 +122,7 @@ sequenceDiagram
 ## Status
 
 - Actively developed with a frequent (~weekly) release cadence; README features a quickstart (`npx create-ag-ui-app`), an AG-UI Dojo of 50–200 line building-block examples, a contributed-integration process, and a growing framework/SDK integration surface.
-- **Confidence:** source-backed (AG-UI README and `CLAUDE.md` protocol architecture plus the `docs/sdk/*` overviews from the official `ag-ui-protocol/ag-ui` repo; single primary source, not independently cross-checked); **confirmed** for the exact package/registry version strings retrieved 2026-08-27 (re-confirmed on the 2026-08-29 re-pull with no new adapter versions).
+- **Confidence:** source-backed (AG-UI README and `CLAUDE.md` protocol architecture plus the `docs/sdk/*` overviews from the official `ag-ui-protocol/ag-ui` repo; single primary source, not independently cross-checked); **confirmed** for the exact package/registry version strings retrieved 2026-08-27 (re-confirmed on the 2026-08-29 and 2026-09-19 re-pulls with no new adapter versions).
 
 ## Source Map
 

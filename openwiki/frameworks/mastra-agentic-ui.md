@@ -1,10 +1,10 @@
 ---
 type: Framework
 title: Mastra agentic-UI integration
-description: Mastra is a TypeScript AI framework whose agentic-UI layer integrates common generative-UI frontends (AI SDK UI, assistant-ui, CopilotKit, AG-UI) through @mastra/ai-sdk and a UI dojo of runnable examples; Mastra 1.0 stable adds A2A support, AI Tracing, and (as of 2026-08-18) agent-loop + nested-streaming orchestration built on AI SDK v5.
+description: Mastra is a TypeScript AI framework whose agentic-UI layer integrates common generative-UI frontends (AI SDK UI, assistant-ui, CopilotKit, AG-UI, OpenUI) through @mastra/ai-sdk and a UI dojo of runnable examples; Mastra 1.0 stable adds A2A support, AI Tracing, and (as of 2026-08-18) agent-loop + nested-streaming orchestration built on AI SDK v5.
 resource: https://mastra.ai/integrations/agentic-ui
 tags: [mastra, agentic-ui, framework, generative-ui, ai-sdk]
-timestamp: 2026-08-29
+timestamp: 2026-09-19
 ---
 
 # Mastra agentic-UI integration
@@ -21,6 +21,10 @@ Canonical materials: the Mastra docs at <https://mastra.ai/integrations/agentic-
 - **Custom UI (a.k.a. Generative UI)** lets you render custom React components based on data streamed from Mastra instead of raw text/JSON — a **weather card instead of JSON**, workflow-step progress indicators, agent-network execution, and custom events.
 - Streaming infrastructure: `@mastra/ai-sdk@latest` with `@ai-sdk/react` and `ai`.
 
+## OpenUI agentic-UI integration (first resolved 2026-09-19)
+
+The Mastra docs page [OpenUI | Agentic UI](https://mastra.ai/integrations/agentic-ui/openui) finally resolved to its own page on the 2026-09-19 pull (after six prior runs where the canonical URL drifted to the AI SDK UI page). The page documents how to **stream Mastra agent output into OpenUI through AG-UI, render generative interfaces with built-in components, and customize the component library** — first-party evidence of a **Mastra → AG-UI → OpenUI** integration line that the [OpenUI](/frameworks/openui.md) page only listed as an agent-framework target. **Confidence: source-backed** (mastra.ai docs, retrieved 2026-09-19; single primary source).
+
 ## UI dojo and supported frontends
 
 The **Mastra UI dojo** (live at `ui-dojo.mastra.ai`, source `mastra-ai/ui-dojo`) is a collection of working examples showing Mastra agents integrated with the most popular AI UI frontends, so users can choose a frontend:
@@ -31,7 +35,16 @@ The **Mastra UI dojo** (live at `ui-dojo.mastra.ai`, source `mastra-ai/ui-dojo`)
 - **Mastra client tools** — live, in-browser feedback
 - **HITL** — trialing how Mastra workflows suspend and resume with human input
 
-Announced in the Mastra blog post "Mastra UI Dojo: Choose your frontend" (2025-11-14, CEO Sam Bhagwat), the dojo is built around the recurring user question "How do I build a frontend for my Mastra project?", and Mastra states continued first-class support for **AI SDK, assistant-ui, and CopilotKit** — evidence of the multi-standard frontend market the [Generative-UI ecosystem](/concepts/generative-ui-ecosystem.md) compares.
+Announced in the Mastra blog post "Mastra UI Dojo: Choose your frontend" (2025-11-14, CEO Sam Bhagwat), the dojo is built around the recurring user question "How do I build a frontend for my Mastra project?", and Mastra states continued first-class support for **AI SDK, assistant-ui, and CopilotKit** — evidence of the multi-standard frontend market the [Generative-UI ecosystem](/concepts/generative-ui-ecosystem.md) compares. The `mastra-ai/ui-dojo` GitHub repo (retrieved 2026-09-19) is the dojo's source ("A Mastra showcase demonstrating how to integrate Mastra with popular AI UI frameworks… compare implementations side-by-side and choose the best approach for your project"; working examples across the three major AI UI frameworks plus advanced patterns — generative UIs, workflows, agent networks). **Confidence: source-backed** (repo README, retrieved 2026-09-19).
+
+## Third-party framing: CopilotKit as UI layer, Mastra as backend (2026-09-19, watchlist)
+
+Two [Developers Digest](https://www.developersdigest.tech) articles surfaced on the 2026-09-19 pull characterize the Mastra/CopilotKit split in terms the wiki's ecosystem comparison already reflects, and add the "frontend layer vs backend orchestrator" framing:
+
+- **"When CopilotKit Is the UI Layer, Not the Agent Framework"** — frames CopilotKit as "a frontend layer for agentic UX — chat surfaces, frontend tools, shared state, and generative UI" while "Mastra, LangGraph, and CrewAI are backend orchestrators that handle reasoning, memory, and durable workflows"; notes "the official integration [Mastra×CopilotKit] says the quiet part loudly: bring Mastra agents to users with CopilotKit via AG-UI."
+- **"Mastra vs CopilotKit vs LangGraph: Build the Same Agent App Three Ways"** — "Mastra owns the agent's reasoning, tools, workflows, state, and production behavior. CopilotKit owns the app-facing interaction model: chat, sidebar, headless hooks, frontend tools, shared state, generative UI, and human-in-the-loop controls," with a worked customer-success-dashboard example (see currently-selected account, stream progress, render risk table/renewal plan, call frontend actions, pause for approval).
+
+**Confidence: watchlist** — third-party commentary (not primary-source docs), but consistent with the primary evidence on this page (Mastra backend + CopilotKit/AG-UI frontend via `create-ag-ui-app --mastra`).
 
 ## Runtime maturity signals (2026-08-17 blog feed)
 
@@ -45,6 +58,7 @@ The 2026-08-17 `web-search-factory-tools` blog pull added runtime-level signals 
 - **Changelog 2026-02-26 (adopted 2026-08-27, watchlist):** `@mastra/core@1.8.0` adds a **supervisor pattern for multi-agent coordination**, metadata-only vector queries, more flexible `runEvals` options, LSP diagnostics after workspace edits, and a Blaxel sandbox provider. Single-source release-notes signal, watchlist until confirmed on primary docs.
 - **Metrics and Logs (new post, 2026-04-01, adopted 2026-08-29, source-backed):** the post "[Introducing Metrics and Logs](https://mastra.ai/blog/introducing-studio-metrics)" (author Eric Pinzur, lead of Mastra's observability work) documents that **Mastra Studio now supports logs, traces, and metrics**: a metrics dashboard tracking **model costs, latency percentiles, scores, and error counts** across all agents, tools, and workflows, plus a new **logging system** that saves logs to the **observability store** and makes them searchable in Studio. This deepens the AI Tracing signal into a full metrics/logs/traces surface on the observability side of the [factory toolchain hub](/concepts/factory-toolchain.md) (see ledger).
 - Watchlist: the 2026-03-23 changelog documents token-aware model routing for observational memory, MongoDB-backed versioned datasets/experiments, and Okta SSO with RBAC — single-source signals, not yet confirmed on primary docs. (The 2026-08-27 pull re-surfaced this changelog with extra detail — tool-input null detection fix, streaming tool lists in traces, a sequential tool-only loop fix, and an Anthropic tool-ordering fix — still changelog-level, watchlist.)
+- **Platform observability index teasers (2026-09-19, watchlist, not ledgered):** the blog index lists four 2026-09 feature posts with teaser titles only — **Incident Alerts** (Sep 17: real-time updates for failed deploys and crashed services), **Error Diagnosis** (Sep 15: diagnose and fix failed deploys with recommendations), **Server Health** (Sep 14: monitor server requests, inspect by path/status/latency), and **Sandbox Lifecycle Controls** (Sep 7: control, status, hooks, persistence). These extend the Mastra observability surface (AI Tracing → Studio metrics/logs) into **Platform operational tooling** and a **sandbox-lifecycle** corner. The index teasers have no stable per-post canonical URLs in the retrieved content, so they are not ledgerable rows (per the [ledger protocol](/sources/blog-post-ledger.md)); recorded as watchlist on this page and the [factory hub](/concepts/factory-toolchain.md). (The `mastrav1` result is the same post as the ledgered `announcing-mastra-1` under a different slug — no re-adoption.)
 
 ## Third-party adoption signals
 
